@@ -1,0 +1,28 @@
+Exception:
+    exclusion_policy: ALL
+    properties:
+        message:
+            type: string
+            expose: true
+            groups: [logs]
+        code:
+            type: integer
+            expose: true
+            groups: [logs]
+        file:
+            type: string
+            expose: true
+            groups: [logs]
+        line:
+            type: integer
+            expose: true
+            groups: [logs]
+#    virtual_properties:
+#        getTrace:
+#            serialized_name: trace
+#            type: array
+#            groups: [logs]
+#        getPrevious:
+#            serialized_name: previous
+#            type: Exception
+#            groups: [logs]

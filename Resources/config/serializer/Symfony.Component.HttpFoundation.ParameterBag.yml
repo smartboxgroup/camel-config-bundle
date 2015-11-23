@@ -1,0 +1,5 @@
+Symfony\Component\HttpFoundation\ParameterBag:
+    exclusion_policy: ALL
+#    properties:
+#        parameters:
+#            groups: [logs]

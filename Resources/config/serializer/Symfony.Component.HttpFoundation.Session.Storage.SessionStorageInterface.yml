@@ -1,0 +1,2 @@
+Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface:
+    exclusion_policy: ALL

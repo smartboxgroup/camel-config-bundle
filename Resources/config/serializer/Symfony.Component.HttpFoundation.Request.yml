@@ -1,0 +1,74 @@
+Symfony\Component\HttpFoundation\Request:
+    exclusion_policy: ALL
+#    properties:
+#        attributes:
+#            expose: true
+#            groups: [logs]
+#
+#        request:
+#            expose: true
+#            groups: [logs]
+#
+#        query:
+#            expose: true
+#            groups: [logs]
+#
+#        server:
+#            expose: true
+#            groups: [logs]
+#
+#        cookies:
+#            expose: true
+#            groups: [logs]
+#
+#        headers:
+#            expose: true
+#            groups: [logs]
+#
+#        content:
+#            expose: true
+#            groups: [logs]
+#
+#        languages:
+#            expose: true
+#            groups: [logs]
+#
+#        charsets:
+#            expose: true
+#            groups: [logs]
+#
+#        encodings:
+#            expose: true
+#            groups: [logs]
+#
+#        acceptableContentTypes:
+#            expose: true
+#            groups: [logs]
+#
+#        pathInfo:
+#            expose: true
+#            groups: [logs]
+#
+#        requestUri:
+#            expose: true
+#            groups: [logs]
+#
+#        baseUrl:
+#            expose: true
+#            groups: [logs]
+#
+#        basePath:
+#            expose: true
+#            groups: [logs]
+#
+#        method:
+#            expose: true
+#            groups: [logs]
+#
+#        format:
+#            expose: true
+#            groups: [logs]
+#
+#        locale:
+#            expose: true
+#            groups: [logs]

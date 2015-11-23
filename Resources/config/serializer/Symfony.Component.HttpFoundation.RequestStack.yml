@@ -1,0 +1,6 @@
+Symfony\Component\HttpFoundation\RequestStack:
+    exclusion_policy: ALL
+#    properties:
+#        requests:
+#            expose: true
+#            groups: [logs]

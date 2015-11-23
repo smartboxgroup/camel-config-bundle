@@ -1,0 +1,51 @@
+imports:
+    - { resource: services.yml }
+
+parameters:
+    locale: en
+    secret: "5yg6u543wrftg34"
+    smartbox.monolog.formatter.json.class: Smartbox\Integration\ServiceBusBundle\Utils\Monolog\Formatter\JMSSerializerFormatter
+    fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
+
+framework:
+    secret:          "%secret%"
+    validation:      { enable_annotations: true }
+    default_locale:  "%locale%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+
+sensio_framework_extra:
+    request:
+        converters: true
+        auto_convert: false
+
+monolog:
+    channels: [tracking]
+    handlers:
+        syslog:
+            type: syslog
+            level: error
+            formatter: smartbox.monolog.formatter.json
+        syslog_tracking:
+            type: syslog
+            level: debug
+            formatter: smartbox.monolog.formatter.json
+            channels: [tracking]
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        directories:
+            error_logging:
+                namespace_prefix: ""
+                path: "@SmartboxIntegrationServiceBusBundle/Resources/config/serializer"
+
+smartbox_core:
+  fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
+  entities_namespaces:
+    - 'Smartbox\Integration\ServiceBusBundle\Tests\App\Entity'
+
+smartbox_integration_service_bus:
+    flows_directories:
+      - "%kernel.root_dir%/Resources/TestFlows"
