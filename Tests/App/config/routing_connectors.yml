@@ -1,5 +1,5 @@
 smartbox_integration_platform:
-    resource: "@SmartboxIntegrationServiceBusBundle/Resources/config/default_connector_routes.yml"
+    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_connector_routes.yml"
     prefix:   /
 
 queues.stomp:

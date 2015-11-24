@@ -4,7 +4,6 @@ imports:
 parameters:
     locale: en
     secret: "5yg6u543wrftg34"
-    smartbox.monolog.formatter.json.class: Smartbox\Integration\ServiceBusBundle\Utils\Monolog\Formatter\JMSSerializerFormatter
     fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
 
 framework:
@@ -32,14 +31,6 @@ monolog:
             level: debug
             formatter: smartbox.monolog.formatter.json
             channels: [tracking]
-
-jms_serializer:
-    metadata:
-        auto_detection: true
-        directories:
-            error_logging:
-                namespace_prefix: ""
-                path: "@SmartboxIntegrationServiceBusBundle/Resources/config/serializer"
 
 smartbox_core:
   fixtures_path: "%kernel.root_dir%/Resources/Fixtures"

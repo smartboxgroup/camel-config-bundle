@@ -38,14 +38,9 @@ class SmartboxIntegrationServiceBusExtension extends Extension
         $configuration = new Configuration();
         $this->config = $this->processConfiguration($configuration, $configs);
 
-        $eventsLogLevel = $this->config['events_log_level'];
-        $container->setParameter('smartesb.event_listener.events_logger.log_level', $eventsLogLevel);
-
         $container->setParameter('smartesb.flows_directories', $this->config['flows_directories']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('exceptions.yml');
-        $loader->load('connectors.yml');
     }
 }
