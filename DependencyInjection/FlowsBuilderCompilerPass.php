@@ -5,7 +5,7 @@ namespace Smartbox\Integration\ServiceBusBundle\DependencyInjection;
 
 
 use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
-use Smartbox\Integration\ServiceBusBundle\Helper\EndpointHelper;
+use Smartbox\Integration\FrameworkBundle\Helper\EndpointHelper;
 use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;

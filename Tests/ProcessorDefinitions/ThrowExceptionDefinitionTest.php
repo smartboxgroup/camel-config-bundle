@@ -2,7 +2,7 @@
 namespace Smartbox\Integration\ServiceBusBundle\Tests\ProcessorDefinitions;
 
 use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
-use Smartbox\Integration\ServiceBusBundle\Exceptions\BadRequestException;
+use Smartbox\Integration\FrameworkBundle\Exceptions\BadRequestException;
 use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ThrowExceptionDefinition;
 use Smartbox\Integration\ServiceBusBundle\Tests\BaseKernelTestCase;
 use Symfony\Component\DependencyInjection\Definition;

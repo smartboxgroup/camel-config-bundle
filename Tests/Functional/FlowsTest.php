@@ -60,7 +60,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\ServiceBusBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
      */
     private function handle(array $conf){
         if(!array_key_exists('in',$conf) || !array_key_exists('out',$conf) || !array_key_exists('from',$conf)){
@@ -85,7 +85,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\ServiceBusBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
      */
     private function checkSpy(array $conf){
         if(!array_key_exists('path',$conf) || !array_key_exists('values',$conf)){
@@ -106,7 +106,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\ServiceBusBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
      */
     private function consumeQueue(array $conf){
         if(!array_key_exists('queue',$conf) || !array_key_exists('amount',$conf)){
