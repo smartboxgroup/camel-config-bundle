@@ -7,7 +7,7 @@ use Smartbox\Integration\FrameworkBundle\Processors\Itinerary;
 use Smartbox\Integration\FrameworkBundle\Routing\ItinerariesMap;
 use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\ServiceBusBundle\DependencyInjection\SmartboxIntegrationServiceBusExtension;
-use Smartbox\Integration\ServiceBusBundle\Helper\EndpointsRegistry;
+use Smartbox\Integration\FrameworkBundle\Helper\EndpointsRegistry;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;

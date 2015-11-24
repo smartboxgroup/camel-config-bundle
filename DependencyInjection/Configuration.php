@@ -22,22 +22,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('smartbox_integration_service_bus');
         $rootNode
             ->children()
-                ->scalarNode('events_log_level')
-                    ->defaultValue(LogLevel::DEBUG)
-                    ->validate()
-                        ->ifNotInArray([
-                            LogLevel::EMERGENCY,
-                            LogLevel::ALERT,
-                            LogLevel::CRITICAL,
-                            LogLevel::ERROR,
-                            LogLevel::WARNING,
-                            LogLevel::NOTICE,
-                            LogLevel::INFO,
-                            LogLevel::DEBUG,
-                        ])
-                        ->thenInvalid('Invalid log level for events log: "%s"')
-                    ->end()
-                ->end()
                 ->arrayNode('flows_directories')
                     ->prototype('scalar')
                         ->validate()

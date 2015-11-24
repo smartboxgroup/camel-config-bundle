@@ -1,30 +1,10 @@
 parameters:
-  smartesb.registry.endpoints.class: Smartbox\Integration\ServiceBusBundle\Helper\EndpointsRegistry
-  smartesb.itinerary.class: Smartbox\Integration\FrameworkBundle\Processors\Itinerary
-
-  smartesb.processor.router.class: Smartbox\Integration\FrameworkBundle\Processors\Routing\ContentRouter
-  smartesb.processor.multicast.class: Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast
-  smartesb.processor.transformer.class: Smartbox\Integration\FrameworkBundle\Processors\Transformation\Transformer
-  smartesb.processor.throw_exception.class: Smartbox\Integration\FrameworkBundle\Processors\ControlFlow\ThrowException
-
   smartesb.definitions.router.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\RouterDefinition
   smartesb.definitions.multicast.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\MulticastDefinition
   smartesb.definitions.transformer.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\TransformerDefinition
   smartesb.definitions.throw_exception.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ThrowExceptionDefinition
 
-  smartesb.event_listener.fatal_error.class: Smartbox\Integration\ServiceBusBundle\EventListener\FatalErrorListener
-  smartesb.event_listener.jms_serializer.serialization_listener.class: Smartbox\Integration\ServiceBusBundle\EventListener\JMSSerializer\SerializationListener
-  smartbox.monolog.formatter.json.class: Smartbox\Integration\ServiceBusBundle\Utils\Monolog\Formatter\JMSSerializerFormatter
-
 services:
-  smartbox.monolog.formatter.json:
-      class: %smartbox.monolog.formatter.json.class%
-      calls:
-          - [setSerializer, [@serializer]]
-
-  smartesb.registry.endpoints:
-      class: %smartesb.registry.endpoints.class%
-
   smartesb.definitions.router:
       class: %smartesb.definitions.router.class%
       tags:
@@ -54,13 +34,3 @@ services:
         - { name: smartesb.definitions.throwException }
       calls:
         - [setProcessorClass, [%smartesb.processor.throw_exception.class%]]
-
-  smartesb.event_listener.fatal_error:
-      class: %smartesb.event_listener.fatal_error.class%
-      tags:
-        - { name: kernel.event_listener, event: smartesb.event.error, method: onErrorEvent }
-  
-  smartesb.event_listener.jms_serializer.serialization_listener:
-      class: %smartesb.event_listener.jms_serializer.serialization_listener.class%
-      tags:
-        - { name: jms_serializer.event_listener, event: serializer.post_serialize, method: onPostSerialize }
