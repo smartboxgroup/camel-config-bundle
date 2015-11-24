@@ -1,7 +1,6 @@
 parameters:
   smartesb.registry.endpoints.class: Smartbox\Integration\ServiceBusBundle\Helper\EndpointsRegistry
   smartesb.itinerary.class: Smartbox\Integration\FrameworkBundle\Processors\Itinerary
-  smartesb.log.processor.class: Smartbox\Integration\ServiceBusBundle\Logging\LogProcessor
 
   smartesb.processor.router.class: Smartbox\Integration\FrameworkBundle\Processors\Routing\ContentRouter
   smartesb.processor.multicast.class: Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast
@@ -65,10 +64,3 @@ services:
       class: %smartesb.event_listener.jms_serializer.serialization_listener.class%
       tags:
         - { name: jms_serializer.event_listener, event: serializer.post_serialize, method: onPostSerialize }
-
-  smartesb.log.processor:
-      arguments:
-        - @request_stack
-      class: %smartesb.log.processor.class%
-      tags:
-          - { name: monolog.processor }

@@ -1,2 +1,0 @@
-Symfony\Component\HttpKernel\Exception\HttpException:
-  exclusion_policy: ALL

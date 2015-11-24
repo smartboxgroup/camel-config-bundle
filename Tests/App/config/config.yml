@@ -33,14 +33,6 @@ monolog:
             formatter: smartbox.monolog.formatter.json
             channels: [tracking]
 
-jms_serializer:
-    metadata:
-        auto_detection: true
-        directories:
-            error_logging:
-                namespace_prefix: ""
-                path: "@SmartboxIntegrationServiceBusBundle/Resources/config/serializer"
-
 smartbox_core:
   fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
   entities_namespaces:

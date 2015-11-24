@@ -1,7 +1,0 @@
-Symfony\Component\EventDispatcher\Event:
-  exclusion_policy: ALL
-  properties:
-    name:
-      type: string
-      groups: [logs]
-      expose: true
