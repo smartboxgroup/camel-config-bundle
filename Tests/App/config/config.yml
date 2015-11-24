@@ -4,7 +4,6 @@ imports:
 parameters:
     locale: en
     secret: "5yg6u543wrftg34"
-    smartbox.monolog.formatter.json.class: Smartbox\Integration\ServiceBusBundle\Utils\Monolog\Formatter\JMSSerializerFormatter
     fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
 
 framework:
