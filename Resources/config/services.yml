@@ -10,7 +10,7 @@ services:
       tags:
         - { name: smartesb.definitions.choice }
       calls:
-        - [setEvaluator, [@smartif.util.evaluator]]
+        - [setEvaluator, [@smartesb.util.evaluator]]
         - [setProcessorClass, [%smartesb.processor.router.class%]]
 
   smartesb.definitions.multicast:
@@ -25,7 +25,7 @@ services:
       tags:
         - { name: smartesb.definitions.transform }
       calls:
-        - [setEvaluator, [@smartif.util.evaluator]]
+        - [setEvaluator, [@smartesb.util.evaluator]]
         - [setProcessorClass, [%smartesb.processor.transformer.class%]]
 
   smartesb.definitions.throw_exception:

@@ -106,7 +106,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         foreach ($traits as $trait) {
             switch ($trait) {
                 case 'Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator':
-                    $definition->addMethodCall('setEvaluator', array(new Reference('smartif.util.evaluator')));
+                    $definition->addMethodCall('setEvaluator', array(new Reference('smartesb.util.evaluator')));
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\Traits\UsesSerializer':
@@ -122,7 +122,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\Traits\UsesConnectorsRouter':
-                    $definition->addMethodCall('setConnectorsRouter', array(new Reference('smartif.router.connectors')));
+                    $definition->addMethodCall('setConnectorsRouter', array(new Reference('smartesb.router.connectors')));
                     break;
             }
         }

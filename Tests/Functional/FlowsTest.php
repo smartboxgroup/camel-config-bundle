@@ -67,7 +67,7 @@ class FlowsTest extends BaseKernelTestCase{
             throw new \Exception("Missing parameter in handle step");
         }
 
-        $evaluator = $this->getContainer()->get('smartif.util.evaluator');
+        $evaluator = $this->getContainer()->get('smartesb.util.evaluator');
 
         $in = $evaluator->evaluate($conf['in'],array());
         $out = $evaluator->evaluate($conf['out'],array('in' => $in));
@@ -91,7 +91,7 @@ class FlowsTest extends BaseKernelTestCase{
         if(!array_key_exists('path',$conf) || !array_key_exists('values',$conf)){
             throw new \Exception("Missing parameter in checkSpy step");
         }
-        $evaluator = $this->getContainer()->get('smartif.util.evaluator');
+        $evaluator = $this->getContainer()->get('smartesb.util.evaluator');
 
         $expectedValues = [];
         foreach($conf['values'] as $value){

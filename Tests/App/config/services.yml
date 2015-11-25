@@ -13,8 +13,8 @@ services:
       calls:
         - [setEventDispatcher, [@event_dispatcher]]
         - [setRetriesMax, [5]]
-        - [setConnectorsRouter, [@smartif.router.connectors]]
-        - [setItinerariesRouter, [@smartif.router.itineraries]]
+        - [setConnectorsRouter, [@smartesb.router.connectors]]
+        - [setItinerariesRouter, [@smartesb.router.itineraries]]
         - [setId, ['handler.sync']]
         - [setFailedURI, ['queue://smartesb/sync/failed']]
         - [setRetryURI, ['stomp://smartesb/sync/retry']]
@@ -27,8 +27,8 @@ services:
       calls:
         - [setEventDispatcher, [@event_dispatcher]]
         - [setRetriesMax, [5]]
-        - [setConnectorsRouter, [@smartif.router.connectors]]
-        - [setItinerariesRouter, [@smartif.router.itineraries]]
+        - [setConnectorsRouter, [@smartesb.router.connectors]]
+        - [setItinerariesRouter, [@smartesb.router.itineraries]]
         - [setId, ['handler.async']]
         - [setFailedURI, ['queue://smartesb/async/failed']]
         - [setDeferNewExchanges, [true]]

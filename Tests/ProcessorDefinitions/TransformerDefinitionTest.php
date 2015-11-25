@@ -34,7 +34,7 @@ class TransformerDefinitionTest extends BaseKernelTestCase
         $this->flowsBuilderCompilerPassMock->method('buildItinerary')->willReturn(new Reference(1));
 
         $this->processorDefinition = new TransformerDefinition();
-        $this->processorDefinition->setEvaluator($container->get('smartif.util.evaluator'));
+        $this->processorDefinition->setEvaluator($container->get('smartesb.util.evaluator'));
         $this->processorDefinition->setBuilder($this->flowsBuilderCompilerPassMock);
     }
 
