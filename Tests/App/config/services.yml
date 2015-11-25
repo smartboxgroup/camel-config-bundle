@@ -48,3 +48,15 @@ services:
       calls:
           - [ setQueueDriver, [ @driver.queue ] ]
           - [ setHandler, [ @handler.async ] ]
+
+  smartbox.queue.driver.events:
+      alias: driver.queue
+
+  smartbox.queue.driver.main:
+      alias: driver.queue
+
+  smartbox.handler.async:
+      alias: handler.async
+
+  smartbox.handler.sync:
+      alias: handler.sync
