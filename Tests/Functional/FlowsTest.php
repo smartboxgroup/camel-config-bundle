@@ -1,6 +1,7 @@
 <?php
 namespace Smartbox\Integration\ServiceBusBundle\Tests\Functional;
 
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
 use Smartbox\Integration\ServiceBusBundle\Tests\App\Entity\EntityX;
@@ -74,7 +75,7 @@ class FlowsTest extends BaseKernelTestCase{
 
         $message = new Message(new EntityX($in));
         $message->setContext(new Context());
-        $handler = $this->getContainer()->get('handler.sync');
+        $handler = $this->getContainer()->get('smartesb.handlers.sync');
 
         /** @var EntityX $result */
         $result = $handler->handle($message, $conf['from'])->getBody();
@@ -115,7 +116,7 @@ class FlowsTest extends BaseKernelTestCase{
 
         $queue = $conf['queue'];
 
-        $consumer = $this->getContainer()->get('consumers.queue');
+        $consumer = $this->getContainer()->get(SmartboxIntegrationFrameworkExtension::CONSUMER_PREFIX.'queue.main');
         $consumer->setExpirationCount($conf['amount']);
         $consumer->consume($queue);
     }
