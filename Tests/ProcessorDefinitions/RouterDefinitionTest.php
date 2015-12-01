@@ -1,15 +1,18 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
 use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
-use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\RouterDefinition;
-use Smartbox\Integration\ServiceBusBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition;
+use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-
+/**
+ * Class RouterDefinitionTest
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ */
 class RouterDefinitionTest extends BaseKernelTestCase
 {
 

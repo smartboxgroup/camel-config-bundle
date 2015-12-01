@@ -1,6 +1,6 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\DependencyInjection;
+namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Psr\Log\LogLevel;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('smartbox_integration_service_bus');
+        $rootNode = $treeBuilder->root('smartbox_integration_camel_config');
         $rootNode
             ->children()
                 ->arrayNode('flows_directories')

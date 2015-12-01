@@ -1,14 +1,18 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
-use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\TransformerDefinition;
-use Smartbox\Integration\ServiceBusBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TransformerDefinition;
+use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class TransformerDefinitionTest
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ */
 class TransformerDefinitionTest extends BaseKernelTestCase
 {
     /**

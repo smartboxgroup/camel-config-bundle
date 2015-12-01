@@ -1,6 +1,6 @@
 <?php
 // File: Tests/app/console.php
-use \Smartbox\Integration\ServiceBusBundle\Tests\App\AppKernel;
+use \Smartbox\Integration\CamelConfigBundle\Tests\App\AppKernel;
 
 set_time_limit(0);
 

@@ -1,10 +1,14 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\App;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\App;
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
+/**
+ * Class AppKernel
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\App
+ */
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -16,7 +20,7 @@ class AppKernel extends Kernel
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Smartbox\Integration\FrameworkBundle\SmartboxIntegrationFrameworkBundle(),
-            new \Smartbox\Integration\ServiceBusBundle\SmartboxIntegrationServiceBusBundle()
+            new \Smartbox\Integration\CamelConfigBundle\SmartboxIntegrationCamelConfigBundle()
         );
     }
 

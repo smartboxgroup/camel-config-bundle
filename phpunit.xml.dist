@@ -7,7 +7,7 @@
          colors="true"
          bootstrap="./Tests/App/autoload.php"
 >
-    <testsuite name="Smartbox IntegrationServiceBus Suite">
+    <testsuite name="Smartbox Integration Camel Config Suite">
         <directory>./Tests/</directory>
     </testsuite>
 </phpunit>

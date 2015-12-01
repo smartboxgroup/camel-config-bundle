@@ -1,15 +1,18 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\App\Connectors;
-
+namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors;
 
 use Smartbox\Integration\FrameworkBundle\Connectors\Connector;
 use Smartbox\Integration\FrameworkBundle\Connectors\ConnectorInterface;
 use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
-use Smartbox\Integration\ServiceBusBundle\Tests\App\Entity\EntityX;
+use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 
+/**
+ * Class HelperConnector
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors
+ */
 class HelperConnector extends Connector implements ConnectorInterface {
 
     const OPTION_OPERATION = 'operation';

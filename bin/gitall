@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "\n$(tput setaf 4)--- SERVICE-BUS-BUNDLE ---$(tput sgr0)"
+echo -e "\n$(tput setaf 4)--- CAMEL-CONFIG-BUNDLE ---$(tput sgr0)"
 path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 git $@
 

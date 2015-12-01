@@ -1,8 +1,7 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\DependencyInjection;
+namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -13,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class SmartboxIntegrationServiceBusExtension extends Extension
+class SmartboxIntegrationCamelConfigExtension extends Extension
 {
     protected $config;
 

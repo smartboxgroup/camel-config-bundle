@@ -1,16 +1,16 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
 use Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast;
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
-use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\MulticastDefinition;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\MulticastDefinition;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class MulticastDefinitionTest
- * @package Smartbox\Integration\ServiceBusBundle\Tests\ProcessorDefinitions
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
  */
 class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,13 +1,13 @@
 <?php
-namespace Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions;
 
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderInterface;
+namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
+
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInterface;
 use Symfony\Component\DependencyInjection\Reference;
-
 
 /**
  * Class ProcessorDefinition
- * @package Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions
+ * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
  */
 interface ProcessorDefinitionInterface
 {

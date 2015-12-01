@@ -1,6 +1,6 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
@@ -9,7 +9,7 @@ use Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator;
 
 /**
  * Class RouterDefinition
- * @package Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions
+ * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
  */
 class RouterDefinition extends ProcessorDefinition
 {

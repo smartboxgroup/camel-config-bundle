@@ -1,15 +1,20 @@
 <?php
-namespace Smartbox\Integration\ServiceBusBundle\Tests\Functional;
+
+namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
-use Smartbox\Integration\ServiceBusBundle\Tests\App\Entity\EntityX;
-use Smartbox\Integration\ServiceBusBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * Class FlowsTest
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\Functional
+ */
 class FlowsTest extends BaseKernelTestCase{
 
     public function flowsDataProvider(){

@@ -1,8 +1,8 @@
 parameters:
-  smartesb.definitions.router.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\RouterDefinition
-  smartesb.definitions.multicast.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\MulticastDefinition
-  smartesb.definitions.transformer.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\TransformerDefinition
-  smartesb.definitions.throw_exception.class: Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ThrowExceptionDefinition
+  smartesb.definitions.router.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition
+  smartesb.definitions.multicast.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\MulticastDefinition
+  smartesb.definitions.transformer.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TransformerDefinition
+  smartesb.definitions.throw_exception.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition
 
 services:
   smartesb.definitions.router:

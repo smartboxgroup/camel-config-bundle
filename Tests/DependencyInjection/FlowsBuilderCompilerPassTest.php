@@ -1,24 +1,22 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\DependencyInjection;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\DependencyInjection;
 
 use Smartbox\Integration\FrameworkBundle\Handlers\SyncHandler;
 use Smartbox\Integration\FrameworkBundle\Processors\Itinerary;
 use Smartbox\Integration\FrameworkBundle\Routing\ItinerariesMap;
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\SmartboxIntegrationServiceBusExtension;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\SmartboxIntegrationCamelConfigExtension;
 use Smartbox\Integration\FrameworkBundle\Helper\EndpointsRegistry;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * Class FlowsBuilderCompilerPassTest
- * @package Smartbox\Integration\ServiceBusBundle\Tests\DependencyInjection
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\DependencyInjection
  * The test is merely functional as there are many dependencies
  *
- * @coversDefaultClass Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass
+ * @coversDefaultClass Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass
  */
 class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,15 +52,15 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
         $compilerPass = new FlowsBuilderCompilerPass();
 
         // Mock extension interface and its related methods
-        /** @var SmartboxIntegrationServiceBusExtension|\PHPUnit_Framework_MockObject_MockObject $extension */
-        $extension = $this->getMockBuilder(SmartboxIntegrationServiceBusExtension::class)
+        /** @var SmartboxIntegrationCamelConfigExtension|\PHPUnit_Framework_MockObject_MockObject $extension */
+        $extension = $this->getMockBuilder(SmartboxIntegrationCamelConfigExtension::class)
             ->setMethods(array('getNamespace', 'getAlias', 'getFlowsDirectories', 'getXsdValidationBasePath', 'load'))
             ->getMock();
 
         $extension->method('getFlowsDirectories')->willReturn(__DIR__ . '/../Fixtures/FlowsBuilderCompilerPassSuccess');
 
         $extension->method('getAlias')
-            ->will($this->returnValue('smartbox_integration_service_bus'));
+            ->will($this->returnValue('smartbox_integration_camel_config'));
 
         // Mock the container given to the compiler pass
         /** @var ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject $container */
