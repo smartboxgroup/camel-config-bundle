@@ -1,10 +1,10 @@
 {
-  "name": "smartbox/integration/service-bus-bundle",
+  "name": "smartbox/integration/camel-config-bundle",
   "type": "symfony-bundle",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Smartbox\\Integration\\ServiceBusBundle\\": ""
+      "Smartbox\\Integration\\CamelConfigBundle\\": ""
     }
   },
   "require": {

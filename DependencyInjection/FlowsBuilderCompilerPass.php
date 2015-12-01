@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Smartbox\Integration\ServiceBusBundle\DependencyInjection;
+namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 
 use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
 use Smartbox\Integration\FrameworkBundle\Helper\EndpointHelper;
-use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ProcessorDefinition;
-use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,6 +16,10 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+/**
+ * Class FlowsBuilderCompilerPass
+ * @package Smartbox\Integration\CamelConfigBundle\DependencyInjection
+ */
 class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInterface
 {
     const CAMEL_CONTEXT = "camelContext";
@@ -192,8 +196,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         $this->container = $container;
         $this->endpointsRegistry = $this->container->getDefinition('smartesb.registry.endpoints');
-        /** @var SmartboxIntegrationServiceBusExtension $extension */
-        $extension = $container->getExtension('smartbox_integration_service_bus');
+        /** @var SmartboxIntegrationCamelConfigExtension $extension */
+        $extension = $container->getExtension('smartbox_integration_camel_config');
         $flowsDirs = $extension->getFlowsDirectories();
 
         $finder = new Finder();

@@ -1,14 +1,13 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Exceptions\ExchangeAwareInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class ThrowExceptionDefinition
- * @package Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions
+ * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
  */
 class ThrowExceptionDefinition extends ProcessorDefinition{
     const REF = "ref";

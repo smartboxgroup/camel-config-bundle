@@ -1,15 +1,15 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Smartbox\Integration\FrameworkBundle\Service;
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderInterface;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class ProcessorDefinition
- * @package Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions
+ * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
  */
 abstract class ProcessorDefinition extends Service implements ProcessorDefinitionInterface
 {

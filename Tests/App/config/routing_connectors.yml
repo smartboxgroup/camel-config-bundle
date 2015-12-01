@@ -7,7 +7,7 @@ queues.stomp:
   defaults:
     _connector: @smartesb.connectors.queue
     queue_driver: @smartesb.drivers.main
-    prefix: "test/servicebus/"
+    prefix: "test/camelconfig/"
     persistent: false     # For the tests we don't really want to persist our messages
 
   requirements:
@@ -18,7 +18,7 @@ queues.generic:
   defaults:
     _connector: @smartesb.connectors.queue
     queue_driver: @smartesb.drivers.main
-    prefix: "test/servicebus/"
+    prefix: "test/camelconfig/"
     persistent: false    # For the tests we don't really want to persist our messages
 
   requirements:

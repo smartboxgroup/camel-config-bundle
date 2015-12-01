@@ -1,12 +1,14 @@
 <?php
 
-
-namespace Smartbox\Integration\ServiceBusBundle\DependencyInjection;
-
+namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Interface FlowsBuilderInterface
+ * @package Smartbox\Integration\CamelConfigBundle\DependencyInjection
+ */
 interface FlowsBuilderInterface
 {
 

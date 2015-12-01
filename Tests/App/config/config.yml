@@ -35,9 +35,9 @@ monolog:
 smartbox_core:
   fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
   entities_namespaces:
-    - 'Smartbox\Integration\ServiceBusBundle\Tests\App\Entity'
+    - 'Smartbox\Integration\CamelConfigBundle\Tests\App\Entity'
 
-smartbox_integration_service_bus:
+smartbox_integration_camel_config:
     flows_directories:
       - "%kernel.root_dir%/Resources/TestFlows"
 

@@ -1,14 +1,17 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\Tests\App\Entity;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 use Smartbox\CoreBundle\Type\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class EntityX
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Entity
+ */
 class EntityX extends Entity
 {
-
     public function __construct($x = 0)
     {
         $this->x = $x;

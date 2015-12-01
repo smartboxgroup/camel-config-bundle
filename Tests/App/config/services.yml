@@ -1,9 +1,9 @@
 services:
   connector.error.triggerer:
-    class: Smartbox\Integration\ServiceBusBundle\Tests\App\Connectors\ErrorTriggerConnector
+    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\ErrorTriggerConnector
 
   connector.helper:
-    class: Smartbox\Integration\ServiceBusBundle\Tests\App\Connectors\HelperConnector
+    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\HelperConnector
 
   connector.spy:
-    class: Smartbox\Integration\ServiceBusBundle\Tests\App\Connectors\SpyConnector
+    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\SpyConnector

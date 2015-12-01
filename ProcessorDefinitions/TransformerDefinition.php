@@ -1,13 +1,13 @@
 <?php
 
-namespace Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Class TransformerDefinition
- * @package Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions
+ * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
  */
 class TransformerDefinition extends ProcessorDefinition
 {

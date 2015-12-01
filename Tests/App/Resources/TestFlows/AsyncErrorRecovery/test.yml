@@ -1,6 +1,6 @@
 steps:
   - {type: handle, from: test://smartesb/queues/recoveryAsyncRecoverable, in: 1, out: 1}
-  - {type: consumeQueue, queue: test/servicebus/recoveryAsyncRecoverable, amount: 1 }
+  - {type: consumeQueue, queue: test/camelconfig/recoveryAsyncRecoverable, amount: 1 }
 
   # Check that the message was partially processed
   - { type: checkSpy, path: before_error/recoverable, values: [6]}
@@ -9,7 +9,7 @@ steps:
   - { type: checkSpy, path: after_error/recoverable, values: []}
 
   # Check that we can recover and that previous steps are not repeated
-  - {type: consumeQueue, queue: test/servicebus/recoveryAsyncRecoverable, amount: 1 }
+  - {type: consumeQueue, queue: test/camelconfig/recoveryAsyncRecoverable, amount: 1 }
 
   - { type: checkSpy, path: before_error/recoverable, values: [6]}
   - { type: checkSpy, path: after_error/recoverable, values: [11]}

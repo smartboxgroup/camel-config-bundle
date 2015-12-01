@@ -1,13 +1,17 @@
 <?php
-namespace Smartbox\Integration\ServiceBusBundle\Tests\ProcessorDefinitions;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
-use Smartbox\Integration\ServiceBusBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\FrameworkBundle\Exceptions\BadRequestException;
-use Smartbox\Integration\ServiceBusBundle\ProcessorDefinitions\ThrowExceptionDefinition;
-use Smartbox\Integration\ServiceBusBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition;
+use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class ThrowExceptionDefinitionTest
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ */
 class ThrowExceptionDefinitionTest extends BaseKernelTestCase
 {
 
@@ -57,6 +61,4 @@ class ThrowExceptionDefinitionTest extends BaseKernelTestCase
         $config = new \SimpleXMLElement('<throwException ref="exceptions.bad_request"/>');
         $this->processorDefinition->buildProcessor($config);
     }
-
-
 }
