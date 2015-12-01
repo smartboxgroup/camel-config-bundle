@@ -7,6 +7,7 @@ use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -73,10 +74,11 @@ class FlowsTest extends BaseKernelTestCase{
             throw new \Exception("Missing parameter in handle step");
         }
 
+        /** @var ExpressionEvaluator $evaluator */
         $evaluator = $this->getContainer()->get('smartesb.util.evaluator');
 
-        $in = $evaluator->evaluate($conf['in'],array());
-        $out = $evaluator->evaluate($conf['out'],array('in' => $in));
+        $in = $evaluator->evaluateWithVars($conf['in'],array());
+        $out = $evaluator->evaluateWithVars($conf['out'],array('in' => $in));
 
         $message = new Message(new EntityX($in));
         $message->setContext(new Context());
@@ -101,7 +103,7 @@ class FlowsTest extends BaseKernelTestCase{
 
         $expectedValues = [];
         foreach($conf['values'] as $value){
-            $expectedValues[] = $evaluator->evaluate($value,array());
+            $expectedValues[] = $evaluator->evaluateWithVars($value,array());
         }
 
         $values = $this->getContainer()->get('connector.spy')->getData($conf['path']);
