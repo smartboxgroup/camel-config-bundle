@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" && cd ${path}/../;
+
+echo 'Clearing all caches'
+
+rm Tests/App/cache/* -rf;
+
+sudo service activemq restart;
+sudo service php5-fpm restart;
