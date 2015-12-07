@@ -41,6 +41,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     protected $currentFile = null;
     protected $registeredNamesInFileCount = 1;
 
+    protected $incrementId = 0;
+
     static public function camelToSnake($input) {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
@@ -86,6 +88,11 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         }
 
         return array_unique($traits);
+    }
+
+    public function getNextIncrementalId(){
+        $this->incrementId++;
+        return $this->incrementId;
     }
 
     public function getParameter($name){
@@ -177,7 +184,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerService(Definition $definition, $prefix)
     {
-        $id = 'smartesb.'.$prefix.'.'.uniqid();
+        $id = 'smartesb.'.$prefix.'.'.$this->getNextIncrementalId();
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
 
@@ -201,7 +208,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $flowsDirs = $extension->getFlowsDirectories();
 
         $finder = new Finder();
-        $finder->files()->in($flowsDirs);
+        $finder->files()->in($flowsDirs)->sortByName();
+
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
             if($file->getExtension() == 'xml'){
@@ -238,8 +246,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     /** {@inheritdoc} */
     public function buildFlow($config, $name = null)
     {
-
-
         // Default naming
         if($name == null){
             $path = $this->currentFile->getRelativePathname();
@@ -354,7 +360,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function buildItinerary($name = null)
     {
         if(!$name){
-            $name = 'itinerary.'.uniqid();
+            $name = 'itinerary.'.$this->getNextIncrementalId();
         }
 
         $itineraryClass = $this->container->getParameter('smartesb.itinerary.class');
