@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb3c14f19f5c996bab437afdb00f688f",
-    "content-hash": "3e1a1986bae90c566e00dc6ed278d8d4",
+    "hash": "30b6391e89e6a3334dc3727761a55a64",
+    "content-hash": "309b8d2593cc632b877c473563d4e5a5",
     "packages": [
         {
             "name": "ass/xmlsecurity",
@@ -1344,7 +1344,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "8c42602fafca409a43013500608736829408f1e1"
+                "reference": "91b832d25cc2093b0e97ae984776ad349a3c428b"
             },
             "require": {
                 "besimple/soap": "^0.2.6",
@@ -1375,7 +1375,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2015-11-30 17:01:53"
+            "time": "2015-12-10 10:58:23"
         },
         {
             "name": "symfony/assetic-bundle",

@@ -61,7 +61,7 @@ class RouterDefinition extends ProcessorDefinition
                 case self::SIMPLE:
                     $expression = (string)$nodeValue;
                     try {
-                        $evaluator->compile($expression, $this->getAccessibleNames());
+                        $evaluator->compile($expression, $this->evaluator->getExchangeExposedVars());
                     } catch (\Exception $e) {
                         throw new InvalidConfigurationException(
                             "Given value ({$expression}) should be a valid expression: " . $e->getMessage(),
@@ -102,10 +102,5 @@ class RouterDefinition extends ProcessorDefinition
         }
 
         return $itinerary;
-    }
-
-    private function getAccessibleNames()
-    {
-        return ['msg'];
     }
 }
