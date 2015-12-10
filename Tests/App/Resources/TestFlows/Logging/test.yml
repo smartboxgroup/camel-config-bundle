@@ -1,0 +1,4 @@
+steps:
+  - {type: expectedException, class: "\Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception\TestException"}
+  - {type: handle, from: test://smartesb/logging/exception, in: 1}
+  - {type: checkLogs, message: "This is a test exception", level: "Error"}

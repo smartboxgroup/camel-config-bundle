@@ -2,11 +2,13 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 
+use Monolog\Logger;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
+use Symfony\Bridge\Monolog\Handler\DebugHandler;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -16,6 +18,9 @@ use Symfony\Component\Yaml\Parser;
  * @package Smartbox\Integration\CamelConfigBundle\Tests\Functional
  */
 class FlowsTest extends BaseKernelTestCase{
+
+    /** @var DebugHandler */
+    private $loggerHandler;
 
     public function flowsDataProvider(){
         $this->setUp();
@@ -47,6 +52,15 @@ class FlowsTest extends BaseKernelTestCase{
             throw new \Exception("Missing steps");
         }
 
+        /** @var Logger $logger */
+        $logger = $this->getContainer()->get('logger');
+        foreach ($logger->getHandlers() as $handler) {
+            if ($handler instanceof DebugHandler) {
+                $this->loggerHandler = $handler;
+                break;
+            }
+        }
+
         foreach($conf['steps'] as $step){
             $type = $step['type'];
             switch($type){
@@ -59,6 +73,12 @@ class FlowsTest extends BaseKernelTestCase{
                 case 'consumeQueue':
                     $this->consumeQueue($step);
                     break;
+                case 'expectedException':
+                    $this->expectedException($step);
+                    break;
+                case 'checkLogs':
+                    $this->checkLogs($step);
+                    break;
             }
         }
     }
@@ -69,14 +89,13 @@ class FlowsTest extends BaseKernelTestCase{
      * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
      */
     private function handle(array $conf){
-        if(!array_key_exists('in',$conf) || !array_key_exists('out',$conf) || !array_key_exists('from',$conf)){
+        if(!array_key_exists('in',$conf) || !array_key_exists('from',$conf)){
             throw new \Exception("Missing parameter in handle step");
         }
 
         $evaluator = $this->getContainer()->get('smartesb.util.evaluator');
 
         $in = $evaluator->evaluate($conf['in'],array());
-        $out = $evaluator->evaluate($conf['out'],array('in' => $in));
 
         $message = new Message(new EntityX($in));
         $message->setContext(new Context());
@@ -85,7 +104,10 @@ class FlowsTest extends BaseKernelTestCase{
         /** @var EntityX $result */
         $result = $handler->handle($message, $conf['from'])->getBody();
 
-        $this->assertEquals($out,$result->getX(), "Unexpected result when handling message from: ".$conf['from']);
+        if (isset($conf['out'])) {
+            $out = $evaluator->evaluate($conf['out'],array('in' => $in));
+            $this->assertEquals($out,$result->getX(), "Unexpected result when handling message from: ".$conf['from']);
+        }
     }
 
     /**
@@ -124,5 +146,27 @@ class FlowsTest extends BaseKernelTestCase{
         $consumer = $this->getContainer()->get(SmartboxIntegrationFrameworkExtension::CONSUMER_PREFIX.'queue.main');
         $consumer->setExpirationCount($conf['amount']);
         $consumer->consume($queue);
+    }
+
+    private function expectedException(array $conf)
+    {
+        if (!array_key_exists('class',$conf)) {
+            throw new \Exception("Missing parameter in expectedException step");
+        }
+
+        $this->setExpectedException($conf['class']);
+    }
+
+    private function checkLogs(array $conf)
+    {
+        if(!array_key_exists('level', $conf) || !array_key_exists('message', $conf)){
+            throw new \Exception("Missing parameter in checkLogs step");
+        }
+
+        $level = $conf['level'];
+        $message = $conf['message'];
+
+        $this->assertTrue($this->loggerHandler->hasRecordThatContains($message, $level));
+
     }
 }
