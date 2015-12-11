@@ -5,6 +5,7 @@ parameters:
     locale: en
     secret: "5yg6u543wrftg34"
     fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
+    logging_exception_test.class: \Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception\TestException
 
 framework:
     secret:          "%secret%"
@@ -13,6 +14,9 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
+    profiler:
+        enabled: true
+        collect: false
 
 sensio_framework_extra:
     request:
@@ -84,5 +88,3 @@ smartbox_integration_framework:
             type: queue
             driver: main
             handler: async
-
-
