@@ -2,6 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use JMS\Serializer\Annotation as JMS;
@@ -35,7 +36,7 @@ class RouterDefinition extends ProcessorDefinition
                     $def->addMethodCall('setDescription', (string)$nodeValue);
                     break;
                 case self::WHEN:
-                    $clauseParams = $this->buildWhenClauseParams($nodeValue);
+                    $clauseParams = $this->buildWhenClauseParams($nodeValue, $def);
                     $def->addMethodCall('addWhen', $clauseParams);
                     break;
                 case self::OTHERWISE:
@@ -50,7 +51,7 @@ class RouterDefinition extends ProcessorDefinition
         return $reference;
     }
 
-    protected function buildWhenClauseParams($whenConfig)
+    protected function buildWhenClauseParams($whenConfig, Definition $definition = null)
     {
         $expression = null;
         $itinerary = $this->builder->buildItinerary();
@@ -72,6 +73,8 @@ class RouterDefinition extends ProcessorDefinition
                     break;
 
                 case self::DESCRIPTION:
+                    $description = (string) $nodeValue;
+                    $definition->addMethodCall('setDescription', $description);
                     break;
 
                 default:
