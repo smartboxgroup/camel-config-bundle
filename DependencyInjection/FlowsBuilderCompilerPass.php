@@ -349,7 +349,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             return new Reference($id);
         }else{
             $endpointDef = $this->getBasicDefinition(Endpoint::class);
-            $endpointDef->addMethodCall('setURI',array($uri));
+            $endpointDef->addMethodCall('setURI', array($uri));
+            if (isset($config->description)) {
+                $endpointDef->addMethodCall('setDescription', array((string) $config->description));
+            };
             return $this->registerEndpoint($endpointDef, $id, $uri);
         }
     }
