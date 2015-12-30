@@ -19,7 +19,7 @@ class ThrowExceptionDefinition extends ProcessorDefinition{
      */
     public function buildProcessor($configNode)
     {
-        $def = $this->getBasicDefinition();
+        $def = parent::buildProcessor($configNode);
 
         // Description
         $description = (string)$configNode->{'ref'};

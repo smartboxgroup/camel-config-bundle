@@ -15,6 +15,8 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
 {
     const DESCRIPTION = "description";
     const ID = "id";
+    const ATTRIBUTE_RUNTIME_BREAKPOINT = "runtime-breakpoint";
+    const ATTRIBUTE_COMPILETIME_BREAKPOINT = "compiletime-breakpoint";
 
     /** @var  string */
     protected $processorClass;
@@ -51,12 +53,36 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function buildProcessor($configNode)
+    {
+        $definition = $this->getBasicDefinition();
+
+        if ($configNode instanceof \SimpleXMLElement) {
+            $attributes = $configNode->attributes();
+
+            // compile time debug breakpoint
+            if (isset($attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT])) {
+                if (function_exists('xdebug_break')) {
+                    xdebug_break();
+                }
+            }
+
+            // runtime debug breakpoint
+            if (isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT])) {
+                $definition->addMethodCall('setRuntimeBreakpoint', [true]);
+            }
+        }
+
+        return $definition;
+    }
+
+    /**
      * @return Definition
      */
-    public function getBasicDefinition()
+    private function getBasicDefinition()
     {
         return $this->builder->getBasicDefinition($this->getProcessorClass());
     }
-
-    public abstract function buildProcessor($configNode);
 }

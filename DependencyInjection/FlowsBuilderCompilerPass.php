@@ -336,7 +336,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         $uri = @$config["uri"]."";
         $id = @$config["id"]."";
-
+        $runtimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT]);
+        $compiletimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT]);
 
         if (!$id || empty($id)) {
             $id = EndpointHelper::getIdForURI($uri);
@@ -348,11 +349,18 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         if ($this->container->has($id)) {
             return new Reference($id);
         }else{
+            if ($compiletimeBreakpoint && function_exists('xdebug_break')) {
+                xdebug_break();
+            }
+
             $endpointDef = $this->getBasicDefinition(Endpoint::class);
             $endpointDef->addMethodCall('setURI', array($uri));
             if (isset($config->description)) {
                 $endpointDef->addMethodCall('setDescription', array((string) $config->description));
             };
+            if ($runtimeBreakpoint) {
+                $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
+            }
             return $this->registerEndpoint($endpointDef, $id, $uri);
         }
     }

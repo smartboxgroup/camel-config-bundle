@@ -22,7 +22,7 @@ interface ProcessorDefinitionInterface
     public function getProcessorClass();
 
     /**
-     * @param $configNode array
+     * @param $configNode
      * @return Reference
      */
     public function buildProcessor($configNode);
