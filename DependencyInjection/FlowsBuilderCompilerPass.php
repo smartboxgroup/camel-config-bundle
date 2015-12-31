@@ -397,7 +397,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function addToItinerary(Reference $itinerary, Reference $processor)
     {
         $itineraryDef = $this->container->getDefinition($itinerary);
-        $itineraryDef->addMethodCall('addProcessor', array($processor));
+        $itineraryDef->addMethodCall('addProcessor', [$processor]);
     }
 
     /**
