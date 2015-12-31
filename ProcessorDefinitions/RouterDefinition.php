@@ -74,7 +74,7 @@ class RouterDefinition extends ProcessorDefinition
 
                 case self::DESCRIPTION:
                     $description = (string) $nodeValue;
-                    $definition->addMethodCall('setDescription', $description);
+                    $definition->addMethodCall('setDescription', [$description]);
                     break;
 
                 default:
