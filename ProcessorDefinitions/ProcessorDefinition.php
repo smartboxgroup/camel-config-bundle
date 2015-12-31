@@ -24,6 +24,8 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     /** @var  FlowsBuilderInterface */
     protected $builder;
 
+    protected $debug = false;
+
     /**
      * @return FlowsBuilderInterface
      */
@@ -55,6 +57,14 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     /**
      * {@inheritDoc}
      */
+    public function setDebug($debug)
+    {
+        $this->debug = (bool) $debug;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function buildProcessor($configNode)
     {
         $definition = $this->getBasicDefinition();
@@ -65,7 +75,8 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
             // compile time debug breakpoint
             if (
                 isset($attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
-                $attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true
+                $attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true &&
+                $this->debug
             ) {
                 if (function_exists('xdebug_break')) {
                     xdebug_break();
@@ -75,7 +86,8 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
             // runtime debug breakpoint
             if (
                 isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
-                $attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT] == true
+                $attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
+                $this->debug
             ) {
                 $definition->addMethodCall('setRuntimeBreakpoint', [true]);
             }

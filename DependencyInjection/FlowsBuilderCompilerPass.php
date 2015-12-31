@@ -309,6 +309,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function buildProcessor($name, $config)
     {
         $definitionService = $this->getDefinitionService($name);
+        $definitionService->setDebug($this->container->getParameter('kernel.debug'));
 
         return $definitionService->buildProcessor($config);
     }
@@ -336,10 +337,16 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         $uri = @$config["uri"]."";
         $id = @$config["id"]."";
+
         $runtimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
-                             $config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT] == true;
+                             $config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
+                             $this->container->getParameter('kernel.debug')
+        ;
+
         $compiletimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
-                                 $config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true;
+                                 $config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true &&
+                                 $this->container->getParameter('kernel.debug')
+        ;
 
         if (!$id || empty($id)) {
             $id = EndpointHelper::getIdForURI($uri);

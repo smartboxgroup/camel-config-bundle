@@ -26,4 +26,9 @@ interface ProcessorDefinitionInterface
      * @return Reference
      */
     public function buildProcessor($configNode);
+
+    /**
+     * @param bool $debug
+     */
+    public function setDebug($debug);
 }
