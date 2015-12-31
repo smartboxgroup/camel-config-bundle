@@ -63,14 +63,20 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
             $attributes = $configNode->attributes();
 
             // compile time debug breakpoint
-            if (isset($attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT])) {
+            if (
+                isset($attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
+                $attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true
+            ) {
                 if (function_exists('xdebug_break')) {
                     xdebug_break();
                 }
             }
 
             // runtime debug breakpoint
-            if (isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT])) {
+            if (
+                isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
+                $attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT] == true
+            ) {
                 $definition->addMethodCall('setRuntimeBreakpoint', [true]);
             }
         }

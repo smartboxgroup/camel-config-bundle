@@ -336,8 +336,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         $uri = @$config["uri"]."";
         $id = @$config["id"]."";
-        $runtimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT]);
-        $compiletimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT]);
+        $runtimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
+                             $config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT] == true;
+        $compiletimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
+                                 $config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true;
 
         if (!$id || empty($id)) {
             $id = EndpointHelper::getIdForURI($uri);
