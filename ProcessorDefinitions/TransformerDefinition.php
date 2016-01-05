@@ -20,8 +20,9 @@ class TransformerDefinition extends ProcessorDefinition
      */
     public function buildProcessor($configNode)
     {
+        $def = parent::buildProcessor($configNode);
+
         $evaluator = $this->getEvaluator();
-        $def = $this->getBasicDefinition();
 
         foreach ($configNode as $nodeName => $nodeValue) {
             switch ($nodeName) {

@@ -26,7 +26,7 @@ class RouterDefinition extends ProcessorDefinition
      */
     public function buildProcessor($configNode)
     {
-        $def = $this->getBasicDefinition();
+        $def = parent::buildProcessor($configNode);
 
         // TODO: FETCH ID
         foreach ($configNode as $nodeName => $nodeValue) {

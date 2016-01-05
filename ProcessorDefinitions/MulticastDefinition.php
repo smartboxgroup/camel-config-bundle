@@ -22,10 +22,9 @@ class MulticastDefinition extends ProcessorDefinition
      */
     public function buildProcessor($configNode)
     {
-        $def = $this->getBasicDefinition();
+        $def = parent::buildProcessor($configNode);
 
         $strategy = @$configNode["strategyRef"]."";
-
 
         $this->validateStrategy($strategy);
         $def->addMethodCall('setAggregationStrategy', [$strategy]);

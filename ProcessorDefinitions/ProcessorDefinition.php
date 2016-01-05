@@ -15,12 +15,16 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
 {
     const DESCRIPTION = "description";
     const ID = "id";
+    const ATTRIBUTE_RUNTIME_BREAKPOINT = "runtime-breakpoint";
+    const ATTRIBUTE_COMPILETIME_BREAKPOINT = "compiletime-breakpoint";
 
     /** @var  string */
     protected $processorClass;
 
     /** @var  FlowsBuilderInterface */
     protected $builder;
+
+    protected $debug = false;
 
     /**
      * @return FlowsBuilderInterface
@@ -51,12 +55,68 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = (bool) $debug;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function buildProcessor($configNode)
+    {
+        $definition = $this->getBasicDefinition();
+
+        if ($configNode instanceof \SimpleXMLElement) {
+            $attributes = $configNode->attributes();
+
+            // runtime debug breakpoint
+            if (
+                isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
+                $attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
+                $this->debug
+            ) {
+                $definition->addMethodCall('setRuntimeBreakpoint', [true]);
+            }
+
+            // compile time debug breakpoint
+            if (
+                isset($attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
+                $attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true &&
+                $this->debug
+            ) {
+                if (function_exists('xdebug_break')) {
+                    xdebug_break();
+                }
+            }
+        }
+
+        /**
+         *
+         * DEBUGGING HINTS
+         *
+         * In case you are adding a compile time breakpoint in a flow xml xdebug will stop here.
+         *
+         * When you step out from this function you will get into the function you want to debug.
+         *
+         * The definition of the processor you are debugging is extending this method.
+         *
+         * To debug in that way you can add this to your xml flow file, as part of the processor you want to debug:
+         *
+         *      <... compiletime-breakpoint="1"/>
+         *
+         */
+
+        return $definition;
+    }
+
+    /**
      * @return Definition
      */
-    public function getBasicDefinition()
+    protected function getBasicDefinition()
     {
         return $this->builder->getBasicDefinition($this->getProcessorClass());
     }
-
-    public abstract function buildProcessor($configNode);
 }
