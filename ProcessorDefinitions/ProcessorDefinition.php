@@ -72,6 +72,15 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
         if ($configNode instanceof \SimpleXMLElement) {
             $attributes = $configNode->attributes();
 
+            // runtime debug breakpoint
+            if (
+                isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
+                $attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
+                $this->debug
+            ) {
+                $definition->addMethodCall('setRuntimeBreakpoint', [true]);
+            }
+
             // compile time debug breakpoint
             if (
                 isset($attributes[self::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
@@ -82,16 +91,23 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
                     xdebug_break();
                 }
             }
-
-            // runtime debug breakpoint
-            if (
-                isset($attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
-                $attributes[self::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
-                $this->debug
-            ) {
-                $definition->addMethodCall('setRuntimeBreakpoint', [true]);
-            }
         }
+
+        /**
+         *
+         * DEBUGGING HINTS
+         *
+         * In case you are adding a compile time breakpoint in a flow xml xdebug will stop here.
+         *
+         * When you step out from this function you will get into the function you want to debug.
+         *
+         * The definition of the processor you are debugging is extending this method.
+         *
+         * To debug in that way you can add this to your xml flow file, as part of the processor you want to debug:
+         *
+         *      <... compiletime-breakpoint="1"/>
+         *
+         */
 
         return $definition;
     }
@@ -99,7 +115,7 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     /**
      * @return Definition
      */
-    private function getBasicDefinition()
+    protected function getBasicDefinition()
     {
         return $this->builder->getBasicDefinition($this->getProcessorClass());
     }
