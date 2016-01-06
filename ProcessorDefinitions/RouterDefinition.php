@@ -36,7 +36,7 @@ class RouterDefinition extends ProcessorDefinition
                     $def->addMethodCall('setDescription', (string)$nodeValue);
                     break;
                 case self::WHEN:
-                    $clauseParams = $this->buildWhenClauseParams($nodeValue, $def);
+                    $clauseParams = $this->buildWhenClauseParams($nodeValue);
                     $def->addMethodCall('addWhen', $clauseParams);
                     break;
                 case self::OTHERWISE:
@@ -51,7 +51,7 @@ class RouterDefinition extends ProcessorDefinition
         return $reference;
     }
 
-    protected function buildWhenClauseParams($whenConfig, Definition $definition = null)
+    protected function buildWhenClauseParams($whenConfig)
     {
         $expression = null;
         $itinerary = $this->builder->buildItinerary();
@@ -73,8 +73,6 @@ class RouterDefinition extends ProcessorDefinition
                     break;
 
                 case self::DESCRIPTION:
-                    $description = (string) $nodeValue;
-                    $definition->addMethodCall('setDescription', [$description]);
                     break;
 
                 default:
