@@ -34,6 +34,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->scalarNode('frozen_flows_directory')->isRequired()
+                ->end()
             ->end()
         ->end();
 
