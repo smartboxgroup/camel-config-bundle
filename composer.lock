@@ -1396,7 +1396,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "e1a2403927b60f776969057625a2349631d3c2d5"
+                "reference": "ae41f95b1d14345dcae34e6a3c50a9b2836af7c1"
             },
             "require": {
                 "besimple/soap": "^0.2.6",
@@ -1427,7 +1427,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-01-12 09:38:16"
+            "time": "2016-01-12 10:14:49"
         },
         {
             "name": "snc/redis-bundle",
