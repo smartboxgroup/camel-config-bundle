@@ -1361,7 +1361,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "7e96d490f7aec35744d666560ceb9ec687a516fd"
+                "reference": "55c69fe3be5e7c00ee040714529a0990993586f1"
             },
             "require": {
                 "doctrine/annotations": "1.2.*",
@@ -1388,7 +1388,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-01-12 09:22:50"
+            "time": "2016-01-13 16:00:38"
         },
         {
             "name": "smartbox/integration/framework-bundle",
@@ -1396,7 +1396,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "ae41f95b1d14345dcae34e6a3c50a9b2836af7c1"
+                "reference": "38c627e445894559bf92d4e9bc25360b38c8ea3b"
             },
             "require": {
                 "besimple/soap": "^0.2.6",
@@ -1427,7 +1427,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-01-12 10:14:49"
+            "time": "2016-01-13 16:12:14"
         },
         {
             "name": "snc/redis-bundle",
