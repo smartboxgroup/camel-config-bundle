@@ -4,6 +4,8 @@ services:
 
   connector.helper:
     class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\HelperConnector
+    calls:
+      - [setMessageFactory, [@smartesb.message_factory]]
 
   connector.spy:
     class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\SpyConnector

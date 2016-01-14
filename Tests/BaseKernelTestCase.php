@@ -3,6 +3,7 @@
 namespace Smartbox\Integration\CamelConfigBundle\Tests;
 
 use Smartbox\Integration\CamelConfigBundle\Tests\App\AppKernel;
+use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -21,5 +22,15 @@ class BaseKernelTestCase extends KernelTestCase
 
     public function getContainer(){
         return self::$kernel->getContainer();
+    }
+
+    /**
+     * @param null $body
+     * @param array $headers
+     * @param Context $context
+     * @return \Smartbox\Integration\FrameworkBundle\Messages\Message
+     */
+    protected function createMessage($body = null, $headers = array(), Context $context = null){
+        return $this->getContainer()->get('smartesb.message_factory')->createMessage($body,$headers,$context);
     }
 }

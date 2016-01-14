@@ -8,12 +8,15 @@ use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use Smartbox\Integration\FrameworkBundle\Traits\MessageFactoryAware;
 
 /**
  * Class HelperConnector
  * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors
  */
 class HelperConnector extends Connector implements ConnectorInterface {
+
+    use MessageFactoryAware;
 
     const OPTION_OPERATION = 'operation';
     const OPTION_OPERAND = 'operand';
@@ -39,10 +42,12 @@ class HelperConnector extends Connector implements ConnectorInterface {
 
         switch(@$options[self::OPTION_OPERATION]){
             case self::OPERATION_MULTIPLY:
-                $ex->setOut(new Message(new EntityX($x->getX() * $operand)));
+                $message = $this->messageFactory->createMessage(new EntityX($x->getX() * $operand));
+                $ex->setOut($message);
                 break;
             case self::OPERATION_ADD:
-                $ex->setOut(new Message(new EntityX($x->getX() + $operand)));
+                $message = $this->messageFactory->createMessage(new EntityX($x->getX() + $operand));
+                $ex->setOut($message);
                 break;
         }
     }
