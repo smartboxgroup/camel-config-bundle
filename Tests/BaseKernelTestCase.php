@@ -2,6 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests;
 
+use Smartbox\CoreBundle\Type\Integer;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\AppKernel;
 use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

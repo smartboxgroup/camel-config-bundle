@@ -16,8 +16,6 @@ use Smartbox\Integration\FrameworkBundle\Traits\MessageFactoryAware;
  */
 class HelperConnector extends Connector implements ConnectorInterface {
 
-    use MessageFactoryAware;
-
     const OPTION_OPERATION = 'operation';
     const OPTION_OPERAND = 'operand';
 
