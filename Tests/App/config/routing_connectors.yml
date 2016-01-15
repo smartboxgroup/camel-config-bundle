@@ -6,7 +6,7 @@ queues.stomp:
   pattern: "stomp://{host}/{queue}"
   defaults:
     _connector: @smartesb.connectors.queue
-    queue_driver: @smartesb.drivers.main
+    queue_driver: @smartesb.drivers.queue.main
     prefix: "test/camelconfig/"
     persistent: false     # For the tests we don't really want to persist our messages
 
@@ -17,7 +17,7 @@ queues.generic:
   pattern: "queue://{host}/{queue}"
   defaults:
     _connector: @smartesb.connectors.queue
-    queue_driver: @smartesb.drivers.main
+    queue_driver: @smartesb.drivers.queue.main
     prefix: "test/camelconfig/"
     persistent: false    # For the tests we don't really want to persist our messages
 
