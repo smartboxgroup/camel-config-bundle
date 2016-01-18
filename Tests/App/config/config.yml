@@ -44,6 +44,8 @@ smartbox_core:
 smartbox_integration_camel_config:
     flows_directories:
       - "%kernel.root_dir%/Resources/TestFlows"
+    frozen_flows_directory: "%kernel.root_dir%/Resources/FrozenFlows"
+
 
 smartbox_integration_framework:
     queue_drivers:
@@ -88,3 +90,5 @@ smartbox_integration_framework:
             type: queue
             driver: main
             handler: async
+            handler: async
+    flows_version: 0
