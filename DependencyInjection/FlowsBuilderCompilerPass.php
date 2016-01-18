@@ -362,6 +362,25 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 xdebug_break();
             }
 
+            /**
+             *
+             * DEBUGGING HINTS
+             *
+             * In case you are adding a compile time breakpoint in a flow xml xdebug will stop here.
+             *
+             * The definition of the endpoint you are debugging is extending this method.
+             *
+             * By continuing executing from here you will have chance to debug the way the endpoint service is built
+             * in the container.
+             *
+             * If you are reading this by chance and wondering how  you can add a compile time breakpoint to endpoint you
+             * need to add this to your xml flow file, as part of the processor you want to debug:
+             *
+             *      <... compiletime-breakpoint="1"/>
+             *
+             * Then you need to execute the compilation in debug mode with xdebug enabled
+             */
+
             $endpointDef = $this->getBasicDefinition(Endpoint::class);
             $endpointDef->addMethodCall('setURI', array($uri));
             if (isset($config->description)) {
