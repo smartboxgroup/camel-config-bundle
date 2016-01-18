@@ -21,7 +21,6 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Smartbox\Integration\FrameworkBundle\SmartboxIntegrationFrameworkBundle(),
             new \Smartbox\Integration\CamelConfigBundle\SmartboxIntegrationCamelConfigBundle(),
-            new \Snc\RedisBundle\SncRedisBundle(),
         );
     }
 

@@ -90,16 +90,5 @@ smartbox_integration_framework:
             type: queue
             driver: main
             handler: async
-
+            handler: async
     flows_version: 0
-
-snc_redis:
-    clients:
-        cache:
-            type: predis
-            alias: cache
-            dsn: redis://localhost
-            options:
-                profile: 2.2
-                connection_timeout: 10
-                read_write_timeout: 30
