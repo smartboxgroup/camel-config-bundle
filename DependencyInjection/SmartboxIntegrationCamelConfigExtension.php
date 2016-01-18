@@ -29,6 +29,11 @@ class SmartboxIntegrationCamelConfigExtension extends Extension
         return $this->config['flows_directories'];
     }
 
+    public function getFrozenFlowsDirectory()
+    {
+        return $this->config['frozen_flows_directory'];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -37,7 +42,8 @@ class SmartboxIntegrationCamelConfigExtension extends Extension
         $configuration = new Configuration();
         $this->config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('smartesb.flows_directories', $this->config['flows_directories']);
+        $container->setParameter('smartesb.flows_directories', $this->getFlowsDirectories());
+        $container->setParameter('smartesb.frozen_flows_directory', $this->getFrozenFlowsDirectory());
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
