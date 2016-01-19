@@ -2,7 +2,6 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Processors\Routing\Pipeline;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\PipelineDefinition;
 use Symfony\Component\DependencyInjection\Definition;
@@ -45,7 +44,6 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
             ->method('registerService')
             ->willReturnCallback(
                 function (Definition $definition, $processorType) {
-
                     $METHOD = 0;
                     $ARGS = 1;
 
@@ -60,9 +58,7 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
 
                     // expected 1 itinerary setter calls inside the definition
                     $this->assertCount(1, $calls);
-//                    for ($i=0; $i < 4; $i++) {
-                        $this->assertEquals('addItinerary', $calls[0][$METHOD]);
-//                    }
+                    $this->assertEquals('setItinerary', $calls[0][$METHOD]);
 
                     return new Reference("1");
                 }

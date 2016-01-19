@@ -33,7 +33,7 @@ class PipelineDefinition extends ProcessorDefinition
                     break;
             }
         }
-        $def->addMethodCall('setItinerary', $itinerary);
+        $def->addMethodCall('setItinerary', [$itinerary]);
 
         $reference = $this->builder->registerService($def, self::PIPELINE);
 
