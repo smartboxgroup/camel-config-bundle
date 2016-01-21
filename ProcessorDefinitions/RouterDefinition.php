@@ -2,8 +2,6 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use JMS\Serializer\Annotation as JMS;
 use Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator;
@@ -21,14 +19,12 @@ class RouterDefinition extends ProcessorDefinition
     const SIMPLE = "simple";
 
     /**
-     * @param $configNode array
-     * @return Reference
+     * {@inheritdoc}
      */
-    public function buildProcessor($configNode)
+    public function buildProcessor($configNode, $id)
     {
-        $def = parent::buildProcessor($configNode);
+        $def = parent::buildProcessor($configNode, $id);
 
-        // TODO: FETCH ID
         foreach ($configNode as $nodeName => $nodeValue) {
 
             switch ($nodeName) {
@@ -36,25 +32,24 @@ class RouterDefinition extends ProcessorDefinition
                     $def->addMethodCall('setDescription', (string)$nodeValue);
                     break;
                 case self::WHEN:
-                    $clauseParams = $this->buildWhenClauseParams($nodeValue);
+                    $clauseParams = $this->buildWhenClauseParams($nodeValue, $id);
                     $def->addMethodCall('addWhen', $clauseParams);
                     break;
                 case self::OTHERWISE:
-                    $itinerary = $this->buildOtherwiseItineraryRef($nodeValue);
+                    $itinerary = $this->buildOtherwiseItineraryRef($nodeValue, $id);
                     $def->addMethodCall('setOtherwise', array($itinerary));
                     break;
             }
         }
 
-        $reference = $this->builder->registerService($def, 'router');
-
-        return $reference;
+        return $def;
     }
 
-    protected function buildWhenClauseParams($whenConfig)
+    protected function buildWhenClauseParams($whenConfig,$id)
     {
         $expression = null;
-        $itinerary = $this->builder->buildItinerary();
+        $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
+        $itinerary = $this->builder->buildItinerary($itineraryName);
         $evaluator = $this->getEvaluator();
 
         foreach ($whenConfig as $nodeName => $nodeValue) {
@@ -88,9 +83,10 @@ class RouterDefinition extends ProcessorDefinition
         return array($expression, $itinerary);
     }
 
-    protected function buildOtherwiseItineraryRef($config)
+    protected function buildOtherwiseItineraryRef($config, $id)
     {
-        $itinerary = $this->builder->buildItinerary();
+        $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
+        $itinerary = $this->builder->buildItinerary($itineraryName);
 
         foreach ($config as $nodeName => $nodeValue) {
             switch ($nodeName) {

@@ -3,7 +3,7 @@
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInterface;
-use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * Class ProcessorDefinition
@@ -23,9 +23,10 @@ interface ProcessorDefinitionInterface
 
     /**
      * @param $configNode
-     * @return Reference
+     * @param string $id
+     * @return Definition
      */
-    public function buildProcessor($configNode);
+    public function buildProcessor($configNode, $id);
 
     /**
      * @param bool $debug

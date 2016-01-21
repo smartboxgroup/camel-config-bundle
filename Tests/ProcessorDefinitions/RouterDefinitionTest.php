@@ -60,7 +60,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
             );
 
         $config = new \SimpleXMLElement("<choice><when><description>when description</description><simple>msg.getBody().get('id') == 666</simple></when><otherwise><description>otherwise description</description></otherwise></choice>");
-        $this->processorDefinition->buildProcessor($config);
+        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
     }
 
     /**
@@ -71,7 +71,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
         $this->setExpectedException('Exception', 'Expression missing in when clause');
 
         $config = new \SimpleXMLElement("<choice><when></when></choice>");
-        $this->processorDefinition->buildProcessor($config);
+        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
     }
 
 }

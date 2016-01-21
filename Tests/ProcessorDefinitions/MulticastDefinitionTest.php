@@ -83,7 +83,7 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
                 </pipeline>
                 <to uri="direct://test/e"/>
             </multicast>');
-        $this->processorDefinition->buildProcessor($config);
+        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
     }
 
     public function testInvalidAggregationStrategy()
@@ -91,6 +91,6 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(\Exception::class);
 
         $config = new \SimpleXMLElement('<multicast strategyRef="invalidStrategy"></multicast>');
-        $this->processorDefinition->buildProcessor($config);
+        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
     }
 }

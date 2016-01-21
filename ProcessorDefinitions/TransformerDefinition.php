@@ -18,9 +18,9 @@ class TransformerDefinition extends ProcessorDefinition
     /**
      * {@inheritdoc}
      */
-    public function buildProcessor($configNode)
+    public function buildProcessor($configNode, $id)
     {
-        $def = parent::buildProcessor($configNode);
+        $def = parent::buildProcessor($configNode, $id);
 
         $evaluator = $this->getEvaluator();
 
@@ -52,9 +52,7 @@ class TransformerDefinition extends ProcessorDefinition
             throw new InvalidConfigurationException("Transformer should have expression in its definition.");
         }
 
-        $reference = $this->builder->registerService($def, 'transformer');
-
-        return $reference;
+        return $def;
     }
 
 }

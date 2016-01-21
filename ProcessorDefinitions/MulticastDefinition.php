@@ -3,7 +3,6 @@
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast;
-use Symfony\Component\DependencyInjection\Reference;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -16,19 +15,16 @@ class MulticastDefinition extends ProcessorDefinition
     const TO= 'to';
 
     /**
-     * @param $configNode array
-     * @return Reference
-     * @throws \Exception
+     * {@inheritdoc}
      */
-    public function buildProcessor($configNode)
+    public function buildProcessor($configNode, $id)
     {
-        $def = parent::buildProcessor($configNode);
+        $def = parent::buildProcessor($configNode, $id);
 
         $strategy = @$configNode["strategyRef"]."";
 
         $this->validateStrategy($strategy);
         $def->addMethodCall('setAggregationStrategy', [$strategy]);
-
 
         foreach ($configNode as $nodeName => $nodeValue) {
 
@@ -37,16 +33,15 @@ class MulticastDefinition extends ProcessorDefinition
                     $def->addMethodCall('setDescription', [(string)$nodeValue]);
                     break;
                 default:
-                    $itinerary = $this->builder->buildItinerary();
+                    $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
+                    $itinerary = $this->builder->buildItinerary($itineraryName);
                     $this->builder->addNodeToItinerary($itinerary,$nodeName,$nodeValue);
                     $def->addMethodCall('addItinerary', [$itinerary]);
                     break;
             }
         }
 
-        $reference = $this->builder->registerService($def, 'multicast');
-
-        return $reference;
+        return $def;
     }
 
     protected function validateStrategy($strategy) {

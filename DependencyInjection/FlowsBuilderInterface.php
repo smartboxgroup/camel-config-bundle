@@ -21,13 +21,14 @@ interface FlowsBuilderInterface
 
     /**
      * @param \Traversable $config
-     * @param string $name
+     * @param string $flowName
      */
-    public function buildFlow($config, $name = null);
+    public function buildFlow($config, $flowName = null);
 
     /**
      * @param Definition|Reference $itinerary
-     * @param $configNode
+     * @param $nodeName
+     * @param $nodeConfig
      */
     public function addNodeToItinerary(Reference $itinerary, $nodeName, $nodeConfig);
 
@@ -44,16 +45,20 @@ interface FlowsBuilderInterface
     public function buildEndpoint($config);
 
     /**
+     * Important: The name of the itinerary must be reproducible on every compiler pass and unique in the container.
+     * It is recommended to use some id of the context where is used to build it.
+     *
+     * @param $name string Must be unique and must be reproducible on every compiler pass when the flows don't change
      * @return Reference
      */
-    public function buildItinerary();
+    public function buildItinerary($name);
 
     /**
      * @param Definition $definition
-     * @param string $prefix
+     * @param string $name
      * @return Reference
      */
-    public function registerService(Definition $definition, $prefix);
+    public function registerItinerary(Definition $definition, $name);
 
     /**
      * @return Definition
@@ -65,4 +70,10 @@ interface FlowsBuilderInterface
      * @return string
      */
     public function getParameter($name);
+
+    /**
+     * @param $contextId
+     * @return string
+     */
+    public function generateNextUniqueReproducibleIdForContext($contextId);
 }

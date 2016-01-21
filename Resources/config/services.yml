@@ -1,14 +1,20 @@
 parameters:
+  smartesb.registry.processor_definitions.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry\ProcessorDefinitionsRegistry
+
   smartesb.definitions.router.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition
   smartesb.definitions.multicast.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\MulticastDefinition
   smartesb.definitions.transformer.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TransformerDefinition
   smartesb.definitions.throw_exception.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition
+  smartesb.definitions.stop.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\StopDefinition
 
 services:
+  smartesb.registry.processor_definitions:
+      class: %smartesb.registry.processor_definitions.class%
+
   smartesb.definitions.router:
       class: %smartesb.definitions.router.class%
       tags:
-        - { name: smartesb.definitions.choice }
+        - { name: smartesb.definitions, nodeName: choice }
       calls:
         - [setEvaluator, [@smartesb.util.evaluator]]
         - [setProcessorClass, [%smartesb.processor.router.class%]]
@@ -16,14 +22,14 @@ services:
   smartesb.definitions.multicast:
         class: %smartesb.definitions.multicast.class%
         tags:
-          - { name: smartesb.definitions.multicast }
+          - { name: smartesb.definitions, nodeName: multicast }
         calls:
           - [setProcessorClass, [%smartesb.processor.multicast.class%]]
 
   smartesb.definitions.transformer:
       class: %smartesb.definitions.transformer.class%
       tags:
-        - { name: smartesb.definitions.transform }
+        - { name: smartesb.definitions, nodeName: transform }
       calls:
         - [setEvaluator, [@smartesb.util.evaluator]]
         - [setProcessorClass, [%smartesb.processor.transformer.class%]]
@@ -31,6 +37,13 @@ services:
   smartesb.definitions.throw_exception:
       class: %smartesb.definitions.throw_exception.class%
       tags:
-        - { name: smartesb.definitions.throwException }
+        - { name: smartesb.definitions, nodeName: throwException }
       calls:
         - [setProcessorClass, [%smartesb.processor.throw_exception.class%]]
+
+  smartesb.definitions.stop:
+      class: %smartesb.definitions.stop.class%
+      tags:
+        - { name: smartesb.definitions, nodeName: stop }
+      calls:
+        - [setProcessorClass, [%smartesb.processor.stop.class%]]
