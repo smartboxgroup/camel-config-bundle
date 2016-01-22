@@ -8,6 +8,7 @@ use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
 use Smartbox\Integration\FrameworkBundle\Helper\EndpointHelper;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
+use Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -27,7 +28,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITION = "smartesb.definitions.";
-    const PIPELINE = 'pipeline';
 
     /** @var  ContainerBuilder */
     protected $container;
@@ -135,6 +135,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 case 'Smartbox\Integration\FrameworkBundle\Traits\UsesConnectorsRouter':
                     $definition->addMethodCall('setConnectorsRouter', array(new Reference('smartesb.router.connectors')));
                     break;
+
+                case 'Smartbox\Integration\FrameworkBundle\Traits\MessageFactoryAware':
+                    $definition->addMethodCall('setMessageFactory', [new Reference('smartesb.message_factory')]);
+                    break;
             }
         }
 
@@ -193,10 +197,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
 
     /**
-     * You can modify the container here before it is dumped to PHP code.
-     *
      * @param ContainerBuilder $container
-     *
      * @api
      */
     public function process(ContainerBuilder $container)
@@ -205,10 +206,34 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $this->endpointsRegistry = $this->container->getDefinition('smartesb.registry.endpoints');
         /** @var SmartboxIntegrationCamelConfigExtension $extension */
         $extension = $container->getExtension('smartbox_integration_camel_config');
-        $flowsDirs = $extension->getFlowsDirectories();
 
+        /** @var FrameworkExtension $frameworkExtension */
+        $frameworkExtension = $container->getExtension('smartbox_integration_framework');
+
+        $flowsDirs = $extension->getFlowsDirectories();
+        $frozenFlowsDir = $extension->getFrozenFlowsDirectory();
+        $version = $frameworkExtension->getFlowsVersion();
+
+        if(file_exists($frozenFlowsDir.'/'.$version)){
+            $finder = new Finder();
+            $dirs = $finder->directories()->in($frozenFlowsDir.'/'.$version)->depth(0);
+            $paths = [];
+
+            /** @var SplFileInfo $dir */
+            foreach($dirs as $dir){
+                $paths[] = $dir->getRealPath();
+            }
+
+            $this->loadFlowsFromPaths($paths);
+        }else{
+            $this->loadFlowsFromPaths($flowsDirs);
+        }
+
+    }
+
+    protected function loadFlowsFromPaths($path){
         $finder = new Finder();
-        $finder->files()->in($flowsDirs)->sortByName();
+        $finder->files()->in($path)->sortByName();
 
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
@@ -433,46 +458,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 $ref = $this->buildEndpoint($nodeConfig);
                 $this->addToItinerary($itinerary, $ref);
                 break;
-            case self::PIPELINE:
-                foreach ($nodeConfig as $subNodeName => $subNodeValue) {
-                    $this->addNodeToItinerary($itinerary, $subNodeName, $subNodeValue);
-                }
-                break;
             default:
                 $ref = $this->buildProcessor($nodeName, $nodeConfig);
                 $this->addToItinerary($itinerary, $ref);
                 break;
         }
     }
-
-//    /**
-//     * TODO: CHECK WHERE DOES THIS GOES
-//     * Validates the option for a specific endpoint
-//     *
-//     * @param $uri
-//     * @param $serviceId
-//     */
-//    private function validateEndpointOptions($uri, $serviceId)
-//    {
-//        $query = parse_url($uri, PHP_URL_QUERY);
-//        if ($query) {
-//            $options = array();
-//            parse_str($query, $options);
-//
-//
-//            $className = $this->container->findDefinition($serviceId)->getClass();
-//            $candidateClassNameParam = str_replace('%', '', $className);
-//            if (!class_exists($className) && $this->container->hasParameter($candidateClassNameParam)) {
-//
-//                $className = $this->container->getParameter($candidateClassNameParam);
-//
-//                if (!class_exists($className)) {
-//                    throw new InvalidConfigurationException(
-//                        sprintf('Class "%s" is missing in service "%s"', $className, $serviceId)
-//                    );
-//                }
-//            }
-//            call_user_func([$className, 'validateOptions'], $options);
-//        }
-//    }
 }
