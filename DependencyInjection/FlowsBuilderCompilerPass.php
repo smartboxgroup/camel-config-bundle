@@ -28,7 +28,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITION = "smartesb.definitions.";
-    const PIPELINE = 'pipeline';
 
     /** @var  ContainerBuilder */
     protected $container;
@@ -439,11 +438,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             case self::TO:
                 $ref = $this->buildEndpoint($nodeConfig);
                 $this->addToItinerary($itinerary, $ref);
-                break;
-            case self::PIPELINE:
-                foreach ($nodeConfig as $subNodeName => $subNodeValue) {
-                    $this->addNodeToItinerary($itinerary, $subNodeName, $subNodeValue);
-                }
                 break;
             default:
                 $ref = $this->buildProcessor($nodeName, $nodeConfig);
