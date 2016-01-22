@@ -27,12 +27,13 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'addToItinerary'))
+            ->setMethods(array('getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'buildProcessor', 'addToItinerary'))
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
         $this->flowsBuilderCompilerPassMock->method('buildItinerary')->willReturn(new Reference(1));
         $this->flowsBuilderCompilerPassMock->method('buildEndpoint')->willReturn(new Reference(2));
+        $this->flowsBuilderCompilerPassMock->method('buildProcessor')->willReturn(new Reference(3));
 
         $this->processorDefinition = new MulticastDefinition();
         $this->processorDefinition->setBuilder($this->flowsBuilderCompilerPassMock);
@@ -74,7 +75,6 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
                 [
                     new Reference(1),
                 ],
-
             ];
         }
 

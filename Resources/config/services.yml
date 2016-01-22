@@ -3,6 +3,7 @@ parameters:
 
   smartesb.definitions.router.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition
   smartesb.definitions.multicast.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\MulticastDefinition
+  smartesb.definitions.pipeline.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\PipelineDefinition
   smartesb.definitions.transformer.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TransformerDefinition
   smartesb.definitions.throw_exception.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition
   smartesb.definitions.stop.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\StopDefinition
@@ -25,6 +26,13 @@ services:
           - { name: smartesb.definitions, nodeName: multicast }
         calls:
           - [setProcessorClass, [%smartesb.processor.multicast.class%]]
+
+  smartesb.definitions.pipeline:
+      class: %smartesb.definitions.pipeline.class%
+      tags:
+        - { name: smartesb.definitions, nodeName: pipeline }
+      calls:
+        - [setProcessorClass, [%smartesb.processor.pipeline.class%]]
 
   smartesb.definitions.transformer:
       class: %smartesb.definitions.transformer.class%
