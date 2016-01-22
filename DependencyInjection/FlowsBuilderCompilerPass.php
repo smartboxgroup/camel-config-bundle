@@ -197,6 +197,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
+        $definition->setArguments(array($name));
 
         return new Reference($id);
     }
@@ -320,7 +321,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $this->registeredNames[] = $flowName;
 
         // Build stuff..
-        $itinerary = $this->buildItinerary($flowName);
+        $itineraryRef = $this->buildItinerary($flowName);
         $from = null;
         $itineraryNodes = 0;
 
@@ -328,7 +329,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             if ($key == self::FROM) {
                 $from = (string)@$value["uri"];
             } else {
-                $this->addNodeToItinerary($itinerary, $key, $value);
+                $this->addNodeToItinerary($itineraryRef, $key, $value);
                 $itineraryNodes++;
             }
         }
@@ -354,7 +355,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         }
 
         $itinerariesRepo = $this->container->getDefinition('smartesb.map.itineraries');
-        $itinerariesRepo->addMethodCall('addItinerary',array($from,(string)$itinerary));
+        $itinerariesRepo->addMethodCall('addItinerary',array($from,(string)$itineraryRef));
     }
 
     /**
@@ -442,7 +443,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         $itineraryClass = $this->container->getParameter('smartesb.itinerary.class');
         $def = $this->getBasicDefinition($itineraryClass);
-        $def->setArguments(array($name));
 
         return $this->registerItinerary($def, $name);
     }

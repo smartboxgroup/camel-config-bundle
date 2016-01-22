@@ -27,11 +27,8 @@ class StopDefinitionTest extends BaseKernelTestCase
 
     public function setUp()
     {
-        static::bootKernel();
-        $container = static::$kernel->getContainer();
-
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary'))
+            ->setMethods(array('getBasicDefinition', 'buildItinerary'))
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -41,52 +38,28 @@ class StopDefinitionTest extends BaseKernelTestCase
         $this->processorDefinition->setBuilder($this->flowsBuilderCompilerPassMock);
     }
 
-    public function dataProviderForValidConfiguration()
+    public function testBuildProcessorForValidConfiguration()
     {
-        return [
-            [new \SimpleXMLElement("</stop>")],
-            [new \SimpleXMLElement("<stop></stop>")],
-            [new \SimpleXMLElement("<stop><description></description></stop>")],
-            [new \SimpleXMLElement("<stop><description>Some description of stoper processor</description></stop>")],
+        $config = new \SimpleXMLElement("<stop><description>Some description of stop processor</description></stop>");
+
+        $stopDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+
+        $expectedMethodCalls = [
+            [
+                'setDescription',
+                [
+                    'Some description of stop processor',
+                ],
+            ],
         ];
+
+        $this->assertEquals($expectedMethodCalls, $stopDefinition->getMethodCalls());
     }
 
-    /**
-     * @dataProvider dataProviderForValidConfiguration
-     *
-     * @param $config
-     */
-    public function testBuildProcessorForValidConfiguration($config)
+    public function testBuildProcessorForInvalidConfiguration()
     {
-        $this->flowsBuilderCompilerPassMock
-            ->expects($this->once())
-            ->method('registerService')
-            ->willReturnCallback(
-                function (Definition $definition, $processorType) {
-                    // Check the processor is a "stop"
-                    $this->assertEquals(StopDefinition::STOP, $processorType);
-                    return new Reference("1");
-                }
-            );
+        $config = new \SimpleXMLElement("<stop><wrong_node>this is content of unsupported node</wrong_node></stop>");
 
-        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
-    }
-
-    public function dataProviderForInvalidConfiguration()
-    {
-        return [
-            [new \SimpleXMLElement("<stop><wrong_node></wrong_node></stop>")],
-            [new \SimpleXMLElement("<stop><wrong_node>this is content of unsupported node</wrong_node></stop>")],
-        ];
-    }
-
-    /**
-     * @dataProvider dataProviderForInvalidConfiguration
-     *
-     * @param $config
-     */
-    public function testBuildProcessorForInvalidConfiguration($config)
-    {
         $this->setExpectedException(InvalidConfigurationException::class);
 
         $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));

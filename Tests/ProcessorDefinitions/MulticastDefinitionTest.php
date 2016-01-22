@@ -27,7 +27,7 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary', 'buildEndpoint', 'addToItinerary'))
+            ->setMethods(array('getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'addToItinerary'))
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -40,38 +40,6 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildProcessor()
     {
-        $this->flowsBuilderCompilerPassMock
-            ->expects($this->once())
-            ->method('registerService')
-            ->willReturnCallback(
-                function (Definition $definition, $processorType) {
-
-                    $METHOD = 0;
-                    $ARGS = 1;
-
-                    // Check the processor is a router
-                    $this->assertEquals('multicast', $processorType);
-
-                    $calls = $definition->getMethodCalls();
-
-                    // test aggregation strategy is set
-                    $aggregationStrategySetter = array_shift($calls);
-                    $this->assertEquals(Multicast::AGGREGATION_STRATEGY_FIRE_AND_FORGET, $aggregationStrategySetter[$ARGS][0]);
-
-                    // test description is set
-                    $description = array_shift($calls);
-                    $this->assertEquals('some description', $description[$ARGS][0]);
-
-                    // expected 4 itineraries setter calls inside the definition
-                    $this->assertCount(4, $calls);
-                    for ($i=0; $i < 4; $i++) {
-                        $this->assertEquals('addItinerary', $calls[$i][$METHOD]);
-                    }
-
-                    return new Reference("1");
-                }
-            );
-
         $config = new \SimpleXMLElement(
             '<multicast strategyRef="fireAndForget">
                 <description>some description</description>
@@ -82,8 +50,35 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
                     <to uri="direct://test/d"/>
                 </pipeline>
                 <to uri="direct://test/e"/>
-            </multicast>');
-        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+            </multicast>'
+        );
+        $multicastDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+
+        $expectedMethodCalls = [
+            [
+                'setAggregationStrategy',
+                [
+                    Multicast::AGGREGATION_STRATEGY_FIRE_AND_FORGET,
+                ],
+            ],
+            [
+                'setDescription',
+                [
+                    'some description',
+                ],
+            ],
+        ];
+        for ($i = 0; $i < 4; $i++) {
+            $expectedMethodCalls[] = [
+                'addItinerary',
+                [
+                    new Reference(1),
+                ],
+
+            ];
+        }
+
+        $this->assertEquals($expectedMethodCalls, $multicastDefinition->getMethodCalls());
     }
 
     public function testInvalidAggregationStrategy()
