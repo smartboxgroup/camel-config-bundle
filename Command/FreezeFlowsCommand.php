@@ -97,7 +97,8 @@ class FreezeFlowsCommand extends ContainerAwareCommand
 
         foreach($files as $file) {
             $this->rebuiltNodesCounter = 0;
-            $idPrefix = str_replace(DIRECTORY_SEPARATOR, '.', $file->getRelativePathname());
+            $fileId = str_replace('.xml','',$file->getRelativePathname());
+            $idPrefix = str_replace(DIRECTORY_SEPARATOR, '.',$fileId);
 
             $nodeConfig = new \SimpleXMLElement($file->getContents());
             $this->rebuildNode($nodeConfig, $idPrefix);
