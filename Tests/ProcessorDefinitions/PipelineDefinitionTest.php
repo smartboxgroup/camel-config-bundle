@@ -26,7 +26,7 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary', 'buildEndpoint', 'addToItinerary'))
+            ->setMethods(array('getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'addToItinerary'))
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -39,31 +39,6 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testBuildProcessor()
     {
-        $this->flowsBuilderCompilerPassMock
-            ->expects($this->once())
-            ->method('registerService')
-            ->willReturnCallback(
-                function (Definition $definition, $processorType) {
-                    $METHOD = 0;
-                    $ARGS = 1;
-
-                    // Check the processor is a pipeline
-                    $this->assertEquals(PipelineDefinition::PIPELINE, $processorType);
-
-                    $calls = $definition->getMethodCalls();
-
-                    // test description is set
-                    $description = array_shift($calls);
-                    $this->assertEquals('some description', $description[$ARGS][0]);
-
-                    // expected 1 itinerary setter calls inside the definition
-                    $this->assertCount(1, $calls);
-                    $this->assertEquals('setItinerary', $calls[0][$METHOD]);
-
-                    return new Reference("1");
-                }
-            );
-
         $config = new \SimpleXMLElement(
             '
                 <pipeline>
@@ -73,6 +48,22 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
                 </pipeline>
             '
         );
-        $this->processorDefinition->buildProcessor($config);
+        $pipelineDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $expectedMethodCalls = [
+            [
+                'setDescription',
+                [
+                    'some description',
+                ],
+            ],
+            [
+                'setItinerary',
+                [
+                    new Reference(1),
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expectedMethodCalls, $pipelineDefinition->getMethodCalls());
     }
 }

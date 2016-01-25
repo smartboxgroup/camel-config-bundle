@@ -2,12 +2,13 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Command;
 
-use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry\ProcessorDefinitionsRegistry;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class FreezeFlowsCommand extends ContainerAwareCommand
 {
@@ -15,6 +16,13 @@ class FreezeFlowsCommand extends ContainerAwareCommand
      * @var OutputInterface
      */
     protected $output;
+
+    /** @var ProcessorDefinitionsRegistry */
+    protected $processorDefinitionsRegistry;
+
+    protected $processorsNodeNames = [];
+
+    protected $rebuiltNodesCounter = 0;
 
     protected function configure()
     {
@@ -28,6 +36,13 @@ class FreezeFlowsCommand extends ContainerAwareCommand
     {
         $this->output = $output;
         $container = $this->getContainer();
+        $this->processorDefinitionsRegistry = $container->get('smartesb.registry.processor_definitions');
+
+        $this->processorsNodeNames = $this->processorDefinitionsRegistry->getRegisteredDefinitionsNodeNames();
+        $this->processorsNodeNames = array_merge(
+            $this->processorsNodeNames,
+            [FlowsBuilderCompilerPass::FROM, FlowsBuilderCompilerPass::TO, FlowsBuilderCompilerPass::ROUTE]
+        );
 
         $flowsDirectories = $container->getParameter('smartesb.flows_directories');
         $frozenFlowsDir = $container->getParameter('smartesb.frozen_flows_directory');
@@ -55,6 +70,8 @@ class FreezeFlowsCommand extends ContainerAwareCommand
             $this->recurse_copy($dir,$versionDir.basename($dir));
         }
         $output->writeln("");
+
+        $this->rebuildFlows($versionDir);
     }
 
     private function recurse_copy($src,$dst) {
@@ -64,12 +81,47 @@ class FreezeFlowsCommand extends ContainerAwareCommand
             if (( $file != '.' ) && ( $file != '..' )) {
                 if ( is_dir($src . '/' . $file) ) {
                     $this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
-                }
-                else {
+                } else {
                     copy($src . '/' . $file,$dst . '/' . $file);
                 }
             }
         }
         closedir($dir);
+    }
+
+    private function rebuildFlows($dir)
+    {
+        $finder = new Finder();
+        /** @var SplFileInfo[] $files */
+        $files = $finder->files()->name('*.xml')->in($dir);
+
+        foreach($files as $file) {
+            $this->rebuiltNodesCounter = 0;
+            $fileId = str_replace('.xml','',$file->getRelativePathname());
+            $idPrefix = str_replace(DIRECTORY_SEPARATOR, '.',$fileId);
+
+            $nodeConfig = new \SimpleXMLElement($file->getContents());
+            $this->rebuildNode($nodeConfig, $idPrefix);
+            $nodeConfig->saveXML($file->getRealPath());
+        }
+    }
+
+    /**
+     * This method takes object and modifies it
+     *
+     * @param \SimpleXMLElement $nodeConfig
+     * @param $idPrefix
+     */
+    private function rebuildNode(\SimpleXMLElement $nodeConfig, $idPrefix)
+    {
+        /** @var \SimpleXMLElement $node */
+        foreach ($nodeConfig as $nodeName => $node) {
+            $nodeId = (string) @$node['id'];
+            if (in_array($nodeName, $this->processorsNodeNames) && ! $nodeId) {
+                $node->addAttribute('id', $idPrefix . '.' . $this->rebuiltNodesCounter++);
+            }
+
+            $this->rebuildNode($node, $idPrefix);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
+use Smartbox\Integration\FrameworkBundle\Processors\Routing\ContentRouter;
 use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition;
@@ -15,7 +16,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RouterDefinitionTest extends BaseKernelTestCase
 {
-
     /**
      * @var RouterDefinition
      */
@@ -30,7 +30,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary'))
+            ->setMethods(array('getBasicDefinition', 'buildItinerary'))
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -47,20 +47,27 @@ class RouterDefinitionTest extends BaseKernelTestCase
      */
     public function testBuildProcessor()
     {
-        $this->flowsBuilderCompilerPassMock
-            ->expects($this->once())
-            ->method('registerService')
-            ->willReturnCallback(
-                function (Definition $definition, $processorType) {
-                    // Check the processor is a router
-                    $this->assertEquals('router', $processorType);
-
-                    return new Reference("1");
-                }
-            );
-
         $config = new \SimpleXMLElement("<choice><when><description>when description</description><simple>msg.getBody().get('id') == 666</simple></when><otherwise><description>otherwise description</description></otherwise></choice>");
-        $this->processorDefinition->buildProcessor($config);
+        $routerDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+
+        $this->assertEquals(
+            [
+                [
+                    'addWhen',
+                    [
+                        'msg.getBody().get(\'id\') == 666',
+                        new Reference(1),
+                    ],
+                ],
+                [
+                    'setOtherwise',
+                    [
+                        new Reference(1),
+                    ],
+                ],
+            ],
+            $routerDefinition->getMethodCalls()
+        );
     }
 
     /**
@@ -71,7 +78,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
         $this->setExpectedException('Exception', 'Expression missing in when clause');
 
         $config = new \SimpleXMLElement("<choice><when></when></choice>");
-        $this->processorDefinition->buildProcessor($config);
+        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
     }
 
 }
