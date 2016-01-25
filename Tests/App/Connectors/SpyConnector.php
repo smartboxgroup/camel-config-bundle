@@ -6,6 +6,7 @@ use Smartbox\Integration\FrameworkBundle\Connectors\Connector;
 use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class SpyConnector
@@ -13,7 +14,11 @@ use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
  */
 class SpyConnector extends Connector
 {
-    public static $SUPPORTED_EXCHANGE_PATTERNS = [self::EXCHANGE_PATTERN_IN_ONLY];
+    /**
+     * @JMS\Exclude
+     * @var array
+     */
+    protected static $SUPPORTED_EXCHANGE_PATTERNS = [self::EXCHANGE_PATTERN_IN_ONLY];
 
     const OPTION_PATH = 'path';
 

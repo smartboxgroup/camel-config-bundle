@@ -65,11 +65,16 @@ smartbox_integration_framework:
             password: ''
             format: json
 
-    nosql_drivers: ~
+    nosql_drivers:
+        main:
+            type: MongoDB
+            description: Default nosql driver (MongoDB)
+            host: localhost
+            database: camel_config_test
 
     events_queue_driver: events
     default_queue_driver: main
-    default_nosql_driver: ~
+    default_nosql_driver: main
 
     message_handlers:
         sync:
