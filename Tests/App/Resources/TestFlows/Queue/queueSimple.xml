@@ -7,7 +7,7 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="queue://smartesb/simple"/>
+        <from uri="queue://main/simple"/>
         <to uri="test://smartesb/transformer"/>
         <to uri="spy://smartesb/queue/simple/result"/>
     </route>

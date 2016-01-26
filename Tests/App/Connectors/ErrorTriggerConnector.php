@@ -7,6 +7,7 @@ use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class ErrorTriggerConnector
@@ -14,7 +15,16 @@ use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
  */
 class ErrorTriggerConnector extends Connector
 {
+    /**
+     * @JMS\Exclude
+     * @var array
+     */
     static public $amountOfErrors = 1;
+
+    /**
+     * @JMS\Exclude
+     * @var array
+     */
     static protected $count = 0;
 
     const OPTION_RECOVERABLE = 'recoverable';

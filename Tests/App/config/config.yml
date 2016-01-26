@@ -65,22 +65,30 @@ smartbox_integration_framework:
             password: ''
             format: json
 
+    nosql_drivers:
+        main:
+            type: MongoDB
+            description: Default nosql driver (MongoDB)
+            host: localhost
+            database: camel_config_test
+
     events_queue_driver: events
     default_queue_driver: main
+    default_nosql_driver: main
 
     message_handlers:
         sync:
             description: Message hanlder to handle messages comming from the API
             retries_max: 5
-            failed_uri: stomp://internal/sync/failed
-            retry_uri: stomp://internal/sync/retry
+            failed_uri: nosql://main/failed/sync
+            retry_uri: nosql://main/retry/sync
             throw_exceptions: true
             defer_new_exchanges: false
 
         async:
             description: Message hanlder to handle messages comming from a queue
             retries_max: 5
-            failed_uri: stomp://internal/async/failed
+            failed_uri: nosql://main/failed/async
             retry_uri: original
             throw_exceptions: false
             defer_new_exchanges: true

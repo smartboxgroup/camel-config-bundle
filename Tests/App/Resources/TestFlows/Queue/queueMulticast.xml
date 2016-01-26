@@ -7,7 +7,7 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="queue://smartesb/multicast"/>
+        <from uri="queue://main/multicast"/>
         <to uri="test://smartesb/multicast"/>
         <to uri="spy://smartesb/queue/multicast/result"/>
     </route>
