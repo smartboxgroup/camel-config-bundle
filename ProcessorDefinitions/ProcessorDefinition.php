@@ -65,7 +65,7 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     /**
      * {@inheritDoc}
      */
-    public function buildProcessor($configNode)
+    public function buildProcessor($configNode, $id)
     {
         $definition = $this->getBasicDefinition();
 

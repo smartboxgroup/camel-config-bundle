@@ -2,16 +2,17 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Symfony\Component\DependencyInjection\Reference;
+use Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
- * Class PipelineDefinition
+ * Class StopDefinition
  * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
  */
-class PipelineDefinition extends ProcessorDefinition
+class StopDefinition extends ProcessorDefinition
 {
-    const PIPELINE = 'pipeline';
+    const STOP = 'stop';
 
     /**
      * {@inheritdoc}
@@ -20,19 +21,16 @@ class PipelineDefinition extends ProcessorDefinition
     {
         $def = parent::buildProcessor($configNode, $id);
 
-        $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
-        $itinerary = $this->builder->buildItinerary($itineraryName);
         foreach ($configNode as $nodeName => $nodeValue) {
             switch ($nodeName) {
                 case self::DESCRIPTION:
                     $def->addMethodCall('setDescription', [(string)$nodeValue]);
                     break;
                 default:
-                    $this->builder->addNodeToItinerary($itinerary,$nodeName,$nodeValue);
+                    throw new InvalidConfigurationException('Unsupported stop processor node: "' . $nodeName . '"');
                     break;
             }
         }
-        $def->addMethodCall('setItinerary', [$itinerary]);
 
         return $def;
     }

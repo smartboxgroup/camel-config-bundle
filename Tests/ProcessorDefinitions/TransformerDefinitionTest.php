@@ -45,9 +45,51 @@ class TransformerDefinitionTest extends BaseKernelTestCase
     public function dataProviderForValidConfiguration()
     {
         return [
-            [new \SimpleXMLElement("<transform><description>Some description of transformer processor</description><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>")],
-            [new \SimpleXMLElement("<transform><description></description><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>")],
-            [new \SimpleXMLElement("<transform><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>")],
+            [
+                new \SimpleXMLElement("<transform><description>Some description of transformer processor</description><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>"),
+                [
+                    [
+                        'setDescription',
+                        [
+                            'Some description of transformer processor',
+                        ],
+                    ],
+                    [
+                        'setExpression',
+                        [
+                            "msg.getBody().get('box').setDescription('test description')"
+                        ]
+                    ]
+                ]
+            ],
+            [
+                new \SimpleXMLElement("<transform><description></description><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>"),
+                [
+                    [
+                        'setDescription',
+                        [
+                            '',
+                        ],
+                    ],
+                    [
+                        'setExpression',
+                        [
+                            "msg.getBody().get('box').setDescription('test description')"
+                        ]
+                    ]
+                ]
+            ],
+            [
+                new \SimpleXMLElement("<transform><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>"),
+                [
+                    [
+                        'setExpression',
+                        [
+                            "msg.getBody().get('box').setDescription('test description')"
+                        ]
+                    ]
+                ]
+            ],
         ];
     }
 
@@ -58,21 +100,13 @@ class TransformerDefinitionTest extends BaseKernelTestCase
      * @dataProvider dataProviderForValidConfiguration
      *
      * @param $config
+     * @param array $expectedMethodCalls
      */
-    public function testBuildProcessorForValidConfiguration($config)
+    public function testBuildProcessorForValidConfiguration($config, $expectedMethodCalls)
     {
-        $this->flowsBuilderCompilerPassMock
-            ->expects($this->once())
-            ->method('registerService')
-            ->willReturnCallback(
-                function (Definition $definition, $processorType) {
-                    // Check the processor is a transformer
-                    $this->assertEquals('transformer', $processorType);
-                    return new Reference("1");
-                }
-            );
+        $transformerDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
 
-        $this->processorDefinition->buildProcessor($config);
+        $this->assertEquals($expectedMethodCalls, $transformerDefinition->getMethodCalls());
     }
 
     public function dataProviderForInvalidConfiguration()
@@ -100,7 +134,7 @@ class TransformerDefinitionTest extends BaseKernelTestCase
     {
         $this->setExpectedException(InvalidConfigurationException::class);
 
-        $this->processorDefinition->buildProcessor($config);
+        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
     }
 
 }

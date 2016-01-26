@@ -2,6 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\DependencyInjection;
 
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry\ProcessorDefinitionsRegistry;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Handlers\SyncHandler;
 use Smartbox\Integration\FrameworkBundle\Processors\Itinerary;
@@ -28,6 +29,7 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     public function prepareContainer(ContainerBuilder $container){
         $container->setDefinition('smartesb.registry.endpoints',new Definition(EndpointsRegistry::class));
+        $container->setDefinition('smartesb.registry.processor_definitions',new Definition(ProcessorDefinitionsRegistry::class));
         $container->setDefinition('smartesb.map.itineraries',new Definition(ItinerariesMap::class));
     }
 
@@ -100,6 +102,7 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->method('findTaggedServiceIds')
             ->willReturnMap(
                 [
+                    [FlowsBuilderCompilerPass::TAG_DEFINITIONS, ['serviceId' => [['nodeName' => 'abc']]]],
                     ['connector.direct.demo', $serviceId],
                     ['connector.custom.business_demo', $serviceId],
                 ]
