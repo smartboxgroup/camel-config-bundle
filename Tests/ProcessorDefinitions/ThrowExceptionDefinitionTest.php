@@ -2,6 +2,7 @@
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
+use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInterface;
 use Smartbox\Integration\FrameworkBundle\Exceptions\BadRequestException;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
@@ -14,16 +15,17 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ThrowExceptionDefinitionTest extends BaseKernelTestCase
 {
-
-    /** @var  ThrowExceptionDefinition */
+    /** @var ThrowExceptionDefinition */
     protected $processorDefinition;
+
+    /** @var FlowsBuilderInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $builderMock;
 
 
     public function setUp()
     {
         $this->builderMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'getParameter', 'registerService'))
+            ->setMethods(array('getBasicDefinition', 'getParameter'))
             ->getMock();
 
         $this->builderMock->method('getParameter')->willReturnMap(
@@ -41,24 +43,24 @@ class ThrowExceptionDefinitionTest extends BaseKernelTestCase
 
     public function testShouldBuildProcessor()
     {
-        $this->builderMock
-            ->expects($this->once())
-            ->method('registerService')->willReturnCallback(
-                function (Definition $definition, $prefix) {
-                    // Check prefix
-                    $this->assertEquals(ThrowExceptionDefinition::PREFIX, $prefix);
-
-                    // Check setExceptionClass
-                    $this->assertContains(
-                        array('setExceptionClass', array(BadRequestException::class)),
-                        $definition->getMethodCalls()
-                    );
-
-                    return new Reference("xxx");
-                }
-            );
-
         $config = new \SimpleXMLElement('<throwException ref="exceptions.bad_request"/>');
-        $this->processorDefinition->buildProcessor($config);
+        $throwExceptionDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+
+        $expectedMethodCalls = [
+            [
+                'setDescription',
+                [
+                    '',
+                ],
+            ],
+            [
+                'setExceptionClass',
+                [
+                    BadRequestException::class,
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expectedMethodCalls, $throwExceptionDefinition->getMethodCalls());
     }
 }

@@ -14,12 +14,11 @@ class ThrowExceptionDefinition extends ProcessorDefinition{
     const PREFIX = 'throw_exception';
 
     /**
-     * @param $configNode \SimpleXMLElement
-     * @return Reference
+     * {@inheritdoc}
      */
-    public function buildProcessor($configNode)
+    public function buildProcessor($configNode, $id)
     {
-        $def = parent::buildProcessor($configNode);
+        $def = parent::buildProcessor($configNode, $id);
 
         // Description
         $description = (string)$configNode->{'ref'};
@@ -42,8 +41,6 @@ class ThrowExceptionDefinition extends ProcessorDefinition{
 
         $def->addMethodCall('setExceptionClass', array($exceptionClass));
 
-        $reference = $this->builder->registerService($def, self::PREFIX);
-
-        return $reference;
+        return $def;
     }
 }
