@@ -1,13 +1,10 @@
 <?php
 
-namespace Smartbox\Integration\CamelConfigBundle\Tests\App;
-
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * Class AppKernel
- * @package Smartbox\Integration\CamelConfigBundle\Tests\App
  */
 class AppKernel extends Kernel
 {
