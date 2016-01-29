@@ -2,8 +2,6 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests;
 
-use Smartbox\CoreBundle\Type\Integer;
-use Smartbox\Integration\CamelConfigBundle\Tests\App\AppKernel;
 use Smartbox\Integration\FrameworkBundle\Messages\Context;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -13,10 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class BaseKernelTestCase extends KernelTestCase
 {
-    public static function getKernelClass(){
-        return AppKernel::class;
-    }
-
     public function setUp(){
         $this->bootKernel();
     }
