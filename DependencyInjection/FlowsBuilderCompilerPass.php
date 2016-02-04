@@ -4,7 +4,7 @@ namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
-use Smartbox\Integration\FrameworkBundle\Helper\EndpointHelper;
+use Smartbox\Integration\FrameworkBundle\Helper\SlugHelper;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -26,6 +26,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITIONS = "smartesb.definitions";
+    const ENDPOINT_PREFIX = "endpoint.";
 
     /** @var  ContainerBuilder */
     protected $container;
@@ -374,6 +375,11 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return $ref;
     }
 
+    protected function getDummyIdForURI($uri)
+    {
+        return self::ENDPOINT_PREFIX.SlugHelper::slugify($uri);
+    }
+
     /**
      * @param Definition $definition
      * @param string $id
@@ -410,7 +416,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         ;
 
         if (!$id || empty($id)) {
-            $id = EndpointHelper::getIdForURI($uri);
+            $id = $this->getDummyIdForURI($uri);
         }
 
         // Use existing endpoint ...
