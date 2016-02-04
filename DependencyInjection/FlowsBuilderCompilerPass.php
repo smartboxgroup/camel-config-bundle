@@ -32,9 +32,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     protected $container;
 
     /** @var Definition */
-    protected $endpointsRegistry;
-
-    /** @var Definition */
     protected $processorDefinitionsRegistry;
 
     protected $registeredNames =[];
@@ -211,25 +208,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     }
 
     /**
-     * @param Definition $definition
-     * @return Reference
-     */
-    public function registerProcessor(Definition $definition, $id)
-    {
-        $this->container->setDefinition($id, $definition);
-        $definition->setProperty('id', $id);
-
-        return new Reference($id);
-    }
-
-    /**
      * @param ContainerBuilder $container
      * @api
      */
     public function process(ContainerBuilder $container)
     {
         $this->container = $container;
-        $this->endpointsRegistry = $this->container->getDefinition('smartesb.registry.endpoints');
         $this->processorDefinitionsRegistry = $this->container->getDefinition('smartesb.registry.processor_definitions');
 
         $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS);
@@ -382,15 +366,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param Definition $definition
-     * @param string $id
-     * @param string $uri
      * @return Reference
      */
-    public function registerEndpoint(Definition $definition, $id, $uri)
+    public function registerProcessor(Definition $definition, $id)
     {
         $definition->setProperty('id', $id);
         $this->container->setDefinition($id, $definition);
-        $this->endpointsRegistry->addMethodCall('register',array($id, $uri));
 
         return new Reference($id);
     }
@@ -456,7 +437,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             if ($runtimeBreakpoint) {
                 $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
             }
-            return $this->registerEndpoint($endpointDef, $id, $uri);
+            return $this->registerProcessor($endpointDef, $id);
         }
     }
 
