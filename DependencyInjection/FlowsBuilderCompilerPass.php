@@ -26,6 +26,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITIONS = "smartesb.definitions";
+    const PROCESSOR_ID_PREFIX = "_smartesb.processor.";
+    const ITINERARY_ID_PREFIX = "smartesb.itinerary.";
 
     /** @var  ContainerBuilder */
     protected $container;
@@ -186,7 +188,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerItinerary(Definition $definition, $name)
     {
-        $id = 'smartesb.itinerary.'.$name;
+        $id = self::ITINERARY_ID_PREFIX . $name;
 
         // Avoid name duplicities
         if(in_array($id, $this->registeredNames)){
@@ -204,7 +206,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public static function determineProcessorId($config){
         $id = @$config["id"]."";
         if(!$id){
-            $id = 'smartesb.processor.' . self::getNextIncrementalId();
+            $id = self::PROCESSOR_ID_PREFIX . self::getNextIncrementalId();
         }
         return $id;
     }
@@ -215,6 +217,9 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerProcessor(Definition $definition, $id)
     {
+        if ($this->container->has($id)) {
+            throw new InvalidConfigurationException("Processor id used twice: ".$id);
+        }
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
 
