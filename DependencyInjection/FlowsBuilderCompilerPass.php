@@ -26,6 +26,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITIONS = "smartesb.definitions";
+    const PROCESSOR_ID_PREFIX = "_smartesb.processor.";
+    const ITINERARY_ID_PREFIX = "smartesb.itinerary.";
     const ENDPOINT_PREFIX = "endpoint.";
 
     /** @var  ContainerBuilder */
@@ -184,7 +186,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerItinerary(Definition $definition, $name)
     {
-        $id = 'smartesb.itinerary.'.$name;
+        $id = self::ITINERARY_ID_PREFIX . $name;
 
         // Avoid name duplicities
         if(in_array($id, $this->registeredNames)){
@@ -202,9 +204,24 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public static function determineProcessorId($config){
         $id = @$config["id"]."";
         if(!$id){
-            $id = 'smartesb.processor.' . self::getNextIncrementalId();
+            $id = self::PROCESSOR_ID_PREFIX . self::getNextIncrementalId();
         }
         return $id;
+    }
+
+    /**
+     * @param Definition $definition
+     * @return Reference
+     */
+    public function registerProcessor(Definition $definition, $id)
+    {
+        if ($this->container->has($id)) {
+            throw new InvalidConfigurationException("Processor id used twice: ".$id);
+        }
+        $this->container->setDefinition($id, $definition);
+        $definition->setProperty('id', $id);
+
+        return new Reference($id);
     }
 
     /**
@@ -362,18 +379,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     protected function getDummyIdForURI($uri)
     {
         return self::ENDPOINT_PREFIX.SlugHelper::slugify($uri);
-    }
-
-    /**
-     * @param Definition $definition
-     * @return Reference
-     */
-    public function registerProcessor(Definition $definition, $id)
-    {
-        $definition->setProperty('id', $id);
-        $this->container->setDefinition($id, $definition);
-
-        return new Reference($id);
     }
 
     /**
