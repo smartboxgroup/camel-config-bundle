@@ -4,10 +4,9 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 
 use Monolog\Logger;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
-use Smartbox\Integration\FrameworkBundle\Messages\Context;
-use Smartbox\Integration\FrameworkBundle\Messages\Message;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\FrameworkBundle\Exceptions\ProcessingException;
 use Symfony\Bridge\Monolog\Handler\DebugHandler;
 use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
 use Symfony\Component\Finder\Finder;
@@ -152,7 +151,7 @@ class FlowsTest extends BaseKernelTestCase{
     private function expectedException(array $conf)
     {
         if (!array_key_exists('class',$conf)) {
-            throw new \Exception("Missing parameter in expectedException step");
+            $conf['class'] = ProcessingException::class;
         }
 
         $this->setExpectedException($conf['class']);

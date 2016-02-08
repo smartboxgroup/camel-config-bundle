@@ -4,7 +4,7 @@ namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
-use Smartbox\Integration\FrameworkBundle\Helper\EndpointHelper;
+use Smartbox\Integration\FrameworkBundle\Helper\SlugHelper;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -26,12 +26,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITIONS = "smartesb.definitions";
+    const ENDPOINT_PREFIX = "endpoint.";
 
     /** @var  ContainerBuilder */
     protected $container;
-
-    /** @var Definition */
-    protected $endpointsRegistry;
 
     /** @var Definition */
     protected $processorDefinitionsRegistry;
@@ -210,25 +208,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     }
 
     /**
-     * @param Definition $definition
-     * @return Reference
-     */
-    public function registerProcessor(Definition $definition, $id)
-    {
-        $this->container->setDefinition($id, $definition);
-        $definition->setProperty('id', $id);
-
-        return new Reference($id);
-    }
-
-    /**
      * @param ContainerBuilder $container
      * @api
      */
     public function process(ContainerBuilder $container)
     {
         $this->container = $container;
-        $this->endpointsRegistry = $this->container->getDefinition('smartesb.registry.endpoints');
         $this->processorDefinitionsRegistry = $this->container->getDefinition('smartesb.registry.processor_definitions');
 
         $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS);
@@ -374,17 +359,19 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return $ref;
     }
 
+    protected function getDummyIdForURI($uri)
+    {
+        return self::ENDPOINT_PREFIX.SlugHelper::slugify($uri);
+    }
+
     /**
      * @param Definition $definition
-     * @param string $id
-     * @param string $uri
      * @return Reference
      */
-    public function registerEndpoint(Definition $definition, $id, $uri)
+    public function registerProcessor(Definition $definition, $id)
     {
         $definition->setProperty('id', $id);
         $this->container->setDefinition($id, $definition);
-        $this->endpointsRegistry->addMethodCall('register',array($id, $uri));
 
         return new Reference($id);
     }
@@ -410,7 +397,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         ;
 
         if (!$id || empty($id)) {
-            $id = EndpointHelper::getIdForURI($uri);
+            $id = $this->getDummyIdForURI($uri);
         }
 
         // Use existing endpoint ...
@@ -450,7 +437,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             if ($runtimeBreakpoint) {
                 $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
             }
-            return $this->registerEndpoint($endpointDef, $id, $uri);
+            return $this->registerProcessor($endpointDef, $id);
         }
     }
 
