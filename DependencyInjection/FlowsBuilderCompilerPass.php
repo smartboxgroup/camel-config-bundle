@@ -382,18 +382,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     }
 
     /**
-     * @param Definition $definition
-     * @return Reference
-     */
-    public function registerProcessor(Definition $definition, $id)
-    {
-        $definition->setProperty('id', $id);
-        $this->container->setDefinition($id, $definition);
-
-        return new Reference($id);
-    }
-
-    /**
      * @param $config
      * @return Reference
      * @throws \Exception
