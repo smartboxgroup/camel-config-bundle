@@ -1,5 +1,5 @@
 steps:
-  - {type: expectedException, class: "\Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception\TestException"}
+  - {type: expectedException}
   - {type: handle, from: test://smartesb/logging/exception, in: 1}
   - {type: checkLogs, message: "Event \"smartesb.handler.before_handle\" occurred", level: "Debug"}
   - {type: checkLogs, message: "Event \"smartesb.handler.before_process\" occurred", level: "Debug"}

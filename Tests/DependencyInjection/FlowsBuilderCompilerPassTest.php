@@ -9,7 +9,6 @@ use Smartbox\Integration\FrameworkBundle\Processors\Itinerary;
 use Smartbox\Integration\FrameworkBundle\Routing\ItinerariesMap;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\SmartboxIntegrationCamelConfigExtension;
-use Smartbox\Integration\FrameworkBundle\Helper\EndpointsRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -22,13 +21,10 @@ use Symfony\Component\DependencyInjection\Definition;
  */
 class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
-
-
     /**
      * @param ContainerBuilder $container
      */
     public function prepareContainer(ContainerBuilder $container){
-        $container->setDefinition('smartesb.registry.endpoints',new Definition(EndpointsRegistry::class));
         $container->setDefinition('smartesb.registry.processor_definitions',new Definition(ProcessorDefinitionsRegistry::class));
         $container->setDefinition('smartesb.map.itineraries',new Definition(ItinerariesMap::class));
     }
