@@ -4,7 +4,7 @@ namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
-use Smartbox\Integration\FrameworkBundle\Helper\EndpointHelper;
+use Smartbox\Integration\FrameworkBundle\Helper\SlugHelper;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -26,12 +26,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = "from";
     const TO = "to";
     const TAG_DEFINITIONS = "smartesb.definitions";
+    const PROCESSOR_ID_PREFIX = "_smartesb.processor.";
+    const ITINERARY_ID_PREFIX = "smartesb.itinerary.";
+    const ENDPOINT_PREFIX = "endpoint.";
 
     /** @var  ContainerBuilder */
     protected $container;
-
-    /** @var Definition */
-    protected $endpointsRegistry;
 
     /** @var Definition */
     protected $processorDefinitionsRegistry;
@@ -186,7 +186,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerItinerary(Definition $definition, $name)
     {
-        $id = 'smartesb.itinerary.'.$name;
+        $id = self::ITINERARY_ID_PREFIX . $name;
 
         // Avoid name duplicities
         if(in_array($id, $this->registeredNames)){
@@ -204,7 +204,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public static function determineProcessorId($config){
         $id = @$config["id"]."";
         if(!$id){
-            $id = 'smartesb.processor.' . self::getNextIncrementalId();
+            $id = self::PROCESSOR_ID_PREFIX . self::getNextIncrementalId();
         }
         return $id;
     }
@@ -215,6 +215,9 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerProcessor(Definition $definition, $id)
     {
+        if ($this->container->has($id)) {
+            throw new InvalidConfigurationException("Processor id used twice: ".$id);
+        }
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
 
@@ -228,7 +231,6 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function process(ContainerBuilder $container)
     {
         $this->container = $container;
-        $this->endpointsRegistry = $this->container->getDefinition('smartesb.registry.endpoints');
         $this->processorDefinitionsRegistry = $this->container->getDefinition('smartesb.registry.processor_definitions');
 
         $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS);
@@ -374,19 +376,9 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return $ref;
     }
 
-    /**
-     * @param Definition $definition
-     * @param string $id
-     * @param string $uri
-     * @return Reference
-     */
-    public function registerEndpoint(Definition $definition, $id, $uri)
+    protected function getDummyIdForURI($uri)
     {
-        $definition->setProperty('id', $id);
-        $this->container->setDefinition($id, $definition);
-        $this->endpointsRegistry->addMethodCall('register',array($id, $uri));
-
-        return new Reference($id);
+        return self::ENDPOINT_PREFIX.SlugHelper::slugify($uri);
     }
 
     /**
@@ -410,7 +402,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         ;
 
         if (!$id || empty($id)) {
-            $id = EndpointHelper::getIdForURI($uri);
+            $id = $this->getDummyIdForURI($uri);
         }
 
         // Use existing endpoint ...
@@ -450,7 +442,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             if ($runtimeBreakpoint) {
                 $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
             }
-            return $this->registerEndpoint($endpointDef, $id, $uri);
+            return $this->registerProcessor($endpointDef, $id);
         }
     }
 
