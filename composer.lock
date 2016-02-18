@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c7e5122e424b5225327c8d7a5aa1af1",
-    "content-hash": "5eced068775a487963c96a07c58905e4",
+    "hash": "d993c70b19f54fddae8b21b62fc126e4",
+    "content-hash": "872d31e5c939d4e1e96d975fd7aa4fed",
     "packages": [
         {
             "name": "ass/xmlsecurity",
@@ -1371,7 +1371,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "48b68be28fdcd383765147ca09add04aa591007b"
+                "reference": "567f9f2693cb5fca4f6546b31b2d65f0684955af"
             },
             "require": {
                 "doctrine/annotations": "1.2.*",
@@ -1398,15 +1398,15 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-02-03 15:47:01"
+            "time": "2016-02-18 15:18:20"
         },
         {
             "name": "smartbox/integration/framework-bundle",
-            "version": "dev-SIEAI-352",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "558653afef9e253f5c1a3fb42cb423bbe08571cc"
+                "reference": "3d1bb8e174aa1b353ebc45ec6ab030dab3f0b777"
             },
             "require": {
                 "besimple/soap": "^0.2.6",
@@ -1438,7 +1438,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-02-18 11:05:09"
+            "time": "2016-02-18 15:31:05"
         },
         {
             "name": "symfony/assetic-bundle",
