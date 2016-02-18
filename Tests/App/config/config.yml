@@ -69,7 +69,7 @@ smartbox_integration_framework:
         main:
             type: MongoDB
             description: Default nosql driver (MongoDB)
-            host: localhost
+            host: mongodb://localhost
             database: camel_config_test
 
     events_queue_driver: events
