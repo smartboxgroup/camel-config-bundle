@@ -22,7 +22,7 @@
     "jms/serializer-bundle": "^0.13.0",
     "besimple/soap": "^0.2.6",
     "smartbox/core-bundle": "dev-master",
-    "smartbox/integration/framework-bundle": "dev-SIEAI-352"
+    "smartbox/integration/framework-bundle": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "4.7.*",
