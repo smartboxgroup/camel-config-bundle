@@ -1406,7 +1406,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "4d742cf43030baa56f63211c4d44b662de857820"
+                "reference": "257be3a3cc6af9b3eaa3da39bf07194829d1d724"
             },
             "require": {
                 "besimple/soap": "^0.2.6",
@@ -1438,7 +1438,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-02-24 12:09:44"
+            "time": "2016-03-02 11:27:42"
         },
         {
             "name": "symfony/assetic-bundle",
