@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d993c70b19f54fddae8b21b62fc126e4",
-    "content-hash": "872d31e5c939d4e1e96d975fd7aa4fed",
+    "hash": "11d06bcf5b864eaeb84370a97a3484c0",
+    "content-hash": "577c0b479078af2832b7fa489c41a645",
     "packages": [
         {
             "name": "ass/xmlsecurity",
@@ -66,78 +66,6 @@
                 "xml"
             ],
             "time": "2015-05-31 10:10:35"
-        },
-        {
-            "name": "besimple/soap",
-            "version": "v0.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/BeSimple/BeSimpleSoap.git",
-                "reference": "fb56d51bd8c70ae6d7092f90fd7fec23520477df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/BeSimple/BeSimpleSoap/zipball/fb56d51bd8c70ae6d7092f90fd7fec23520477df",
-                "reference": "fb56d51bd8c70ae6d7092f90fd7fec23520477df",
-                "shasum": ""
-            },
-            "require": {
-                "ass/xmlsecurity": "~1.0",
-                "ext-curl": "*",
-                "ext-soap": "*",
-                "php": ">=5.3.0",
-                "symfony/framework-bundle": "~2.0",
-                "symfony/twig-bundle": "~2.0",
-                "zendframework/zend-mime": "2.1.*"
-            },
-            "replace": {
-                "besimple/soap-bundle": "self.version",
-                "besimple/soap-client": "self.version",
-                "besimple/soap-common": "self.version",
-                "besimple/soap-server": "self.version",
-                "besimple/soap-wsdl": "self.version"
-            },
-            "require-dev": {
-                "ext-mcrypt": "*",
-                "mikey179/vfsstream": "~1.0",
-                "symfony/filesystem": "~2.0",
-                "symfony/process": "~2.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "BeSimple\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreas Schamberger",
-                    "email": "mail@andreass.net"
-                },
-                {
-                    "name": "Christian Kerl",
-                    "email": "christian-kerl@web.de"
-                },
-                {
-                    "name": "Francis Besset",
-                    "email": "francis.besset@gmail.com"
-                }
-            ],
-            "description": "Build and consume SOAP and WSDL based web services",
-            "homepage": "http://besim.pl",
-            "keywords": [
-                "soap"
-            ],
-            "time": "2015-03-27 15:07:42"
         },
         {
             "name": "centraldesktop/stomp",
@@ -1429,6 +1357,71 @@
             "time": "2015-11-07 08:07:40"
         },
         {
+            "name": "smartbox/besimple/soap",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git",
+                "reference": "c89302e2f9497b9e9f8fcc9c68e5cedf1ebc6587"
+            },
+            "require": {
+                "ass/xmlsecurity": "~1.0",
+                "ext-curl": "*",
+                "ext-soap": "*",
+                "php": ">=5.3.0",
+                "symfony/framework-bundle": "~2.6",
+                "symfony/twig-bundle": "~2.6",
+                "zendframework/zend-mime": "2.1.*"
+            },
+            "replace": {
+                "besimple/soap-bundle": "self.version",
+                "besimple/soap-client": "self.version",
+                "besimple/soap-common": "self.version",
+                "besimple/soap-server": "self.version",
+                "besimple/soap-wsdl": "self.version"
+            },
+            "require-dev": {
+                "ext-mcrypt": "*",
+                "mikey179/vfsstream": "~1.0",
+                "symfony/filesystem": "~2.3",
+                "symfony/process": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "BeSimple\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Francis Besset",
+                    "email": "francis.besset@gmail.com"
+                },
+                {
+                    "name": "Christian Kerl",
+                    "email": "christian-kerl@web.de"
+                },
+                {
+                    "name": "Andreas Schamberger",
+                    "email": "mail@andreass.net"
+                }
+            ],
+            "description": "Build and consume SOAP and WSDL based web services",
+            "homepage": "http://besim.pl",
+            "keywords": [
+                "soap"
+            ],
+            "time": "2016-03-16 14:03:31"
+        },
+        {
             "name": "smartbox/core-bundle",
             "version": "dev-master",
             "source": {
@@ -1469,10 +1462,9 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "25a7b0a3ff3261de38a674fd9567ae24b6cc0311"
+                "reference": "eb5a5c89acfb2ca455c137bafaaff14425d43efa"
             },
             "require": {
-                "besimple/soap": "^0.2.6",
                 "centraldesktop/stomp": "^2.0",
                 "doctrine/annotations": "1.2.*",
                 "ext-mongodb": "~1.0",
@@ -1484,6 +1476,7 @@
                 "php": ">=5.5",
                 "sensio/distribution-bundle": "~4.0",
                 "sensio/framework-extra-bundle": "^3.0",
+                "smartbox/besimple/soap": "dev-master",
                 "smartbox/core-bundle": "dev-master",
                 "symfony/assetic-bundle": "~2.3",
                 "symfony/monolog-bundle": "~2.4",
@@ -1502,7 +1495,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-03-16 10:54:15"
+            "time": "2016-03-16 14:37:12"
         },
         {
             "name": "symfony/assetic-bundle",

@@ -20,7 +20,6 @@
     "sensio/framework-extra-bundle": "^3.0",
     "incenteev/composer-parameter-handler": "~2.0",
     "jms/serializer-bundle": "^0.13.0",
-    "besimple/soap": "^0.2.6",
     "smartbox/core-bundle": "dev-master",
     "smartbox/integration/framework-bundle": "dev-master"
   },
@@ -32,6 +31,10 @@
     "bin-dir": "bin"
   },
   "repositories": [
+    {
+      "type": "vcs",
+      "url":  "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git"
+    },
     {
       "type": "vcs",
       "url":  "git@gitlab.production.smartbox.com:smartesb/core-bundle.git"
