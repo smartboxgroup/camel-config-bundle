@@ -1,18 +1,18 @@
 <?php
 
-namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
-use Smartbox\Integration\FrameworkBundle\Connectors\Connector;
+use Smartbox\Integration\FrameworkBundle\Producers\Producer;
 use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class SpyConnector
- * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors
+ * Class SpyProducer
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Producers
  */
-class SpyConnector extends Connector
+class SpyProducer extends Producer
 {
     /**
      * @JMS\Exclude
@@ -25,7 +25,7 @@ class SpyConnector extends Connector
     public $array = [];
 
     /**
-     * Sends an exchange to the connector
+     * Sends an exchange to the producer
      *
      * @param Exchange $ex
      * @throws \Exception

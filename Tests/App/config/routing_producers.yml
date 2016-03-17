@@ -1,11 +1,11 @@
 smartbox_integration_platform:
-    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_connector_routes.yml"
+    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_producer_routes.yml"
     prefix:   /
 
 queues.stomp:
   pattern: "stomp://{host}/{queue}"
   defaults:
-    _connector: @smartesb.connectors.queue
+    _producer: @smartesb.producers.queue
     queue_driver: main
     prefix: "test/camelconfig/"
     persistent: false     # For the tests we don't really want to persist our messages
@@ -16,7 +16,7 @@ queues.stomp:
 queues.generic:
   pattern: "queue://{queue_driver}/{queue}"
   defaults:
-    _connector: @smartesb.connectors.queue
+    _producer: @smartesb.producers.queue
     prefix: "test/camelconfig/"
     persistent: false    # For the tests we don't really want to persist our messages
 
@@ -27,29 +27,29 @@ queues.generic:
 test:
   pattern: "test://{host}/{path}"
   defaults:
-    _connector: @smartesb.connector.direct
+    _producer: @smartesb.producer.direct
   requirements:
     path: "[a-zA-Z0-9/]+"
 
 helper:
   pattern: "helper://{host}/{operation}/{operand}"
   defaults:
-    _connector: @connector.helper
+    _producer: @producer.helper
 
 spy:
   pattern: "spy://{host}/{path}"
   defaults:
-    _connector: @connector.spy
+    _producer: @producer.spy
   requirements:
     path: "[a-zA-Z0-9/_-]+"
 
 error.triggerer.recoverable:
   pattern: "error://recoverable"
   defaults:
-    _connector: @connector.error.triggerer
+    _producer: @producer.error.triggerer
     recoverable: true
 
 error.triggerer.unrecoverable:
   pattern: "error://unrecoverable"
   defaults:
-    _connector: @connector.error.triggerer
+    _producer: @producer.error.triggerer

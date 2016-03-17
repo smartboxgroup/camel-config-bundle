@@ -1,9 +1,9 @@
 <?php
 
-namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
-use Smartbox\Integration\FrameworkBundle\Connectors\Connector;
-use Smartbox\Integration\FrameworkBundle\Connectors\ConnectorInterface;
+use Smartbox\Integration\FrameworkBundle\Producers\Producer;
+use Smartbox\Integration\FrameworkBundle\Producers\ProducerInterface;
 use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\FrameworkBundle\Messages\Message;
@@ -11,10 +11,10 @@ use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\FrameworkBundle\Traits\MessageFactoryAware;
 
 /**
- * Class HelperConnector
- * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors
+ * Class HelperProducer
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Producers
  */
-class HelperConnector extends Connector implements ConnectorInterface {
+class HelperProducer extends Producer implements ProducerInterface {
 
     const OPTION_OPERATION = 'operation';
     const OPTION_OPERAND = 'operand';
@@ -23,7 +23,7 @@ class HelperConnector extends Connector implements ConnectorInterface {
     const OPERATION_ADD = 'add';
 
     /**
-     * Sends an exchange to the connector
+     * Sends an exchange to the producer
      *
      * @param Exchange $ex
      * @throws \Exception
@@ -51,7 +51,7 @@ class HelperConnector extends Connector implements ConnectorInterface {
     }
 
     /**
-     * Validates the options passed to an connector
+     * Validates the options passed to an producer
      *
      * @param array $options
      * @throws InvalidOptionException in case one of the options is not valid

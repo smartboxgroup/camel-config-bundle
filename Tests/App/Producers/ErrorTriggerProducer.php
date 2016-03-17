@@ -1,8 +1,8 @@
 <?php
 
-namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors;
+namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
-use Smartbox\Integration\FrameworkBundle\Connectors\Connector;
+use Smartbox\Integration\FrameworkBundle\Producers\Producer;
 use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException;
@@ -10,10 +10,10 @@ use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class ErrorTriggerConnector
- * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors
+ * Class ErrorTriggerProducer
+ * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Producers
  */
-class ErrorTriggerConnector extends Connector
+class ErrorTriggerProducer extends Producer
 {
     /**
      * @JMS\Exclude
@@ -30,7 +30,7 @@ class ErrorTriggerConnector extends Connector
     const OPTION_RECOVERABLE = 'recoverable';
 
     /**
-     * Sends an exchange to the connector
+     * Sends an exchange to the producer
      *
      * @param Exchange $ex
      * @throws \Exception
@@ -50,7 +50,7 @@ class ErrorTriggerConnector extends Connector
     }
 
     /**
-     * Validates the options passed to an connector
+     * Validates the options passed to an producer
      *
      * @param array $options
      * @throws InvalidOptionException in case one of the options is not valid
@@ -67,7 +67,7 @@ class ErrorTriggerConnector extends Connector
     function getDefaultOptions()
     {
         return array(
-            Connector::OPTION_EXCHANGE_PATTERN => Connector::EXCHANGE_PATTERN_IN_ONLY
+            Producer::OPTION_EXCHANGE_PATTERN => Producer::EXCHANGE_PATTERN_IN_ONLY
         );
     }
 

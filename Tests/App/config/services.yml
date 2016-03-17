@@ -1,11 +1,11 @@
 services:
-  connector.error.triggerer:
-    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\ErrorTriggerConnector
+  producer.error.triggerer:
+    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\ErrorTriggerProducer
 
-  connector.helper:
-    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\HelperConnector
+  producer.helper:
+    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\HelperProducer
     calls:
       - [setMessageFactory, [@smartesb.message_factory]]
 
-  connector.spy:
-    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Connectors\SpyConnector
+  producer.spy:
+    class: Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\SpyProducer

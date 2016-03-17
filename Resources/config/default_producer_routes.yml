@@ -1,7 +1,7 @@
 queues.stomp:
   pattern: "stomp://{host}/{queue}"
   defaults:
-    _connector: @smartesb.connectors.queue
+    _producer: @smartesb.producers.queue
     queue_driver: @smartesb.default_queue_driver
     prefix: "%kernel.environment%/fv_%flows.version%"
   requirements:
@@ -10,7 +10,7 @@ queues.stomp:
 queues.generic:
   pattern: "queue://{host}/{queue}"
   defaults:
-    _connector: @smartesb.connectors.queue
+    _producer: @smartesb.producers.queue
     queue_driver: @smartesb.default_queue_driver
     prefix: "%kernel.environment%/fv_%flows.version%"
   requirements:
@@ -19,4 +19,4 @@ queues.generic:
 direct:
   pattern: "direct://{host}/{subroutine}"
   defaults:
-    _connector: @smartesb.connector.direct
+    _producer: @smartesb.producer.direct

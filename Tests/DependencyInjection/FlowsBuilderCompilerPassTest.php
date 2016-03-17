@@ -39,10 +39,10 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
      * @covers ::getBasicDefinition
      * @covers ::class_uses_deep
      * @covers ::registerService
-     * @covers ::buildConnector
-     * @covers ::findAbstractConnector
-     * @covers ::registerConnector
-     * @covers ::getConnectorScheme
+     * @covers ::buildProducer
+     * @covers ::findAbstractProducer
+     * @covers ::registerProducer
+     * @covers ::getProducerScheme
      * @covers ::addNodeToItinerary
      * @covers ::addToItinerary
      * @covers ::buildHandler
@@ -99,8 +99,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->willReturnMap(
                 [
                     [FlowsBuilderCompilerPass::TAG_DEFINITIONS, ['serviceId' => [['nodeName' => 'abc']]]],
-                    ['connector.direct.demo', $serviceId],
-                    ['connector.custom.business_demo', $serviceId],
+                    ['producer.direct.demo', $serviceId],
+                    ['producer.custom.business_demo', $serviceId],
                 ]
             )
         ;

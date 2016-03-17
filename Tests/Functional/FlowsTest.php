@@ -126,7 +126,7 @@ class FlowsTest extends BaseKernelTestCase{
             $expectedValues[] = $evaluator->evaluateWithVars($value,array());
         }
 
-        $values = $this->getContainer()->get('connector.spy')->getData($conf['path']);
+        $values = $this->getContainer()->get('producer.spy')->getData($conf['path']);
 
         $this->assertEquals($expectedValues,$values, "The spy ".$conf['path']." didn't contain the expected data");
     }
