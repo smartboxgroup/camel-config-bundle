@@ -3,7 +3,7 @@
 namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
-use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
+use Smartbox\Integration\FrameworkBundle\Processors\EndpointProcessor;
 use Smartbox\Integration\FrameworkBundle\Helper\SlugHelper;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
@@ -434,7 +434,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
              * Then you need to execute the compilation in debug mode with xdebug enabled
              */
 
-            $endpointDef = $this->getBasicDefinition(Endpoint::class);
+            $endpointDef = $this->getBasicDefinition(EndpointProcessor::class);
             $endpointDef->addMethodCall('setURI', array($uri));
             if (isset($config->description)) {
                 $endpointDef->addMethodCall('setDescription', array((string) $config->description));
