@@ -135,8 +135,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                     $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
                     break;
 
-                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesProducersRouter':
-                    $definition->addMethodCall('setProducersRouter', array(new Reference('smartesb.router.producers')));
+                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesEndpointRouter':
+                    $definition->addMethodCall('setEndpointsRouter', array(new Reference('smartesb.router.endpoints')));
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\Traits\MessageFactoryAware':
