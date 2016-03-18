@@ -9,3 +9,6 @@ cd ${path}/../vendor/smartbox/core-bundle && git $@
 
 echo -e "\n$(tput setaf 4)--- FRAMEWORK-BUNDLE ---$(tput sgr0)"
 cd ${path}/../vendor/smartbox/integration/framework-bundle && git $@
+
+echo -e "\n$(tput setaf 4)--- SOAP-BUNDLE ---$(tput sgr0)"
+cd ${path}/../vendor/smartbox/besimple/soap && eval "git ${@}"

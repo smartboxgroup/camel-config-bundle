@@ -1427,7 +1427,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "0bd9416bc13943b5ced9dbfee30c5d861364f4f0"
+                "reference": "44e15d415db94a50bccf0ad93b894a05543305da"
             },
             "require": {
                 "doctrine/annotations": "1.2.*",
@@ -1454,7 +1454,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-03-16 15:15:26"
+            "time": "2016-03-18 10:41:00"
         },
         {
             "name": "smartbox/integration/framework-bundle",
@@ -1462,7 +1462,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "ce7f73a99587e34752626f4b7a6ece711672bd6c"
+                "reference": "a8b5fa2cc0778423c4c916976a36430537f4d724"
             },
             "require": {
                 "centraldesktop/stomp": "^2.0",
@@ -1495,7 +1495,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-03-16 15:33:13"
+            "time": "2016-03-18 11:15:56"
         },
         {
             "name": "symfony/assetic-bundle",
