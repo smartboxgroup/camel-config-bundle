@@ -8,7 +8,7 @@ queues.stomp:
     queue: "[a-zA-Z0-9/]+"
 
 queues.generic:
-  pattern: "queue://{host}/{queue}"
+  pattern: "queue://{queue_driver}/{queue}"
   defaults:
     _producer: @smartesb.producers.queue
     queue_driver: @smartesb.default_queue_driver
@@ -17,6 +17,8 @@ queues.generic:
     queue: "[a-zA-Z0-9/]+"
 
 direct:
-  pattern: "direct://{host}/{subroutine}"
+  pattern: "direct://{path}"
   defaults:
     _producer: @smartesb.producer.direct
+  requirements:
+    path: "[a-zA-Z0-9/_]+"

@@ -2,24 +2,21 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
+use Smartbox\Integration\FrameworkBundle\Endpoints\ConfigurableInterface;
+use Smartbox\Integration\FrameworkBundle\Endpoints\Endpoint;
+use Smartbox\Integration\FrameworkBundle\Endpoints\EndpointInterface;
 use Smartbox\Integration\FrameworkBundle\Producers\Producer;
-use Smartbox\Integration\FrameworkBundle\Exceptions\InvalidOptionException;
 use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class SpyProducer
  * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Producers
  */
-class SpyProducer extends Producer
+class SpyProducer extends Producer implements ConfigurableInterface
 {
-    /**
-     * @JMS\Exclude
-     * @var array
-     */
-    protected static $SUPPORTED_EXCHANGE_PATTERNS = [self::EXCHANGE_PATTERN_IN_ONLY];
-
     const OPTION_PATH = 'path';
 
     public $array = [];
@@ -30,8 +27,9 @@ class SpyProducer extends Producer
      * @param Exchange $ex
      * @throws \Exception
      */
-    public function send(Exchange $ex, array $options)
+    public function send(Exchange $ex, EndpointInterface $endpoint)
     {
+        $options = $endpoint->getOptions();
         /** @var EntityX $x */
         $x = $ex->getIn()->getBody();
 
@@ -44,37 +42,6 @@ class SpyProducer extends Producer
         $this->array[$path][] = $x->getX();
     }
 
-    public static function validateOptions(array $options, $checkComplete = false)
-    {
-        if(array_key_exists(self::OPTION_EXCHANGE_PATTERN,$options) && $options[self::OPTION_EXCHANGE_PATTERN] != self::EXCHANGE_PATTERN_IN_ONLY){
-            throw new InvalidOptionException(self::class,self::OPTION_EXCHANGE_PATTERN,"Exchange pattern not supported");
-        }
-
-        if($checkComplete && !array_key_exists(self::OPTION_PATH,$options)){
-            throw new InvalidOptionException(self::class,self::OPTION_PATH,"Missing path option");
-        }
-    }
-
-    /**
-     * Get default options
-     *
-     * @return array
-     */
-    function getDefaultOptions()
-    {
-        return array(
-            self::OPTION_EXCHANGE_PATTERN => self::EXCHANGE_PATTERN_IN_ONLY
-        );
-    }
-
-    public function getAvailableOptions(){
-        $options = array(
-            self::OPTION_PATH => array('Path to store the messages crossing this spy', array()),
-        );
-
-        return $options;
-    }
-
     /**
      * @return array
      */
@@ -85,5 +52,36 @@ class SpyProducer extends Producer
         }else{
             return [];
         }
+    }
+
+    /**
+     *  Key-Value array with the option name as key and the details as value
+     *
+     *  [OptionName => [description, array of valid values],..]
+     *
+     * @return array
+     */
+    public function getOptionsDescriptions()
+    {
+        $options = array(
+            self::OPTION_PATH => array('Path to store the messages crossing this spy', array()),
+        );
+
+        return $options;
+    }
+
+    /**
+     * With this method this class can configure an OptionsResolver that will be used to validate the options
+     *
+     * @param OptionsResolver $resolver
+     * @return mixed
+     */
+    public function configureOptionsResolver(OptionsResolver $resolver)
+    {
+        $resolver->setDefault(Endpoint::OPTION_EXCHANGE_PATTERN,Endpoint::EXCHANGE_PATTERN_IN_ONLY);
+        $resolver->setAllowedValues(Endpoint::OPTION_EXCHANGE_PATTERN,[Endpoint::EXCHANGE_PATTERN_IN_ONLY]);
+
+        $resolver->setRequired(self::OPTION_PATH);
+        $resolver->setAllowedTypes(self::OPTION_PATH,['string']);
     }
 }
