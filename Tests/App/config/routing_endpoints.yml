@@ -2,17 +2,6 @@ smartbox_integration_platform:
     resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
     prefix:   /
 
-queues.stomp:
-  pattern: "stomp://{host}/{queue}"
-  defaults:
-    _producer: @smartesb.producers.queue
-    queue_driver: main
-    prefix: "test/camelconfig/"
-    persistent: false     # For the tests we don't really want to persist our messages
-
-  requirements:
-    queue: "[a-zA-Z0-9/]+"
-
 queues.generic:
   pattern: "queue://{queue_driver}/{queue}"
   defaults:

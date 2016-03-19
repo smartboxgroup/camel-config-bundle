@@ -1,12 +1,3 @@
-queues.stomp:
-  pattern: "stomp://{host}/{queue}"
-  defaults:
-    _producer: @smartesb.producers.queue
-    queue_driver: @smartesb.default_queue_driver
-    prefix: "%kernel.environment%/fv_%flows.version%"
-  requirements:
-    queue: "[a-zA-Z0-9/]+"
-
 queues.generic:
   pattern: "queue://{queue_driver}/{queue}"
   defaults:

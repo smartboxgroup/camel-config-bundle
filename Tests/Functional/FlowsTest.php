@@ -100,9 +100,11 @@ class FlowsTest extends BaseKernelTestCase{
 
         $message = $this->createMessage(new EntityX($in));
         $handler = $this->getContainer()->get('smartesb.helper')->getHandler('sync');
+        $endpointFactory = $this->getContainer()->get('smartesb.endpoint_factory');
+        $endpoint = $endpointFactory->createEndpoint($conf['from']);
 
         /** @var EntityX $result */
-        $result = $handler->handle($message, $conf['from'])->getBody();
+        $result = $handler->handle($message,$endpoint)->getBody();
 
         if (isset($conf['out'])) {
             $out = $evaluator->evaluateWithVars($conf['out'],array('in' => $in));

@@ -72,7 +72,6 @@ smartbox_integration_framework:
             host: mongodb://localhost
             database: camel_config_test
 
-    events_queue_driver: events
     default_queue_driver: main
     default_nosql_driver: main
 
