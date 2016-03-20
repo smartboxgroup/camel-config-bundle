@@ -78,8 +78,8 @@ class SpyProducer extends Producer implements ConfigurableInterface
      */
     public function configureOptionsResolver(OptionsResolver $resolver)
     {
-        $resolver->setDefault(Endpoint::OPTION_EXCHANGE_PATTERN,Endpoint::EXCHANGE_PATTERN_IN_ONLY);
-        $resolver->setAllowedValues(Endpoint::OPTION_EXCHANGE_PATTERN,[Endpoint::EXCHANGE_PATTERN_IN_ONLY]);
+        $resolver->setDefault(Protocol::OPTION_EXCHANGE_PATTERN,Protocol::EXCHANGE_PATTERN_IN_ONLY);
+        $resolver->setAllowedValues(Protocol::OPTION_EXCHANGE_PATTERN,[Protocol::EXCHANGE_PATTERN_IN_ONLY]);
 
         $resolver->setRequired(self::OPTION_PATH);
         $resolver->setAllowedTypes(self::OPTION_PATH,['string']);

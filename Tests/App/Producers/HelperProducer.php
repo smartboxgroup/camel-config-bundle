@@ -87,6 +87,6 @@ class HelperProducer extends Producer implements ProducerInterface, Configurable
         $resolver->setRequired(self::OPTION_OPERAND);
         $resolver->setAllowedTypes(self::OPTION_OPERAND,['numeric']);
 
-        $resolver->setDefault(Endpoint::OPTION_EXCHANGE_PATTERN,Endpoint::EXCHANGE_PATTERN_IN_OUT);
+        $resolver->setDefault(Protocol::OPTION_EXCHANGE_PATTERN,Protocol::EXCHANGE_PATTERN_IN_OUT);
     }
 }

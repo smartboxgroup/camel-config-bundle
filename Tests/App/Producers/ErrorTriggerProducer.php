@@ -9,6 +9,7 @@ use Smartbox\Integration\FrameworkBundle\Core\Endpoints\Endpoint;
 use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
 use Smartbox\Integration\FrameworkBundle\Core\Exchange;
 use Smartbox\Integration\FrameworkBundle\Core\Producers\Producer;
+use Smartbox\Integration\FrameworkBundle\Core\Protocols\Protocol;
 use Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -79,7 +80,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     public function configureOptionsResolver(OptionsResolver $resolver)
     {
         $resolver->setRequired(self::OPTION_RECOVERABLE);
-        $resolver->setDefault(Endpoint::OPTION_EXCHANGE_PATTERN,Endpoint::EXCHANGE_PATTERN_IN_ONLY);
-        $resolver->setAllowedValues(Endpoint::OPTION_EXCHANGE_PATTERN,[Endpoint::EXCHANGE_PATTERN_IN_ONLY]);
+        $resolver->setDefault(Protocol::OPTION_EXCHANGE_PATTERN,Protocol::EXCHANGE_PATTERN_IN_ONLY);
+        $resolver->setAllowedValues(Protocol::OPTION_EXCHANGE_PATTERN,[Protocol::EXCHANGE_PATTERN_IN_ONLY]);
     }
 }
