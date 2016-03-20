@@ -3,12 +3,12 @@
 namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 
 use Monolog\Logger;
-use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
-use Smartbox\Integration\FrameworkBundle\Exceptions\ProcessingException;
+use Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException;
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
+use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 use Symfony\Bridge\Monolog\Handler\DebugHandler;
-use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -86,7 +86,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
     private function handle(array $conf){
         if(!array_key_exists('in',$conf) || !array_key_exists('from',$conf)){
@@ -115,7 +115,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
     private function checkSpy(array $conf){
         if(!array_key_exists('path',$conf) || !array_key_exists('values',$conf)){
@@ -136,7 +136,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
     private function consumeQueue(array $conf){
         if(!array_key_exists('queue',$conf) || !array_key_exists('amount',$conf)){

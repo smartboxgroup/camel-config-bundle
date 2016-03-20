@@ -2,13 +2,13 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
-use Smartbox\Integration\FrameworkBundle\Endpoints\ConfigurableInterface;
-use Smartbox\Integration\FrameworkBundle\Endpoints\Endpoint;
-use Smartbox\Integration\FrameworkBundle\Endpoints\EndpointInterface;
-use Smartbox\Integration\FrameworkBundle\Producers\Producer;
-use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
-use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use JMS\Serializer\Annotation as JMS;
+use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use Smartbox\Integration\FrameworkBundle\Configurability\ConfigurableInterface;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\Endpoint;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
+use Smartbox\Integration\FrameworkBundle\Core\Exchange;
+use Smartbox\Integration\FrameworkBundle\Core\Producers\Producer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**

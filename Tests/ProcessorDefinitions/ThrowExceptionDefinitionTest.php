@@ -3,11 +3,10 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInterface;
-use Smartbox\Integration\FrameworkBundle\Exceptions\BadRequestException;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\FrameworkBundle\Exceptions\Deprecated\BadRequestException;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class ThrowExceptionDefinitionTest

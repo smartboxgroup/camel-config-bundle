@@ -2,14 +2,14 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
-use Smartbox\Integration\FrameworkBundle\Endpoints\ConfigurableInterface;
-use Smartbox\Integration\FrameworkBundle\Endpoints\Endpoint;
-use Smartbox\Integration\FrameworkBundle\Endpoints\EndpointInterface;
-use Smartbox\Integration\FrameworkBundle\Producers\Producer;
-use Smartbox\Integration\FrameworkBundle\Messages\Exchange;
-use Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException;
-use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use JMS\Serializer\Annotation as JMS;
+use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use Smartbox\Integration\FrameworkBundle\Configurability\ConfigurableInterface;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\Endpoint;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
+use Smartbox\Integration\FrameworkBundle\Core\Exchange;
+use Smartbox\Integration\FrameworkBundle\Core\Producers\Producer;
+use Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -35,7 +35,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     /**
      * Sends an exchange to the producer
      *
-     * @param Exchange $ex
+     * @param \Smartbox\Integration\FrameworkBundle\Core\Exchange $ex
      * @throws \Exception
      */
     public function send(Exchange $ex, EndpointInterface $endpoint)
