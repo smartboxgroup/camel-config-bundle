@@ -1,2 +1,2 @@
 steps:
-  - { type: handle, from: "test://smartesb/transformer", in: 1, out: 11}
+  - { type: handle, from: "test://transformer", in: 1, out: 11}

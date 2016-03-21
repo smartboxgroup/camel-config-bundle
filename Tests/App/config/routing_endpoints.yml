@@ -1,7 +1,3 @@
-smartbox_integration_platform:
-    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
-    prefix:   /
-
 queues.generic:
   pattern: "queue://{queue_driver}/{queue}"
   defaults:
@@ -12,22 +8,26 @@ queues.generic:
   requirements:
     queue: "[a-zA-Z0-9/]+"
 
+smartbox_integration_platform:
+    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
+    prefix:   /
+
 ## For testing purposes
 test:
-  pattern: "test://{host}/{path}"
+  pattern: "test://{path}"
   defaults:
     _protocol: @smartesb.protocols.direct
   requirements:
     path: "[a-zA-Z0-9/]+"
 
 helper:
-  pattern: "helper://{host}/{operation}/{operand}"
+  pattern: "helper://{operation}/{operand}"
   defaults:
     _protocol: @smartesb.protocols.base
     _producer: @producer.helper
 
 spy:
-  pattern: "spy://{host}/{path}"
+  pattern: "spy://{path}"
   defaults:
     _protocol: @smartesb.protocols.base
     _producer: @producer.spy

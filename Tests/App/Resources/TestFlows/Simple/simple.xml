@@ -7,21 +7,21 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="test://smartesb/simple1"/>
-        <to uri="helper://smartesb/multiply/5"/>
+        <from uri="test://simple1"/>
+        <to uri="helper://multiply/5"/>
     </route>
     <route>
-        <from uri="test://smartesb/simple2"/>
-        <to uri="helper://smartesb/multiply/2"/>
+        <from uri="test://simple2"/>
+        <to uri="helper://multiply/2"/>
     </route>
     <route>
-        <from uri="test://smartesb/simple3"/>
-        <to uri="helper://smartesb/add/5"/>
+        <from uri="test://simple3"/>
+        <to uri="helper://add/5"/>
     </route>
     <route>
-        <from uri="test://smartesb/simple4"/>
-        <to uri="helper://smartesb/add/5"/>
-        <to uri="helper://smartesb/multiply/2"/>
+        <from uri="test://simple4"/>
+        <to uri="helper://add/5"/>
+        <to uri="helper://multiply/2"/>
     </route>
 </camelContext>
 

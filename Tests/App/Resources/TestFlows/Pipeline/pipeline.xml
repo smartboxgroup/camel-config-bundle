@@ -7,10 +7,10 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="test://smartesb/pipeline"/>
+        <from uri="test://pipeline"/>
         <pipeline>
-            <to uri="helper://smartesb/multiply/5"/>
-            <to uri="spy://smartesb/pipeline/a"/>
+            <to uri="helper://multiply/5"/>
+            <to uri="spy://pipeline/a"/>
         </pipeline>
     </route>
 </camelContext>

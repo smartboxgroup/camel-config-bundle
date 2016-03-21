@@ -5,6 +5,7 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 use Monolog\Logger;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
 use Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
@@ -70,8 +71,8 @@ class FlowsTest extends BaseKernelTestCase{
                 case 'checkSpy':
                     $this->checkSpy($step);
                     break;
-                case 'consumeQueue':
-                    $this->consumeQueue($step);
+                case 'consume':
+                    $this->consume($step);
                     break;
                 case 'expectedException':
                     $this->expectedException($step);
@@ -138,16 +139,16 @@ class FlowsTest extends BaseKernelTestCase{
      * @throws \Exception
      * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
-    private function consumeQueue(array $conf){
-        if(!array_key_exists('queue',$conf) || !array_key_exists('amount',$conf)){
-            throw new \Exception("Missing parameter in consumeQueue step");
+    private function consume(array $conf){
+        if(!array_key_exists('uri',$conf) || !array_key_exists('amount',$conf)){
+            throw new \Exception("Missing parameter uri in consume step");
         }
 
-        $queue = $conf['queue'];
+        $uri = $conf['uri'];
 
-        $consumer = $this->getContainer()->get(SmartboxIntegrationFrameworkExtension::CONSUMER_PREFIX.'queue.main');
-        $consumer->setExpirationCount($conf['amount']);
-        $consumer->consume($queue);
+        /** @var EndpointInterface $endpoint */
+        $endpoint = $this->getContainer()->get('smartesb.endpoint_factory')->createEndpoint($uri);
+        $endpoint->consume($conf['amount']);
     }
 
     private function expectedException(array $conf)

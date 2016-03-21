@@ -7,9 +7,9 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="test://smartesb/subroutines/multicast"/>
-        <to uri="test://smartesb/multicast"/>
-        <to uri="test://smartesb/transformer"/>
+        <from uri="test://subroutines/multicast"/>
+        <to uri="test://multicast"/>
+        <to uri="test://transformer"/>
     </route>
 </camelContext>
 
