@@ -2,13 +2,12 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\DependencyInjection;
 
-use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry\ProcessorDefinitionsRegistry;
-use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
-use Smartbox\Integration\FrameworkBundle\Handlers\SyncHandler;
-use Smartbox\Integration\FrameworkBundle\Processors\Itinerary;
-use Smartbox\Integration\FrameworkBundle\Routing\ItinerariesMap;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\SmartboxIntegrationCamelConfigExtension;
+use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry\ProcessorDefinitionsRegistry;
+use Smartbox\Integration\FrameworkBundle\Configurability\Routing\ItinerariesMap;
+use Smartbox\Integration\FrameworkBundle\Core\Itinerary\Itinerary;
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -39,10 +38,10 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
      * @covers ::getBasicDefinition
      * @covers ::class_uses_deep
      * @covers ::registerService
-     * @covers ::buildConnector
-     * @covers ::findAbstractConnector
-     * @covers ::registerConnector
-     * @covers ::getConnectorScheme
+     * @covers ::buildProducer
+     * @covers ::findAbstractProducer
+     * @covers ::registerProducer
+     * @covers ::getProducerScheme
      * @covers ::addNodeToItinerary
      * @covers ::addToItinerary
      * @covers ::buildHandler
@@ -99,8 +98,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->willReturnMap(
                 [
                     [FlowsBuilderCompilerPass::TAG_DEFINITIONS, ['serviceId' => [['nodeName' => 'abc']]]],
-                    ['connector.direct.demo', $serviceId],
-                    ['connector.custom.business_demo', $serviceId],
+                    ['producer.direct.demo', $serviceId],
+                    ['producer.custom.business_demo', $serviceId],
                 ]
             )
         ;

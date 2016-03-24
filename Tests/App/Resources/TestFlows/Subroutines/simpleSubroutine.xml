@@ -7,8 +7,8 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="test://smartesb/subroutines/simple"/>
-        <to uri="test://smartesb/transformer"/>
+        <from uri="test://subroutines/simple"/>
+        <to uri="test://transformer"/>
     </route>
 </camelContext>
 

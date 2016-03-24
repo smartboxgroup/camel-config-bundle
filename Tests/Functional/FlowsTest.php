@@ -3,12 +3,13 @@
 namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 
 use Monolog\Logger;
-use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
-use Smartbox\Integration\FrameworkBundle\Exceptions\ProcessingException;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
+use Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException;
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
+use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 use Symfony\Bridge\Monolog\Handler\DebugHandler;
-use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Parser;
@@ -70,8 +71,8 @@ class FlowsTest extends BaseKernelTestCase{
                 case 'checkSpy':
                     $this->checkSpy($step);
                     break;
-                case 'consumeQueue':
-                    $this->consumeQueue($step);
+                case 'consume':
+                    $this->consume($step);
                     break;
                 case 'expectedException':
                     $this->expectedException($step);
@@ -86,7 +87,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
     private function handle(array $conf){
         if(!array_key_exists('in',$conf) || !array_key_exists('from',$conf)){
@@ -100,9 +101,11 @@ class FlowsTest extends BaseKernelTestCase{
 
         $message = $this->createMessage(new EntityX($in));
         $handler = $this->getContainer()->get('smartesb.helper')->getHandler('sync');
+        $endpointFactory = $this->getContainer()->get('smartesb.endpoint_factory');
+        $endpoint = $endpointFactory->createEndpoint($conf['from']);
 
         /** @var EntityX $result */
-        $result = $handler->handle($message, $conf['from'])->getBody();
+        $result = $handler->handle($message,$endpoint)->getBody();
 
         if (isset($conf['out'])) {
             $out = $evaluator->evaluateWithVars($conf['out'],array('in' => $in));
@@ -113,7 +116,7 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
     private function checkSpy(array $conf){
         if(!array_key_exists('path',$conf) || !array_key_exists('values',$conf)){
@@ -126,7 +129,7 @@ class FlowsTest extends BaseKernelTestCase{
             $expectedValues[] = $evaluator->evaluateWithVars($value,array());
         }
 
-        $values = $this->getContainer()->get('connector.spy')->getData($conf['path']);
+        $values = $this->getContainer()->get('producer.spy')->getData($conf['path']);
 
         $this->assertEquals($expectedValues,$values, "The spy ".$conf['path']." didn't contain the expected data");
     }
@@ -134,18 +137,18 @@ class FlowsTest extends BaseKernelTestCase{
     /**
      * @param array $conf
      * @throws \Exception
-     * @throws \Smartbox\Integration\FrameworkBundle\Exceptions\HandlerException
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
      */
-    private function consumeQueue(array $conf){
-        if(!array_key_exists('queue',$conf) || !array_key_exists('amount',$conf)){
-            throw new \Exception("Missing parameter in consumeQueue step");
+    private function consume(array $conf){
+        if(!array_key_exists('uri',$conf) || !array_key_exists('amount',$conf)){
+            throw new \Exception("Missing parameter uri in consume step");
         }
 
-        $queue = $conf['queue'];
+        $uri = $conf['uri'];
 
-        $consumer = $this->getContainer()->get(SmartboxIntegrationFrameworkExtension::CONSUMER_PREFIX.'queue.main');
-        $consumer->setExpirationCount($conf['amount']);
-        $consumer->consume($queue);
+        /** @var EndpointInterface $endpoint */
+        $endpoint = $this->getContainer()->get('smartesb.endpoint_factory')->createEndpoint($uri);
+        $endpoint->consume($conf['amount']);
     }
 
     private function expectedException(array $conf)

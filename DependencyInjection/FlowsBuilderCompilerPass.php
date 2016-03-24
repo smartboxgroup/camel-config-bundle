@@ -3,8 +3,8 @@
 namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
-use Smartbox\Integration\FrameworkBundle\Processors\Endpoint;
-use Smartbox\Integration\FrameworkBundle\Helper\SlugHelper;
+use Smartbox\Integration\FrameworkBundle\Core\Processors\EndpointProcessor;
+use Smartbox\Integration\FrameworkBundle\Tools\Helper\SlugHelper;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinition;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -119,27 +119,31 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $traits = $this->classUsesDeep($class);
         foreach ($traits as $trait) {
             switch ($trait) {
-                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator':
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator':
                     $definition->addMethodCall('setEvaluator', array(new Reference('smartesb.util.evaluator')));
                     break;
 
-                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesSerializer':
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesSerializer':
                     $definition->addMethodCall('setSerializer', array(new Reference('serializer')));
                     break;
 
-                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesValidator':
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesValidator':
                     $definition->addMethodCall('setValidator', array(new Reference('validator')));
                     break;
 
-                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesEventDispatcher':
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEventDispatcher':
                     $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
                     break;
 
-                case 'Smartbox\Integration\FrameworkBundle\Traits\UsesConnectorsRouter':
-                    $definition->addMethodCall('setConnectorsRouter', array(new Reference('smartesb.router.connectors')));
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEndpointFactory':
+                    $definition->addMethodCall('setEndpointFactory', array(new Reference('smartesb.endpoint_factory')));
                     break;
 
-                case 'Smartbox\Integration\FrameworkBundle\Traits\MessageFactoryAware':
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEndpointRouter':
+                    $definition->addMethodCall('setEndpointsRouter', array(new Reference('smartesb.router.endpoints')));
+                    break;
+
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\MessageFactoryAware':
                     $definition->addMethodCall('setMessageFactory', [new Reference('smartesb.message_factory')]);
                     break;
             }
@@ -434,7 +438,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
              * Then you need to execute the compilation in debug mode with xdebug enabled
              */
 
-            $endpointDef = $this->getBasicDefinition(Endpoint::class);
+            $endpointDef = $this->getBasicDefinition(EndpointProcessor::class);
             $endpointDef->addMethodCall('setURI', array($uri));
             if (isset($config->description)) {
                 $endpointDef->addMethodCall('setDescription', array((string) $config->description));

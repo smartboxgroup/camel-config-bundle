@@ -2,8 +2,8 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Processors\Routing\ContentRouter;
-use Smartbox\Integration\FrameworkBundle\Util\ExpressionEvaluator;
+use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\ContentRouter;
+use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;

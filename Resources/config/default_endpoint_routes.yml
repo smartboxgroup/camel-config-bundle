@@ -1,0 +1,15 @@
+queues.generic:
+  pattern: "queue://{queue_driver}/{queue}"
+  defaults:
+    _producer: @smartesb.producers.queue
+    queue_driver: @smartesb.default_queue_driver
+    prefix: "%kernel.environment%/fv_%flows.version%"
+  requirements:
+    queue: "[a-zA-Z0-9/]+"
+
+direct:
+  pattern: "direct://{path}"
+  defaults:
+    _producer: @smartesb.producer.direct
+  requirements:
+    path: "[a-zA-Z0-9/_]+"

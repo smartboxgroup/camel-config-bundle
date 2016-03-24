@@ -2,7 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast;
+use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\Multicast;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\MulticastDefinition;
 use Symfony\Component\DependencyInjection\Definition;

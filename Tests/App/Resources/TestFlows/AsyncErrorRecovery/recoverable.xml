@@ -8,11 +8,11 @@
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
         <from uri="queue://main/recoveryAsyncRecoverable"/>
-        <to uri="helper://smartesb/add/5"/>
-        <to uri="spy://smartesb/before_error/recoverable"/>
+        <to uri="helper://add/5"/>
+        <to uri="spy://before_error/recoverable"/>
         <to uri="error://recoverable"/>
-        <to uri="helper://smartesb/add/5"/>
-        <to uri="spy://smartesb/after_error/recoverable"/>
+        <to uri="helper://add/5"/>
+        <to uri="spy://after_error/recoverable"/>
     </route>
 </camelContext>
 

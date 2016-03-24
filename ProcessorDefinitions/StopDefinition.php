@@ -2,7 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Processors\Routing\Multicast;
+use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\Multicast;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 

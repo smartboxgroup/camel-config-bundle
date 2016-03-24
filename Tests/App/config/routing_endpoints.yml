@@ -1,0 +1,48 @@
+queues.generic:
+  pattern: "queue://{queue_driver}/{queue}"
+  defaults:
+    _protocol: @smartesb.protocols.queue
+    prefix: "test/camelconfig/"
+    persistent: false    # For the tests we don't really want to persist our messages
+
+  requirements:
+    queue: "[a-zA-Z0-9/]+"
+
+smartbox_integration_platform:
+    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
+    prefix:   /
+
+## For testing purposes
+test:
+  pattern: "test://{path}"
+  defaults:
+    _protocol: @smartesb.protocols.direct
+  requirements:
+    path: "[a-zA-Z0-9/]+"
+
+helper:
+  pattern: "helper://{operation}/{operand}"
+  defaults:
+    _protocol: @smartesb.protocols.base
+    _producer: @producer.helper
+
+spy:
+  pattern: "spy://{path}"
+  defaults:
+    _protocol: @smartesb.protocols.base
+    _producer: @producer.spy
+  requirements:
+    path: "[a-zA-Z0-9/_-]+"
+
+error.triggerer.recoverable:
+  pattern: "error://recoverable"
+  defaults:
+    _protocol: @smartesb.protocols.base
+    _producer: @producer.error.triggerer
+    recoverable: true
+
+error.triggerer.unrecoverable:
+  pattern: "error://unrecoverable"
+  defaults:
+    _protocol: @smartesb.protocols.base
+    _producer: @producer.error.triggerer

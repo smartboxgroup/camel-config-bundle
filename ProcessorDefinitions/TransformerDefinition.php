@@ -2,7 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator;
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**

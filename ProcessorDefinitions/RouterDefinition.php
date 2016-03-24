@@ -4,7 +4,7 @@ namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use JMS\Serializer\Annotation as JMS;
-use Smartbox\Integration\FrameworkBundle\Traits\UsesEvaluator;
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 
 /**
  * Class RouterDefinition
