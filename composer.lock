@@ -1643,16 +1643,16 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "c6750b0c5b904f12edc8a6f5944abd35bd8a5d51"
+                "reference": "8598556d82f280ca709c31ad11e1c55bf7e43756"
             },
             "require": {
-                "doctrine/annotations": "1.2.*",
-                "jms/serializer-bundle": "^0.13.0",
+                "doctrine/annotations": ">=1.2.0",
+                "jms/serializer-bundle": ">=0.13.0",
                 "php": ">=5.4",
-                "sensio/distribution-bundle": "~4.0",
-                "sensio/framework-extra-bundle": "^3.0",
-                "symfony/monolog-bundle": "~2.4",
-                "symfony/symfony": "2.7.*"
+                "sensio/distribution-bundle": ">=4.0",
+                "sensio/framework-extra-bundle": ">=3.0",
+                "symfony/monolog-bundle": ">=2.4",
+                "symfony/symfony": ">=2.7.0"
             },
             "require-dev": {
                 "digitalnature/php-ref": "dev-master",
@@ -1670,7 +1670,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-04-05 08:38:52"
+            "time": "2016-04-06 13:53:32"
         },
         {
             "name": "smartbox/integration/framework-bundle",
@@ -1678,7 +1678,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "7b292bf70554f7f8fb11fdd3ed320f4adac49644"
+                "reference": "c04e9b17957b84e817de086889cbb9765bd5249a"
             },
             "require": {
                 "centraldesktop/stomp": "^2.0",
@@ -1712,7 +1712,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-04-05 08:56:34"
+            "time": "2016-04-14 14:54:09"
         },
         {
             "name": "symfony/assetic-bundle",
