@@ -1578,7 +1578,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git",
-                "reference": "76f210922c9e6cb569a7a061c08753f7f5bd6929"
+                "reference": "fda110ea8263d597bc97dc4bc0ee05da89834c95"
             },
             "require": {
                 "ass/xmlsecurity": "~1.0",
@@ -1635,7 +1635,7 @@
             "keywords": [
                 "soap"
             ],
-            "time": "2016-03-18 15:17:26"
+            "time": "2016-04-27 14:02:11"
         },
         {
             "name": "smartbox/core-bundle",
@@ -1679,7 +1679,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "a55b5cf839dbea3d95405428697cc77d748d10dd"
+                "reference": "7aacff0092309694b6c2f89117212da78c569b3b"
             },
             "require": {
                 "centraldesktop/stomp": "^2.0",
@@ -1713,7 +1713,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-04-18 13:54:30"
+            "time": "2016-04-27 14:27:10"
         },
         {
             "name": "symfony/assetic-bundle",
