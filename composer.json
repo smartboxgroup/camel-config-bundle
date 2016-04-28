@@ -1,5 +1,6 @@
 {
-  "name": "smartbox/integration/camel-config-bundle",
+  "name": "smartbox/camel-config-bundle",
+  "description": "Smartbox Camel Config Bundle",
   "type": "symfony-bundle",
   "license": "MIT",
   "autoload": {
