@@ -53,7 +53,7 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
                 <to uri="direct://test/e"/>
             </multicast>'
         );
-        $multicastDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $multicastDefinition = $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
 
         $expectedMethodCalls = [
             [
@@ -86,6 +86,6 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(\Exception::class);
 
         $config = new \SimpleXMLElement('<multicast strategyRef="invalidStrategy"></multicast>');
-        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $this->processorDefinition->buildProcessor($config,$this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
 }
