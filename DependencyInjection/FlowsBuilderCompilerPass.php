@@ -286,10 +286,16 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         }
     }
 
-    protected function loadFlowsFromPaths($version,$path){
+    /**
+     * Loads the flows in the given $paths for the given $version
+     *
+     * @param string $version
+     * @param array $paths
+     */
+    protected function loadFlowsFromPaths($version,$paths){
         $this->currentLoadingVersion = $version;
         $finder = new Finder();
-        $finder->files()->name('*.xml')->in($path)->sortByName();
+        $finder->files()->name('*.xml')->in($paths)->sortByName();
 
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
