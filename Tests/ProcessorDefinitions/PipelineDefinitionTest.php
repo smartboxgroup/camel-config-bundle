@@ -48,7 +48,7 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
                 </pipeline>
             '
         );
-        $pipelineDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $pipelineDefinition = $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
         $expectedMethodCalls = [
             [
                 'setDescription',

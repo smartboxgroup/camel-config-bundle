@@ -3,7 +3,7 @@ queues.generic:
   defaults:
     _producer: @smartesb.producers.queue
     queue_driver: @smartesb.default_queue_driver
-    prefix: "%kernel.environment%/fv_%flows.version%"
+    prefix: "%kernel.environment%"
   requirements:
     queue: "[a-zA-Z0-9/]+"
 

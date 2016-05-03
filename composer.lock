@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "11d06bcf5b864eaeb84370a97a3484c0",
-    "content-hash": "577c0b479078af2832b7fa489c41a645",
+    "hash": "8cdc896e40a5fab4938cdb96e825e842",
+    "content-hash": "852774733a2451ef8d8120f173d1ec24",
     "packages": [
         {
             "name": "ass/xmlsecurity",
@@ -1722,12 +1722,12 @@
             "time": "2016-04-18 10:57:09"
         },
         {
-            "name": "smartbox/integration/framework-bundle",
+            "name": "smartbox/framework-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "7aacff0092309694b6c2f89117212da78c569b3b"
+                "reference": "f09fbe7f258367e767927d98dd88c95ebc9bed03"
             },
             "require": {
                 "centraldesktop/stomp": "^2.0",
@@ -1761,7 +1761,8 @@
             "license": [
                 "MIT"
             ],
-            "time": "2016-04-27 14:27:10"
+            "description": "Smartbox Framework Bundle",
+            "time": "2016-05-03 13:56:37"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -3353,13 +3354,55 @@
             ],
             "description": "This bundle generates code for you",
             "time": "2015-03-17 06:36:52"
+        },
+        {
+            "name": "smartbox/integration/framework-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
+                "reference": "7aacff0092309694b6c2f89117212da78c569b3b"
+            },
+            "require": {
+                "centraldesktop/stomp": "^2.0",
+                "doctrine/annotations": "1.2.*",
+                "ext-mongodb": "~1.0",
+                "ext-pcntl": "*",
+                "guzzlehttp/guzzle": "^6.0",
+                "incenteev/composer-parameter-handler": "~2.0",
+                "jms/serializer-bundle": "^0.13.0",
+                "mongodb/mongodb": "~1.0",
+                "ocramius/proxy-manager": "~1.0",
+                "php": ">=5.5",
+                "sensio/distribution-bundle": "~4.0",
+                "sensio/framework-extra-bundle": "^3.0",
+                "smartbox/besimple/soap": "dev-master",
+                "smartbox/core-bundle": "dev-master",
+                "symfony/assetic-bundle": "~2.3",
+                "symfony/monolog-bundle": "~2.4",
+                "symfony/symfony": "2.7.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*",
+                "sensio/generator-bundle": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Smartbox\\Integration\\FrameworkBundle\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2016-04-27 14:27:10"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "smartbox/core-bundle": 20,
-        "smartbox/integration/framework-bundle": 20
+        "smartbox/framework-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

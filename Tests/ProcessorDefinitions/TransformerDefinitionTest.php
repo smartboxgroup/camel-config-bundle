@@ -104,7 +104,7 @@ class TransformerDefinitionTest extends BaseKernelTestCase
      */
     public function testBuildProcessorForValidConfiguration($config, $expectedMethodCalls)
     {
-        $transformerDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $transformerDefinition = $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
 
         $this->assertEquals($expectedMethodCalls, $transformerDefinition->getMethodCalls());
     }
@@ -134,7 +134,7 @@ class TransformerDefinitionTest extends BaseKernelTestCase
     {
         $this->setExpectedException(InvalidConfigurationException::class);
 
-        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
 
 }

@@ -22,7 +22,7 @@
     "incenteev/composer-parameter-handler": "~2.0",
     "jms/serializer-bundle": "^0.13.0",
     "smartbox/core-bundle": "dev-master",
-    "smartbox/integration/framework-bundle": "dev-master"
+    "smartbox/framework-bundle": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "4.7.*",

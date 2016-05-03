@@ -53,10 +53,11 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
         // Mock extension interface and its related methods
         /** @var SmartboxIntegrationCamelConfigExtension|\PHPUnit_Framework_MockObject_MockObject $extension */
         $extension = $this->getMockBuilder(SmartboxIntegrationCamelConfigExtension::class)
-            ->setMethods(array('getNamespace', 'getAlias', 'getFlowsDirectories', 'getXsdValidationBasePath', 'load'))
+            ->setMethods(array('getNamespace', 'getAlias', 'getFlowsDirectories', 'getFrozenFlowsDirectory','getXsdValidationBasePath', 'load'))
             ->getMock();
 
         $extension->method('getFlowsDirectories')->willReturn(__DIR__ . '/../Fixtures/FlowsBuilderCompilerPassSuccess');
+        $extension->method('getFrozenFlowsDirectory')->willReturn(__DIR__ . '/../Fixtures/FlowsBuilderCompilerPassSuccess/Frozen');
 
         $extension->method('getAlias')
             ->will($this->returnValue('smartbox_integration_camel_config'));

@@ -2,6 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\DependencyInjection;
 
+use Smartbox\Integration\FrameworkBundle\Core\Itinerary\ItineraryResolver;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Core\Processors\EndpointProcessor;
 use Smartbox\Integration\FrameworkBundle\Tools\Helper\SlugHelper;
@@ -36,12 +37,14 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     /** @var Definition */
     protected $processorDefinitionsRegistry;
 
-    protected $registeredNames =[];
+    protected $registeredNames = [];
 
     protected $registeredNamesPerContext =[];
 
     /** @var SplFileInfo */
-    protected $currentFile = null;
+    protected $currentLoadingFile = null;
+
+    protected $currentLoadingVersion = null;
     protected $registeredNamesInFileCount = 1;
 
     protected static $incrementId = 0;
@@ -178,7 +181,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $index = count($this->registeredNamesPerContext[$contextId]);
 
-        $id = sha1($contextId.$index);
+        $id = 'v'.$this->currentLoadingVersion.'.'.sha1($contextId.$index);
         $this->registeredNamesPerContext[$contextId][] = $id;
         return $id;
     }
@@ -190,7 +193,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
      */
     public function registerItinerary(Definition $definition, $name)
     {
-        $id = self::ITINERARY_ID_PREFIX . $name;
+        $id = self::ITINERARY_ID_PREFIX .'v'.$this->currentLoadingVersion.'.'. $name;
 
         // Avoid name duplicities
         if(in_array($id, $this->registeredNames)){
@@ -205,11 +208,14 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return new Reference($id);
     }
 
-    public static function determineProcessorId($config){
+    public function determineProcessorId($config){
         $id = @$config["id"]."";
         if(!$id){
-            $id = self::PROCESSOR_ID_PREFIX . self::getNextIncrementalId();
+            $id = self::PROCESSOR_ID_PREFIX .self::getNextIncrementalId();
         }
+
+        $id = 'v'.$this->currentLoadingVersion.'.'.$id;
+
         return $id;
     }
 
@@ -222,6 +228,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         if ($this->container->has($id)) {
             throw new InvalidConfigurationException("Processor id used twice: ".$id);
         }
+
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
 
@@ -251,33 +258,48 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $frameworkExtension = $container->getExtension('smartbox_integration_framework');
 
         $flowsDirs = $extension->getFlowsDirectories();
+        $currentVersion = $frameworkExtension->getFlowsVersion();
         $frozenFlowsDir = $extension->getFrozenFlowsDirectory();
-        $version = $frameworkExtension->getFlowsVersion();
 
-        if(file_exists($frozenFlowsDir.'/'.$version)){
-            $finder = new Finder();
-            $dirs = $finder->directories()->in($frozenFlowsDir.'/'.$version)->depth(0);
-            $paths = [];
-
-            /** @var SplFileInfo $dir */
-            foreach($dirs as $dir){
-                $paths[] = $dir->getRealPath();
-            }
-
-            $this->loadFlowsFromPaths($paths);
-        }else{
-            $this->loadFlowsFromPaths($flowsDirs);
+        // Load current version if not frozen
+        if(!file_exists($frozenFlowsDir.'/'.$currentVersion)){
+            $this->loadFlowsFromPaths($currentVersion,$flowsDirs);
         }
 
+        // Load frozen versions
+        $finder = new Finder();
+        $frozenDirs = $finder->directories()->in($frozenFlowsDir)->depth(0);
+
+        /** @var SplFileInfo $frozenDir */
+        foreach($frozenDirs as $frozenDir){
+            $subFinder = new Finder();
+            $version = $frozenDir->getRelativePathname();
+            $subDirs = $subFinder->directories()->in($frozenDir->getRealPath())->depth(0);
+
+            $paths = [];
+            /** @var SplFileInfo $subDir */
+            foreach($subDirs as $subDir){
+                $paths[] = $subDir->getRealPath();
+            }
+
+            $this->loadFlowsFromPaths($version,$paths);
+        }
     }
 
-    protected function loadFlowsFromPaths($path){
+    /**
+     * Loads the flows in the given $paths for the given $version
+     *
+     * @param string $version
+     * @param array $paths
+     */
+    protected function loadFlowsFromPaths($version,$paths){
+        $this->currentLoadingVersion = $version;
         $finder = new Finder();
-        $finder->files()->name('*.xml')->in($path)->sortByName();
+        $finder->files()->name('*.xml')->in($paths)->sortByName();
 
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
-            $this->currentFile = $file;
+            $this->currentLoadingFile = $file;
             $this->registeredNamesInFileCount = 1;
             $this->loadXMLFlows($file->getRealpath());
         }
@@ -311,7 +333,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         // Default naming
         if($flowName == null){
-            $path = $this->currentFile->getRelativePathname();
+            $path = $this->currentLoadingFile->getRelativePathname();
             $flowName = self::slugify(str_replace('.xml','',$path));
             if($this->registeredNamesInFileCount > 1){
                 $flowName .= '_'.$this->registeredNamesInFileCount;
@@ -323,6 +345,9 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         if(in_array($flowName,$this->registeredNames)){
             throw new InvalidConfigurationException("Flow name used twice: ".$flowName);
         }
+
+        $flowName = 'v'.$this->currentLoadingVersion.'_'.$flowName;
+
         $this->registeredNames[] = $flowName;
 
         // Build stuff..
@@ -344,7 +369,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 sprintf(
                     'The flow "%s" defined in "%s" must contain at least an endpoint to consume from it',
                     $flowName,
-                    realpath($this->currentFile->getPathname())
+                    realpath($this->currentLoadingFile->getPathname())
                 )
             );
         }
@@ -354,11 +379,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 sprintf(
                     'The flow "%s" defined in "%s" must contain at least one node in its itinerary',
                     $flowName,
-                    realpath($this->currentFile->getPathname())
+                    realpath($this->currentLoadingFile->getPathname())
                 )
             );
         }
 
+        $from = ItineraryResolver::getItineraryURIWithVersion($from,$this->currentLoadingVersion);
         $itinerariesRepo = $this->container->getDefinition('smartesb.map.itineraries');
         $itinerariesRepo->addMethodCall('addItinerary',array($from,(string)$itineraryRef));
     }
@@ -374,7 +400,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $definitionService = $this->getDefinitionService($name);
         $definitionService->setDebug($this->container->getParameter('kernel.debug'));
 
-        $id = self::determineProcessorId($config);
+        $id = $this->determineProcessorId($config);
         $def =  $definitionService->buildProcessor($config,$id);
         $ref = $this->registerProcessor($def,$id);
         return $ref;
@@ -393,61 +419,55 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function buildEndpoint($config)
     {
         $uri = @$config["uri"]."";
-        $id = @$config["id"]."";
+        $id = $this->determineProcessorId($config);
 
         $runtimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
-                             $config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
-                             $this->container->getParameter('kernel.debug')
+            $config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT] == true &&
+            $this->container->getParameter('kernel.debug')
         ;
 
         $compiletimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT]) &&
-                                 $config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true &&
-                                 $this->container->getParameter('kernel.debug')
+            $config[ProcessorDefinition::ATTRIBUTE_COMPILETIME_BREAKPOINT] == true &&
+            $this->container->getParameter('kernel.debug')
         ;
-
-        if (!$id || empty($id)) {
-            $id = $this->getDummyIdForURI($uri);
-        }
 
         // Use existing endpoint ...
         // ====================================
         // Find by id ... !! Id should be specific for scheme, host, path
-        if ($this->container->has($id)) {
-            return new Reference($id);
-        }else{
-            if ($compiletimeBreakpoint && function_exists('xdebug_break')) {
-                xdebug_break();
-            }
-
-            /**
-             *
-             * DEBUGGING HINTS
-             *
-             * In case you are adding a compile time breakpoint in a flow xml xdebug will stop here.
-             *
-             * The definition of the endpoint you are debugging is extending this method.
-             *
-             * By continuing executing from here you will have chance to debug the way the endpoint service is built
-             * in the container.
-             *
-             * If you are reading this by chance and wondering how  you can add a compile time breakpoint to endpoint you
-             * need to add this to your xml flow file, as part of the processor you want to debug:
-             *
-             *      <... compiletime-breakpoint="1"/>
-             *
-             * Then you need to execute the compilation in debug mode with xdebug enabled
-             */
-
-            $endpointDef = $this->getBasicDefinition(EndpointProcessor::class);
-            $endpointDef->addMethodCall('setURI', array($uri));
-            if (isset($config->description)) {
-                $endpointDef->addMethodCall('setDescription', array((string) $config->description));
-            };
-            if ($runtimeBreakpoint) {
-                $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
-            }
-            return $this->registerProcessor($endpointDef, $id);
+        if ($compiletimeBreakpoint && function_exists('xdebug_break')) {
+            xdebug_break();
         }
+
+        /**
+         *
+         * DEBUGGING HINTS
+         *
+         * In case you are adding a compile time breakpoint in a flow xml xdebug will stop here.
+         *
+         * The definition of the endpoint you are debugging is extending this method.
+         *
+         * By continuing executing from here you will have chance to debug the way the endpoint service is built
+         * in the container.
+         *
+         * If you are reading this by chance and wondering how  you can add a compile time breakpoint to endpoint you
+         * need to add this to your xml flow file, as part of the processor you want to debug:
+         *
+         *      <... compiletime-breakpoint="1"/>
+         *
+         * Then you need to execute the compilation in debug mode with xdebug enabled
+         */
+
+        $endpointDef = $this->getBasicDefinition(EndpointProcessor::class);
+        $endpointDef->addMethodCall('setURI', array($uri));
+
+        if (isset($config->description)) {
+            $endpointDef->addMethodCall('setDescription', array((string) $config->description));
+        };
+        if ($runtimeBreakpoint) {
+            $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
+        }
+
+        return $this->registerProcessor($endpointDef, $id);
     }
 
     /**

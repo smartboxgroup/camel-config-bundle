@@ -4,6 +4,7 @@ namespace Smartbox\Integration\CamelConfigBundle\Command;
 
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry\ProcessorDefinitionsRegistry;
+use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,12 +38,13 @@ class FreezeFlowsCommand extends ContainerAwareCommand
     {
         $this->output = $output;
         $container = $this->getContainer();
+
         $this->processorDefinitionsRegistry = $container->get('smartesb.registry.processor_definitions');
 
         $this->processorsNodeNames = $this->processorDefinitionsRegistry->getRegisteredDefinitionsNodeNames();
         $this->processorsNodeNames = array_merge(
             $this->processorsNodeNames,
-            [FlowsBuilderCompilerPass::FROM, FlowsBuilderCompilerPass::TO, FlowsBuilderCompilerPass::ROUTE]
+            [FlowsBuilderCompilerPass::FROM, FlowsBuilderCompilerPass::TO]
         );
 
         $flowsDirectories = $container->getParameter('smartesb.flows_directories');
@@ -99,7 +101,7 @@ class FreezeFlowsCommand extends ContainerAwareCommand
         foreach($files as $file) {
             $this->rebuiltNodesCounter = 0;
             $fileId = str_replace('.xml','',$file->getRelativePathname());
-            $idPrefix = FlowsBuilderCompilerPass::PROCESSOR_ID_PREFIX . str_replace(DIRECTORY_SEPARATOR, '.',$fileId);
+            $idPrefix = FlowsBuilderCompilerPass::PROCESSOR_ID_PREFIX .str_replace(DIRECTORY_SEPARATOR, '.',$fileId);
 
             $nodeConfig = new \SimpleXMLElement($file->getContents());
             $this->rebuildNode($nodeConfig, $idPrefix);

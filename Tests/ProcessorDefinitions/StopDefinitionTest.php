@@ -42,7 +42,7 @@ class StopDefinitionTest extends BaseKernelTestCase
     {
         $config = new \SimpleXMLElement("<stop><description>Some description of stop processor</description></stop>");
 
-        $stopDefinition = $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $stopDefinition = $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
 
         $expectedMethodCalls = [
             [
@@ -62,6 +62,6 @@ class StopDefinitionTest extends BaseKernelTestCase
 
         $this->setExpectedException(InvalidConfigurationException::class);
 
-        $this->processorDefinition->buildProcessor($config, FlowsBuilderCompilerPass::determineProcessorId($config));
+        $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
 }
