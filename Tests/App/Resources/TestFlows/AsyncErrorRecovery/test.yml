@@ -1,4 +1,6 @@
 steps:
+  - {type: configureHandler, name: async, retryDelay: 0 }
+
   - {type: handle, from: test://queues/recoveryAsyncRecoverable, in: 1, out: 1}
   - {type: consume, uri: queue://main/recoveryAsyncRecoverable, amount: 1 }
 
