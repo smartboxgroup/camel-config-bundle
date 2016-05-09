@@ -29,7 +29,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
      * @JMS\Exclude
      * @var array
      */
-    static protected $count = 0;
+    static public $count = 0;
 
     const OPTION_RECOVERABLE = 'recoverable';
 
