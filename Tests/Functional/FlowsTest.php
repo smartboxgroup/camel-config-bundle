@@ -4,8 +4,10 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\Functional;
 
 use Monolog\Logger;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
+use Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\ErrorTriggerProducer;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
 use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
+use Smartbox\Integration\FrameworkBundle\Core\Handlers\MessageHandler;
 use Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
@@ -79,6 +81,12 @@ class FlowsTest extends BaseKernelTestCase{
                     break;
                 case 'checkLogs':
                     $this->checkLogs($step);
+                    break;
+                case 'wait':
+                    $this->wait($step);
+                    break;
+                case 'configureHandler':
+                    $this->configureHandler($step);
                     break;
             }
         }
@@ -171,5 +179,44 @@ class FlowsTest extends BaseKernelTestCase{
 
         $this->assertTrue($this->loggerHandler->hasRecordThatContains($message, $level));
 
+    }
+
+    /**
+     * @param array $conf
+     * @throws \Exception
+     */
+    private function wait(array $conf)
+    {
+        if (!array_key_exists('delay', $conf)) {
+            throw new \Exception("Missing parameter in wait step");
+        }
+
+        $delay = $conf['delay'];
+        sleep($delay);
+    }
+
+    /**
+     * @param array $conf
+     * @throws \Exception
+     */
+    private function configureHandler(array $conf)
+    {
+        if (!array_key_exists('name', $conf)) {
+            throw new \Exception("Missing parameter in configureHandler step");
+        }
+
+        /** @var MessageHandler $handler */
+        $handler = $this->getContainer()->get('smartesb.helper')->getHandler($conf['name']);
+        if (array_key_exists('retryDelay', $conf)) {
+            $handler->setRetryDelay($conf['retryDelay']);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function tearDown(){
+        parent::tearDown();
+        ErrorTriggerProducer::$count = 0;
     }
 }
