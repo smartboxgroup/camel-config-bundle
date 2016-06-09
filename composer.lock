@@ -440,7 +440,7 @@
                     "email": "schmittjoh@gmail.com"
                 }
             ],
-            "description": "Common StringType Manipulations with regard to casing and singular/plural rules.",
+            "description": "Common String Manipulations with regard to casing and singular/plural rules.",
             "homepage": "http://www.doctrine-project.org",
             "keywords": [
                 "inflection",
@@ -1729,7 +1729,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "6ab214dee51ed8bbfec88c5a2da614c2ae9fcfd5"
+                "reference": "e293c820be0b507a9dc9f866ff1cdeea6de00796"
             },
             "require": {
                 "centraldesktop/stomp": "^2.0",
@@ -1766,7 +1766,7 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "time": "2016-06-02 16:43:29"
+            "time": "2016-06-09 08:17:47"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2620,12 +2620,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "679ebb73b5dcf7d7533ed5ad303edd07e85d18f0"
+                "reference": "900370c81280cc0d942ffbc5912d80464eaee7e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/679ebb73b5dcf7d7533ed5ad303edd07e85d18f0",
-                "reference": "679ebb73b5dcf7d7533ed5ad303edd07e85d18f0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/900370c81280cc0d942ffbc5912d80464eaee7e9",
+                "reference": "900370c81280cc0d942ffbc5912d80464eaee7e9",
                 "shasum": ""
             },
             "require": {
@@ -2675,7 +2675,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-05-10 18:28:32"
+            "time": "2016-06-03 05:03:56"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2936,19 +2936,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "5d8c2a839d2c77757b7499eb135f34f9f5f07e6f"
+                "reference": "0dc8fd8e87e0366c22b6c25d1f43c4e2e66847b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5d8c2a839d2c77757b7499eb135f34f9f5f07e6f",
-                "reference": "5d8c2a839d2c77757b7499eb135f34f9f5f07e6f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/0dc8fd8e87e0366c22b6c25d1f43c4e2e66847b3",
+                "reference": "0dc8fd8e87e0366c22b6c25d1f43c4e2e66847b3",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
-                "php": ">=5.6",
-                "phpunit/php-text-template": "~1.2",
-                "sebastian/exporter": "~1.2"
+                "php": "^5.6 || ^7.0",
+                "phpunit/php-text-template": "^1.2",
+                "sebastian/exporter": "^1.2"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<5.4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.4"
@@ -2984,7 +2987,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-04-20 14:39:30"
+            "time": "2016-06-04 05:52:19"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
