@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab4882a90ddb81a019f6b85d48deb361",
-    "content-hash": "afbd027c0ba7d9dd5ec61da1246c0f15",
+    "hash": "9c6ff24b796dff6dcf8a9fdf4e79cb00",
+    "content-hash": "f11773fc765a6f198586a742cca0d304",
     "packages": [
         {
             "name": "ass/xmlsecurity",
@@ -1691,7 +1691,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "8e96f44011349d55127bdd2a2a22831872bf91a5"
+                "reference": "c44ea84b3c1e19ea67d9477850b7a24e6026b609"
             },
             "require": {
                 "doctrine/annotations": ">=1.2.0",
@@ -1721,7 +1721,7 @@
                 "MIT"
             ],
             "description": "Smartbox Core Bundle",
-            "time": "2016-06-13 10:57:26"
+            "time": "2016-07-08 11:13:24"
         },
         {
             "name": "smartbox/framework-bundle",
@@ -1732,7 +1732,7 @@
                 "reference": "384f7e7fa75b9e9e440c66752e677e9f64b45601"
             },
             "require": {
-                "centraldesktop/stomp": "^2.0",
+                "centraldesktop/stomp": "dev-master",
                 "doctrine/annotations": "1.2.*",
                 "ext-mongodb": "~1.0",
                 "ext-pcntl": "*",
