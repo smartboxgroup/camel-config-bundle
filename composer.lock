@@ -1691,7 +1691,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "8e96f44011349d55127bdd2a2a22831872bf91a5"
+                "reference": "c44ea84b3c1e19ea67d9477850b7a24e6026b609"
             },
             "require": {
                 "doctrine/annotations": ">=1.2.0",
@@ -1721,7 +1721,7 @@
                 "MIT"
             ],
             "description": "Smartbox Core Bundle",
-            "time": "2016-06-13 10:57:26"
+            "time": "2016-07-08 11:13:24"
         },
         {
             "name": "smartbox/framework-bundle",
@@ -1732,7 +1732,7 @@
                 "reference": "384f7e7fa75b9e9e440c66752e677e9f64b45601"
             },
             "require": {
-                "centraldesktop/stomp": "^2.0",
+                "centraldesktop/stomp": "dev-master",
                 "doctrine/annotations": "1.2.*",
                 "ext-mongodb": "~1.0",
                 "ext-pcntl": "*",
