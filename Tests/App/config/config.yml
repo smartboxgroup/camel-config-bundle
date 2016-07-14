@@ -42,6 +42,9 @@ smartbox_core:
   fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
   entities_namespaces:
     - 'Smartbox\Integration\CamelConfigBundle\Tests\App\Entity'
+  cache_drivers:
+      null:
+          service: ~
 
 smartbox_integration_camel_config:
     flows_directories:
@@ -55,7 +58,7 @@ smartbox_integration_framework:
         main:
             type: ActiveMQ
             description: Default queue driver
-            host: real.smartesb.local
+            host: tcp://real.smartesb.local
             username: ''
             password: ''
             format: json
