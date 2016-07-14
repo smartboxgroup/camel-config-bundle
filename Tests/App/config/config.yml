@@ -43,7 +43,7 @@ smartbox_core:
   entities_namespaces:
     - 'Smartbox\Integration\CamelConfigBundle\Tests\App\Entity'
   cache_drivers:
-      predefined_null:
+      null:
           service: ~
 
 smartbox_integration_camel_config:
