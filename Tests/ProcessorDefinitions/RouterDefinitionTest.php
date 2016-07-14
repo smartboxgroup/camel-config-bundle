@@ -9,6 +9,7 @@ use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
  * Class RouterDefinitionTest
@@ -38,7 +39,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
 
         $this->processorDefinition = new RouterDefinition();
         $this->processorDefinition->setBuilder($this->flowsBuilderCompilerPassMock);
-        $this->processorDefinition->setEvaluator(new ExpressionEvaluator());
+        $this->processorDefinition->setEvaluator(new ExpressionEvaluator(new ExpressionLanguage()));
     }
 
     /**
