@@ -29,7 +29,6 @@ class ProcessDefinitionTest extends BaseKernelTestCase
     public function setUp()
     {
         static::bootKernel();
-        $container = static::$kernel->getContainer();
 
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
             ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary'))
@@ -39,7 +38,6 @@ class ProcessDefinitionTest extends BaseKernelTestCase
         $this->flowsBuilderCompilerPassMock->method('buildItinerary')->willReturn(new Reference(1));
 
         $this->processorDefinition = new ProcessDefinition();
-        $this->processorDefinition->setEvaluator($container->get('smartesb.util.evaluator'));
         $this->processorDefinition->setBuilder($this->flowsBuilderCompilerPassMock);
     }
 
@@ -103,7 +101,7 @@ class ProcessDefinitionTest extends BaseKernelTestCase
             'Empty ref parameter in process node' => [new \SimpleXMLElement("<process ref=\"\"></process>")],
             'Empty ref parameter in process node (with provided description)' => [new \SimpleXMLElement("<process ref=\"\"><description>Some description</description></process>")],
             'Unsupported node in process node' => [new \SimpleXMLElement("<process><wrong_node></wrong_node></process>")],
-            'Unsupported node in process node (with provided content of wrong_node)'[new \SimpleXMLElement("<process><wrong_node>this is content of unsupported node</wrong_node></process>")],
+            'Unsupported node in process node (with provided content of wrong_node)' => [new \SimpleXMLElement("<process><wrong_node>this is content of unsupported node</wrong_node></process>")],
             'Unsupported node in process node (with provided description)' => [new \SimpleXMLElement("<process><description>Some description</description><wrong_node></wrong_node></process>")],
         ];
     }
