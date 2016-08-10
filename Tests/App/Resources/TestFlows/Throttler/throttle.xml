@@ -9,7 +9,7 @@
     <route>
         <from uri="test://throttle1"/>
         <throttle timePeriodMillis="1000" asyncDelayed="true">
-            <simple>100</simple>
+            <simple>5+5</simple>
             <to uri="helper://multiply/5"/>
         </throttle>
     </route>

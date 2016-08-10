@@ -70,6 +70,7 @@ services:
       tags:
         - { name: smartesb.definitions, nodeName: throttle }
       calls:
+        - [setEvaluator, ["@smartesb.util.evaluator"]]
         - [setProcessorClass, ["%smartesb.processor.throttle.class%"]]
 
 
