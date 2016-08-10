@@ -92,5 +92,4 @@ smartbox_integration_framework:
             defer_new_exchanges: true
             retry_delay: 0
 
-    message_consumers:
     flows_version: 0
