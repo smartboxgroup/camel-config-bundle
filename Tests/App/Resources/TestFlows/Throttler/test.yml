@@ -1,2 +1,27 @@
 steps:
-  - { type: handle, from: "test://throttle1", in: 1, out: 5}
+##### Async
+
+## Send 2 messages, consume 2 messages, first one should pass, second one not
+  - { type: handle, from: "test://queues/throttler", in: 1, out: in }
+  - { type: handle, from: "test://queues/throttler", in: 1, out: in }
+
+  - { type: consume, uri: "queue://main/throttler", amount: 2}
+
+  - { type: checkSpy, path: "throttler_async/before", values: [1,1] }
+  - { type: checkSpy, path: "throttler_async/after", values: [5] }
+
+# Wait until the end of the reset, then consume again and check that the message passes
+  - { type: wait, delay: 3 }
+
+  - { type: consume, uri: "queue://main/throttler", amount: 1}
+
+  - { type: checkSpy, path: "throttler_async/before", values: [1,1] }
+  - { type: checkSpy, path: "throttler_async/after", values: [5,5] }
+
+#
+### First message should pass
+#  - { type: handle, from: "test://throttle1", in: 1, out: 5}
+#
+### Second message should fail
+#  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\RetryLater'}
+#  - { type: handle, from: "test://throttle1", in: 1, out: 1}
