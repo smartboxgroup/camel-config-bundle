@@ -17,7 +17,6 @@ class ArrayCacheService implements CacheServiceInterface{
      */
     public function set($key, $value, $expireTTL = null)
     {
-        error_log("SET $key");
         $this->cache[$key] = $value;
     }
 
@@ -28,7 +27,6 @@ class ArrayCacheService implements CacheServiceInterface{
      */
     public function get($key)
     {
-        error_log("GET $key");
         return @$this->cache[$key];
     }
 
@@ -40,7 +38,6 @@ class ArrayCacheService implements CacheServiceInterface{
      */
     public function exists($key, $ttlLimit = null)
     {
-        error_log("EXISTS $key");
         return array_key_exists($key,$this->cache);
     }
 }
