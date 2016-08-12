@@ -18,10 +18,10 @@ steps:
   - { type: checkSpy, path: "throttler_async/before", values: [1,1] }
   - { type: checkSpy, path: "throttler_async/after", values: [5,5] }
 
-#
+
 ### First message should pass
-#  - { type: handle, from: "test://throttle1", in: 1, out: 5}
-#
+  - { type: handle, from: "test://throttle1", in: 1, out: 5}
+
 ### Second message should fail
-#  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\RetryLater'}
-#  - { type: handle, from: "test://throttle1", in: 1, out: 1}
+  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\RetryLater'}
+  - { type: handle, from: "test://throttle1", in: 1, out: 1}
