@@ -1,0 +1,8 @@
+steps:
+
+### First message should pass
+  - { type: handle, from: "test://throttler", in: 1, out: 5}
+
+### Second message should fail
+  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ThrottlingLimitReachedException'}
+  - { type: handle, from: "test://throttler", in: 1, out: 1}

@@ -149,6 +149,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\MessageFactoryAware':
                     $definition->addMethodCall('setMessageFactory', [new Reference('smartesb.message_factory')]);
                     break;
+
+                case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesCacheService':
+                    $definition->addMethodCall('setCacheService', [new Reference('smartcore.cache_service')]);
+                    break;
             }
         }
 
