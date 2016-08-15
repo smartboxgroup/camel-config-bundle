@@ -4,11 +4,9 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Entity;
 
 use JMS\Serializer\Annotation as JMS;
 use Smartbox\CoreBundle\Type\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class EntityX
- * @package Smartbox\Integration\CamelConfigBundle\Tests\App\Entity
+ * Class EntityX.
  */
 class EntityX extends Entity
 {

@@ -5,18 +5,16 @@ namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 use Smartbox\Integration\FrameworkBundle\Service;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInterface;
 use Symfony\Component\DependencyInjection\Definition;
-use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class ProcessorDefinition
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
+ * Class ProcessorDefinition.
  */
 abstract class ProcessorDefinition extends Service implements ProcessorDefinitionInterface
 {
-    const DESCRIPTION = "description";
-    const ID = "id";
-    const ATTRIBUTE_RUNTIME_BREAKPOINT = "runtime-breakpoint";
-    const ATTRIBUTE_COMPILETIME_BREAKPOINT = "compiletime-breakpoint";
+    const DESCRIPTION = 'description';
+    const ID = 'id';
+    const ATTRIBUTE_RUNTIME_BREAKPOINT = 'runtime-breakpoint';
+    const ATTRIBUTE_COMPILETIME_BREAKPOINT = 'compiletime-breakpoint';
 
     /** @var  string */
     protected $processorClass;
@@ -34,13 +32,13 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
         return $this->builder;
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritdoc} */
     public function setBuilder(FlowsBuilderInterface $builder)
     {
         $this->builder = $builder;
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritdoc} */
     public function getProcessorClass()
     {
         return $this->processorClass;
@@ -55,7 +53,7 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setDebug($debug)
     {
@@ -63,7 +61,7 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function buildProcessor($configNode, $id)
     {
@@ -93,7 +91,7 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
             }
         }
 
-        /**
+        /*
          *
          * DEBUGGING HINTS
          *

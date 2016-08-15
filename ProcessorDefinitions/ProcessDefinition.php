@@ -6,8 +6,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class ProcessDefinition
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
+ * Class ProcessDefinition.
  */
 class ProcessDefinition extends ProcessorDefinition
 {
@@ -17,7 +16,7 @@ class ProcessDefinition extends ProcessorDefinition
     public function buildProcessor($configNode, $id)
     {
         $def = parent::buildProcessor($configNode, $id);
-        $ref = (string)$configNode->attributes()->{'ref'};
+        $ref = (string) $configNode->attributes()->{'ref'};
         if (!$ref) {
             throw new InvalidConfigurationException('Missing "ref" property for process node.');
         }
@@ -27,11 +26,11 @@ class ProcessDefinition extends ProcessorDefinition
         foreach ($configNode as $nodeName => $nodeValue) {
             switch ($nodeName) {
                 case self::DESCRIPTION:
-                    $description = (string)$nodeValue;
+                    $description = (string) $nodeValue;
                     $def->addMethodCall('setDescription', [$description]);
                     break;
                 default:
-                    throw new InvalidConfigurationException('Unsupported process node: "' . $nodeName . '"');
+                    throw new InvalidConfigurationException('Unsupported process node: "'.$nodeName.'"');
             }
         }
 

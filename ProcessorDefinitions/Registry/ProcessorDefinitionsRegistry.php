@@ -5,8 +5,7 @@ namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessorDefinitionInterface;
 
 /**
- * Class ProcessorDefinitionsRegistry
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\Registry
+ * Class ProcessorDefinitionsRegistry.
  */
 class ProcessorDefinitionsRegistry
 {
@@ -16,6 +15,7 @@ class ProcessorDefinitionsRegistry
     /**
      * @param $nodeName
      * @param ProcessorDefinitionInterface $definition
+     *
      * @throws \RuntimeException
      */
     public function register($nodeName, ProcessorDefinitionInterface $definition)
@@ -29,13 +29,15 @@ class ProcessorDefinitionsRegistry
 
     /**
      * @param $nodeName
+     *
      * @return ProcessorDefinitionInterface
+     *
      * @throws \RuntimeException
      */
     public function findDefinition($nodeName)
     {
         if (!array_key_exists($nodeName, $this->items)) {
-             throw new \RuntimeException('Can not find processor definition for node name: ' . $nodeName);
+            throw new \RuntimeException('Can not find processor definition for node name: '.$nodeName);
         }
 
         return $this->items[$nodeName];

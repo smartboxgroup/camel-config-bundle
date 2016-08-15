@@ -3,20 +3,18 @@
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
-use JMS\Serializer\Annotation as JMS;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 
 /**
- * Class RouterDefinition
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
+ * Class RouterDefinition.
  */
 class RouterDefinition extends ProcessorDefinition
 {
     use UsesEvaluator;
 
-    const WHEN = "when";
-    const OTHERWISE = "otherwise";
-    const SIMPLE = "simple";
+    const WHEN = 'when';
+    const OTHERWISE = 'otherwise';
+    const SIMPLE = 'simple';
 
     /**
      * {@inheritdoc}
@@ -26,10 +24,9 @@ class RouterDefinition extends ProcessorDefinition
         $def = parent::buildProcessor($configNode, $id);
 
         foreach ($configNode as $nodeName => $nodeValue) {
-
             switch ($nodeName) {
                 case self::DESCRIPTION:
-                    $def->addMethodCall('setDescription', (string)$nodeValue);
+                    $def->addMethodCall('setDescription', (string) $nodeValue);
                     break;
                 case self::WHEN:
                     $clauseParams = $this->buildWhenClauseParams($nodeValue, $id);
@@ -37,7 +34,7 @@ class RouterDefinition extends ProcessorDefinition
                     break;
                 case self::OTHERWISE:
                     $itinerary = $this->buildOtherwiseItineraryRef($nodeValue, $id);
-                    $def->addMethodCall('setOtherwise', array($itinerary));
+                    $def->addMethodCall('setOtherwise', [$itinerary]);
                     break;
             }
         }
@@ -45,7 +42,7 @@ class RouterDefinition extends ProcessorDefinition
         return $def;
     }
 
-    protected function buildWhenClauseParams($whenConfig,$id)
+    protected function buildWhenClauseParams($whenConfig, $id)
     {
         $expression = null;
         $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
@@ -55,12 +52,12 @@ class RouterDefinition extends ProcessorDefinition
         foreach ($whenConfig as $nodeName => $nodeValue) {
             switch ($nodeName) {
                 case self::SIMPLE:
-                    $expression = (string)$nodeValue;
+                    $expression = (string) $nodeValue;
                     try {
                         $evaluator->compile($expression, $this->evaluator->getExchangeExposedVars());
                     } catch (\Exception $e) {
                         throw new InvalidConfigurationException(
-                            "Given value ({$expression}) should be a valid expression: " . $e->getMessage(),
+                            "Given value ({$expression}) should be a valid expression: ".$e->getMessage(),
                             $e->getCode(),
                             $e
                         );
@@ -77,10 +74,10 @@ class RouterDefinition extends ProcessorDefinition
         }
 
         if (empty($expression)) {
-            throw new \Exception("Expression missing in when clause");
+            throw new \Exception('Expression missing in when clause');
         }
 
-        return array($expression, $itinerary);
+        return [$expression, $itinerary];
     }
 
     protected function buildOtherwiseItineraryRef($config, $id)

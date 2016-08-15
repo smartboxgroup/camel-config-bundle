@@ -17,19 +17,18 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Class FlowsBuilderCompilerPass
- * @package Smartbox\Integration\CamelConfigBundle\DependencyInjection
+ * Class FlowsBuilderCompilerPass.
  */
 class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInterface
 {
-    const CAMEL_CONTEXT = "camelContext";
-    const ROUTE = "route";
-    const FROM = "from";
-    const TO = "to";
-    const TAG_DEFINITIONS = "smartesb.definitions";
-    const PROCESSOR_ID_PREFIX = "_smartesb.processor.";
-    const ITINERARY_ID_PREFIX = "smartesb.itinerary.";
-    const ENDPOINT_PREFIX = "endpoint.";
+    const CAMEL_CONTEXT = 'camelContext';
+    const ROUTE = 'route';
+    const FROM = 'from';
+    const TO = 'to';
+    const TAG_DEFINITIONS = 'smartesb.definitions';
+    const PROCESSOR_ID_PREFIX = '_smartesb.processor.';
+    const ITINERARY_ID_PREFIX = 'smartesb.itinerary.';
+    const ENDPOINT_PREFIX = 'endpoint.';
 
     /** @var  ContainerBuilder */
     protected $container;
@@ -39,7 +38,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     protected $registeredNames = [];
 
-    protected $registeredNamesPerContext =[];
+    protected $registeredNamesPerContext = [];
 
     /** @var SplFileInfo */
     protected $currentLoadingFile = null;
@@ -49,16 +48,18 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     protected static $incrementId = 0;
 
-    static public function camelToSnake($input) {
+    public static function camelToSnake($input)
+    {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
         foreach ($ret as &$match) {
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
+
         return implode('_', $ret);
     }
 
-    static public function slugify($text)
+    public static function slugify($text)
     {
         $text = self::camelToSnake($text);
         // replace non letter or digits by -
@@ -83,7 +84,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return $text;
     }
 
-    function classUsesDeep($class, $autoload = true)
+    public function classUsesDeep($class, $autoload = true)
     {
         $traits = [];
         do {
@@ -96,12 +97,15 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return array_unique($traits);
     }
 
-    private static function getNextIncrementalId(){
-        self::$incrementId++;
+    private static function getNextIncrementalId()
+    {
+        ++self::$incrementId;
+
         return self::$incrementId;
     }
 
-    public function getParameter($name){
+    public function getParameter($name)
+    {
         return $this->container->getParameter($name);
     }
 
@@ -117,33 +121,33 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             throw new \InvalidArgumentException("$class is not a valid class name");
         }
 
-        $definition = new Definition($class, array());
+        $definition = new Definition($class, []);
 
         $traits = $this->classUsesDeep($class);
         foreach ($traits as $trait) {
             switch ($trait) {
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator':
-                    $definition->addMethodCall('setEvaluator', array(new Reference('smartesb.util.evaluator')));
+                    $definition->addMethodCall('setEvaluator', [new Reference('smartesb.util.evaluator')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesSerializer':
-                    $definition->addMethodCall('setSerializer', array(new Reference('serializer')));
+                    $definition->addMethodCall('setSerializer', [new Reference('serializer')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesValidator':
-                    $definition->addMethodCall('setValidator', array(new Reference('validator')));
+                    $definition->addMethodCall('setValidator', [new Reference('validator')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEventDispatcher':
-                    $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
+                    $definition->addMethodCall('setEventDispatcher', [new Reference('event_dispatcher')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEndpointFactory':
-                    $definition->addMethodCall('setEndpointFactory', array(new Reference('smartesb.endpoint_factory')));
+                    $definition->addMethodCall('setEndpointFactory', [new Reference('smartesb.endpoint_factory')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEndpointRouter':
-                    $definition->addMethodCall('setEndpointsRouter', array(new Reference('smartesb.router.endpoints')));
+                    $definition->addMethodCall('setEndpointsRouter', [new Reference('smartesb.router.endpoints')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\MessageFactoryAware':
@@ -161,7 +165,9 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param $nodeName
+     *
      * @return ProcessorDefinitionInterface
+     *
      * @throws \Exception
      */
     protected function getDefinitionService($nodeName)
@@ -176,10 +182,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param $contextId
+     *
      * @return string
      */
-    public function generateNextUniqueReproducibleIdForContext($contextId) {
-        if(!array_key_exists($contextId, $this->registeredNamesPerContext)){
+    public function generateNextUniqueReproducibleIdForContext($contextId)
+    {
+        if (!array_key_exists($contextId, $this->registeredNamesPerContext)) {
             $this->registeredNamesPerContext[$contextId] = [];
         }
 
@@ -187,35 +195,38 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $id = 'v'.$this->currentLoadingVersion.'.'.sha1($contextId.$index);
         $this->registeredNamesPerContext[$contextId][] = $id;
+
         return $id;
     }
 
     /**
      * @param Definition $definition
-     * @param string $name
+     * @param string     $name
+     *
      * @return Reference
      */
     public function registerItinerary(Definition $definition, $name)
     {
-        $id = self::ITINERARY_ID_PREFIX .'v'.$this->currentLoadingVersion.'.'. $name;
+        $id = self::ITINERARY_ID_PREFIX.'v'.$this->currentLoadingVersion.'.'.$name;
 
         // Avoid name duplicities
-        if(in_array($id, $this->registeredNames)){
-            throw new InvalidConfigurationException("Itinerary name used twice: ".$id);
+        if (in_array($id, $this->registeredNames)) {
+            throw new InvalidConfigurationException('Itinerary name used twice: '.$id);
         }
         $this->registeredNames[] = $id;
 
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
-        $definition->setArguments(array($name));
+        $definition->setArguments([$name]);
 
         return new Reference($id);
     }
 
-    public function determineProcessorId($config){
-        $id = @$config["id"]."";
-        if(!$id){
-            $id = self::PROCESSOR_ID_PREFIX .self::getNextIncrementalId();
+    public function determineProcessorId($config)
+    {
+        $id = @$config['id'].'';
+        if (!$id) {
+            $id = self::PROCESSOR_ID_PREFIX.self::getNextIncrementalId();
         }
 
         $id = 'v'.$this->currentLoadingVersion.'.'.$id;
@@ -225,12 +236,13 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param Definition $definition
+     *
      * @return Reference
      */
     public function registerProcessor(Definition $definition, $id)
     {
         if ($this->container->has($id)) {
-            throw new InvalidConfigurationException("Processor id used twice: ".$id);
+            throw new InvalidConfigurationException('Processor id used twice: '.$id);
         }
 
         $this->container->setDefinition($id, $definition);
@@ -241,6 +253,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param ContainerBuilder $container
+     *
      * @api
      */
     public function process(ContainerBuilder $container)
@@ -251,7 +264,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS);
         foreach ($processorDefinitionsServices as $id => $tags) {
             foreach ($tags as $attributes) {
-                $this->processorDefinitionsRegistry->addMethodCall('register', array($attributes['nodeName'], new Reference($id)));
+                $this->processorDefinitionsRegistry->addMethodCall('register', [$attributes['nodeName'], new Reference($id)]);
             }
         }
 
@@ -266,8 +279,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $frozenFlowsDir = $extension->getFrozenFlowsDirectory();
 
         // Load current version if not frozen
-        if(!file_exists($frozenFlowsDir.'/'.$currentVersion)){
-            $this->loadFlowsFromPaths($currentVersion,$flowsDirs);
+        if (!file_exists($frozenFlowsDir.'/'.$currentVersion)) {
+            $this->loadFlowsFromPaths($currentVersion, $flowsDirs);
         }
 
         // Load frozen versions
@@ -275,28 +288,29 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $frozenDirs = $finder->directories()->in($frozenFlowsDir)->depth(0);
 
         /** @var SplFileInfo $frozenDir */
-        foreach($frozenDirs as $frozenDir){
+        foreach ($frozenDirs as $frozenDir) {
             $subFinder = new Finder();
             $version = $frozenDir->getRelativePathname();
             $subDirs = $subFinder->directories()->in($frozenDir->getRealPath())->depth(0);
 
             $paths = [];
             /** @var SplFileInfo $subDir */
-            foreach($subDirs as $subDir){
+            foreach ($subDirs as $subDir) {
                 $paths[] = $subDir->getRealPath();
             }
 
-            $this->loadFlowsFromPaths($version,$paths);
+            $this->loadFlowsFromPaths($version, $paths);
         }
     }
 
     /**
-     * Loads the flows in the given $paths for the given $version
+     * Loads the flows in the given $paths for the given $version.
      *
      * @param string $version
-     * @param array $paths
+     * @param array  $paths
      */
-    protected function loadFlowsFromPaths($version,$paths){
+    protected function loadFlowsFromPaths($version, $paths)
+    {
         $this->currentLoadingVersion = $version;
         $finder = new Finder();
         $finder->files()->name('*.xml')->in($paths)->sortByName();
@@ -326,7 +340,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                     $this->build($value);
                     break;
                 case self::ROUTE:
-                    $this->buildFlow($value,(string)@$value['id']);
+                    $this->buildFlow($value, (string) @$value['id']);
                     break;
             }
         }
@@ -336,18 +350,18 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function buildFlow($config, $flowName = null)
     {
         // Default naming
-        if($flowName == null){
+        if ($flowName == null) {
             $path = $this->currentLoadingFile->getRelativePathname();
-            $flowName = self::slugify(str_replace('.xml','',$path));
-            if($this->registeredNamesInFileCount > 1){
+            $flowName = self::slugify(str_replace('.xml', '', $path));
+            if ($this->registeredNamesInFileCount > 1) {
                 $flowName .= '_'.$this->registeredNamesInFileCount;
             }
-            $this->registeredNamesInFileCount++;
+            ++$this->registeredNamesInFileCount;
         }
 
         // Avoid name duplicities
-        if(in_array($flowName,$this->registeredNames)){
-            throw new InvalidConfigurationException("Flow name used twice: ".$flowName);
+        if (in_array($flowName, $this->registeredNames)) {
+            throw new InvalidConfigurationException('Flow name used twice: '.$flowName);
         }
 
         $flowName = 'v'.$this->currentLoadingVersion.'_'.$flowName;
@@ -361,14 +375,14 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         foreach ($config as $key => $value) {
             if ($key == self::FROM) {
-                $from = (string)@$value["uri"];
+                $from = (string) @$value['uri'];
             } else {
                 $this->addNodeToItinerary($itineraryRef, $key, $value);
-                $itineraryNodes++;
+                ++$itineraryNodes;
             }
         }
 
-        if(empty($from)){
+        if (empty($from)) {
             throw new InvalidConfigurationException(
                 sprintf(
                     'The flow "%s" defined in "%s" must contain at least an endpoint to consume from it',
@@ -378,7 +392,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             );
         }
 
-        if($itineraryNodes == 0){
+        if ($itineraryNodes == 0) {
             throw new InvalidConfigurationException(
                 sprintf(
                     'The flow "%s" defined in "%s" must contain at least one node in its itinerary',
@@ -388,15 +402,17 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             );
         }
 
-        $from = ItineraryResolver::getItineraryURIWithVersion($from,$this->currentLoadingVersion);
+        $from = ItineraryResolver::getItineraryURIWithVersion($from, $this->currentLoadingVersion);
         $itinerariesRepo = $this->container->getDefinition('smartesb.map.itineraries');
-        $itinerariesRepo->addMethodCall('addItinerary',array($from,(string)$itineraryRef));
+        $itinerariesRepo->addMethodCall('addItinerary', [$from, (string) $itineraryRef]);
     }
 
     /**
      * @param $name
      * @param $config
+     *
      * @return Reference
+     *
      * @throws \Exception
      */
     public function buildProcessor($name, $config)
@@ -405,8 +421,9 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $definitionService->setDebug($this->container->getParameter('kernel.debug'));
 
         $id = $this->determineProcessorId($config);
-        $def =  $definitionService->buildProcessor($config,$id);
-        $ref = $this->registerProcessor($def,$id);
+        $def = $definitionService->buildProcessor($config, $id);
+        $ref = $this->registerProcessor($def, $id);
+
         return $ref;
     }
 
@@ -417,12 +434,14 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param $config
+     *
      * @return Reference
+     *
      * @throws \Exception
      */
     public function buildEndpoint($config)
     {
-        $uri = @$config["uri"]."";
+        $uri = @$config['uri'].'';
         $id = $this->determineProcessorId($config);
 
         $runtimeBreakpoint = isset($config[ProcessorDefinition::ATTRIBUTE_RUNTIME_BREAKPOINT]) &&
@@ -442,7 +461,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             xdebug_break();
         }
 
-        /**
+        /*
          *
          * DEBUGGING HINTS
          *
@@ -462,10 +481,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
          */
 
         $endpointDef = $this->getBasicDefinition(EndpointProcessor::class);
-        $endpointDef->addMethodCall('setURI', array($uri));
+        $endpointDef->addMethodCall('setURI', [$uri]);
 
         if (isset($config->description)) {
-            $endpointDef->addMethodCall('setDescription', array((string) $config->description));
+            $endpointDef->addMethodCall('setDescription', [(string) $config->description]);
         };
         if ($runtimeBreakpoint) {
             $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
@@ -497,9 +516,11 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /**
      * @param Definition|Reference $itinerary
-     * @param string $nodeName
+     * @param string               $nodeName
      * @param $nodeConfig
+     *
      * @throws \Exception
+     *
      * @internal param $configNode
      */
     public function addNodeToItinerary(Reference $itinerary, $nodeName, $nodeConfig)

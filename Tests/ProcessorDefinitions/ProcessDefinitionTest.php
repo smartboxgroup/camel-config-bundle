@@ -11,8 +11,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class ProcessDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class ProcessDefinitionTest.
  */
 class ProcessDefinitionTest extends BaseKernelTestCase
 {
@@ -31,7 +30,7 @@ class ProcessDefinitionTest extends BaseKernelTestCase
         static::bootKernel();
 
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary'))
+            ->setMethods(['getBasicDefinition', 'registerService', 'buildItinerary'])
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -50,33 +49,33 @@ class ProcessDefinitionTest extends BaseKernelTestCase
                     [
                         'setProcessor',
                         [
-                            new Reference('processor_id')
-                        ]
+                            new Reference('processor_id'),
+                        ],
                     ],
                     [
                         'setDescription',
                         [
                             'Some description of \'Process\' processor',
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
             [
-                new \SimpleXMLElement("<process ref=\"processor_id\"><description></description></process>"),
+                new \SimpleXMLElement('<process ref="processor_id"><description></description></process>'),
                 [
                     [
                         'setProcessor',
                         [
-                            new Reference('processor_id')
-                        ]
+                            new Reference('processor_id'),
+                        ],
                     ],
                     [
                         'setDescription',
                         [
                             '',
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
     }
@@ -97,17 +96,17 @@ class ProcessDefinitionTest extends BaseKernelTestCase
     public function dataProviderForInvalidConfiguration()
     {
         return [
-            'Missing ref parameter in process node' => [new \SimpleXMLElement("<process></process>")],
-            'Empty ref parameter in process node' => [new \SimpleXMLElement("<process ref=\"\"></process>")],
-            'Empty ref parameter in process node (with provided description)' => [new \SimpleXMLElement("<process ref=\"\"><description>Some description</description></process>")],
-            'Unsupported node in process node' => [new \SimpleXMLElement("<process><wrong_node></wrong_node></process>")],
-            'Unsupported node in process node (with provided content of wrong_node)' => [new \SimpleXMLElement("<process><wrong_node>this is content of unsupported node</wrong_node></process>")],
-            'Unsupported node in process node (with provided description)' => [new \SimpleXMLElement("<process><description>Some description</description><wrong_node></wrong_node></process>")],
+            'Missing ref parameter in process node' => [new \SimpleXMLElement('<process></process>')],
+            'Empty ref parameter in process node' => [new \SimpleXMLElement('<process ref=""></process>')],
+            'Empty ref parameter in process node (with provided description)' => [new \SimpleXMLElement('<process ref=""><description>Some description</description></process>')],
+            'Unsupported node in process node' => [new \SimpleXMLElement('<process><wrong_node></wrong_node></process>')],
+            'Unsupported node in process node (with provided content of wrong_node)' => [new \SimpleXMLElement('<process><wrong_node>this is content of unsupported node</wrong_node></process>')],
+            'Unsupported node in process node (with provided description)' => [new \SimpleXMLElement('<process><description>Some description</description><wrong_node></wrong_node></process>')],
         ];
     }
 
     /**
-     * Tests exception when process node is invalid
+     * Tests exception when process node is invalid.
      *
      * @dataProvider dataProviderForInvalidConfiguration
      *
@@ -119,5 +118,4 @@ class ProcessDefinitionTest extends BaseKernelTestCase
 
         $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
-
 }

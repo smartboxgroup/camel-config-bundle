@@ -8,8 +8,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class PipelineDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class PipelineDefinitionTest.
  */
 class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +25,7 @@ class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'addToItinerary'))
+            ->setMethods(['getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'addToItinerary'])
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
