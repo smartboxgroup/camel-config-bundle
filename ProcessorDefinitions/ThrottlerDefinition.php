@@ -30,7 +30,7 @@ class ThrottlerDefinition extends ProcessorDefinition {
 
         // asyncDelayed
         $asyncDelayed = false;
-        if ($configNode->hasAttribute('asyncDelayed')) {
+        if (isset($configNode->attributes()->{'asyncDelayed'})) {
             $asyncDelayed = strtolower($configNode->attributes()->{'asyncDelayed'});
             if (!in_array($asyncDelayed, ['true', 'false'])) {
                 throw new \RuntimeException(sprintf(
@@ -41,8 +41,8 @@ class ThrottlerDefinition extends ProcessorDefinition {
             $asyncDelayed = $asyncDelayed === 'true' ? true : false;
         }
 
-        $def->addMethodCall('setPeriodMs', array($timeMs));
-        $def->addMethodCall('setAsyncDelayed', $asyncDelayed);
+        $def->addMethodCall('setPeriodMs', [$timeMs]);
+        $def->addMethodCall('setAsyncDelayed', [$asyncDelayed]);
 
         $expression = null;
 
