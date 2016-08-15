@@ -22,13 +22,27 @@ class ThrottlerDefinition extends ProcessorDefinition {
     {
         $def = parent::buildProcessor($configNode, $id);
 
-        // Description
+        // timePeriodMillis
         $timeMs = (int)$configNode->attributes()->{'timePeriodMillis'};
         if(!$timeMs && is_int($timeMs) && ! $timeMs >= 0){
             throw new \RuntimeException("The attribute timePeriodMillis of the throttler processor must be defined and be an integer >= 0");
         }
 
+        // asyncDelayed
+        $asyncDelayed = false;
+        if ($configNode->hasAttribute('asyncDelayed')) {
+            $asyncDelayed = strtolower($configNode->attributes()->{'asyncDelayed'});
+            if (!in_array($asyncDelayed, ['true', 'false'])) {
+                throw new \RuntimeException(sprintf(
+                    'The attribute asyncDelayed must be boolean ("true" or "false"): "%s" given',
+                    $asyncDelayed
+                ));
+            }
+            $asyncDelayed = $asyncDelayed === 'true' ? true : false;
+        }
+
         $def->addMethodCall('setPeriodMs', array($timeMs));
+        $def->addMethodCall('setAsyncDelayed', $asyncDelayed);
 
         $expression = null;
 
