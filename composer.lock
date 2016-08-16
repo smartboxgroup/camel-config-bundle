@@ -1691,7 +1691,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
-                "reference": "abdcea38b365ff3ca773995d8268f8324dbf0e1f"
+                "reference": "381868f3921b48b7e0f944b89554d465a1cc3c45"
             },
             "require": {
                 "doctrine/annotations": ">=1.2.0",
@@ -1704,9 +1704,9 @@
             },
             "require-dev": {
                 "digitalnature/php-ref": "dev-master",
-                "phpunit/php-code-coverage": "dev-master",
-                "phpunit/phpunit": "dev-master",
-                "phpunit/phpunit-mock-objects": "dev-master",
+                "phpunit/php-code-coverage": "~4.0",
+                "phpunit/phpunit": "~5.4",
+                "phpunit/phpunit-mock-objects": "~3.2",
                 "predis/predis": "^1.0",
                 "sensio/generator-bundle": "~2.3",
                 "snc/redis-bundle": "^1.1"
@@ -1721,7 +1721,7 @@
                 "MIT"
             ],
             "description": "Smartbox Core Bundle",
-            "time": "2016-07-19 11:15:46"
+            "time": "2016-08-16 09:07:43"
         },
         {
             "name": "smartbox/framework-bundle",
@@ -1729,7 +1729,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "11568d932476fe8ac0d11982be4b8b49bb77061a"
+                "reference": "7b4c64decf898717409335110ec16b9e7ac952c1"
             },
             "require": {
                 "centraldesktop/stomp": "dev-master",
@@ -1766,7 +1766,7 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "time": "2016-08-15 11:13:35"
+            "time": "2016-08-16 15:03:34"
         },
         {
             "name": "symfony/assetic-bundle",
