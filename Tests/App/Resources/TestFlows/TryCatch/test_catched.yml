@@ -1,0 +1,7 @@
+steps:
+  - { type: handle, from: "test://try1", in: 1, out: 22 }
+  - { type: handle, from: "test://try2", in: 1, out: 42 }
+
+  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException'}
+  - { type: handle, from: "test://try3", in: 1, out: 21 }
+

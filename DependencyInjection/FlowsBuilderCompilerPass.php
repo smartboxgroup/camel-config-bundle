@@ -492,6 +492,16 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function addProcessorDefinitionToItinerary(Reference $itinerary, Definition $processor, $id = null)
+    {
+        $id = $this->determineProcessorId(['id' => $id]);
+        $ref = $this->registerProcessor($processor,$id);
+        $this->addToItinerary($itinerary,$ref);
+    }
+
+    /**
      * @param Definition|Reference $itinerary
      * @param string $nodeName
      * @param $nodeConfig
