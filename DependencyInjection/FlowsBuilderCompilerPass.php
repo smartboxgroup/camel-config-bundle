@@ -153,6 +153,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesCacheService':
                     $definition->addMethodCall('setCacheService', [new Reference('smartcore.cache_service')]);
                     break;
+
+                case 'Symfony\Component\DependencyInjection\ContainerAwareTrait':
+                    $definition->addMethodCall('setContainer', [new Reference('service_container')]);
+                    break;
             }
         }
 
