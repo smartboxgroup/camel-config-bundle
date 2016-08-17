@@ -46,3 +46,4 @@ error.triggerer.unrecoverable:
   defaults:
     _protocol: @smartesb.protocols.base
     _producer: @producer.error.triggerer
+    recoverable: false

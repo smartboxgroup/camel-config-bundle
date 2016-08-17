@@ -81,7 +81,7 @@
             <to uri="error://recoverable"/>
             <to uri="helper://add/5"/>
             <to uri="spy://try/async/after_first_error"/>
-            <to uri="error://unrecoverable?force=true"/> <!-- This will make sure that we always throw the exception -->
+            <to uri="error://unrecoverable?force=1"/> <!-- This will make sure that we always throw the exception -->
             <to uri="helper://add/10"/>
             <doCatch>
                 <handled>

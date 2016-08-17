@@ -83,8 +83,8 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     {
         $resolver->setRequired(self::OPTION_RECOVERABLE);
         $resolver->setDefault(Protocol::OPTION_EXCHANGE_PATTERN,Protocol::EXCHANGE_PATTERN_IN_ONLY);
+        $resolver->setDefault(self::OPTION_RECOVERABLE, false);
         $resolver->setDefault(self::OPTION_FORCE, false);
-        $resolver->setAllowedTypes(self::OPTION_FORCE,'bool');
         $resolver->setAllowedValues(Protocol::OPTION_EXCHANGE_PATTERN,[Protocol::EXCHANGE_PATTERN_IN_ONLY]);
     }
 }
