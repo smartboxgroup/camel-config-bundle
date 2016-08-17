@@ -1729,7 +1729,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "393d0cc51f9ffa2ee102719e7ab50b7050d3046a"
+                "reference": "11568d932476fe8ac0d11982be4b8b49bb77061a"
             },
             "require": {
                 "centraldesktop/stomp": "dev-master",
@@ -1766,7 +1766,7 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "time": "2016-08-02 11:14:06"
+            "time": "2016-08-15 11:13:35"
         },
         {
             "name": "symfony/assetic-bundle",

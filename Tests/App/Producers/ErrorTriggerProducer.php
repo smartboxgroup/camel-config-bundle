@@ -32,6 +32,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     static public $count = 0;
 
     const OPTION_RECOVERABLE = 'recoverable';
+    const OPTION_FORCE = 'force';
 
     /**
      * Sends an exchange to the producer
@@ -43,7 +44,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     {
         $options = $endpoint->getOptions();
 
-        if(self::$count < self::$amountOfErrors){
+        if(self::$count < self::$amountOfErrors || @$options[self::OPTION_FORCE]){
             $ex->getIn()->setBody(new EntityX(666));
             self::$count++;
 
@@ -66,6 +67,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     {
         $options = array(
             self::OPTION_RECOVERABLE => array('Whether the errors triggered are recoverable or not', array()),
+            self::OPTION_FORCE => array('Force to throw the exception every time, not only n number of times', array()),
         );
 
         return $options;
@@ -81,6 +83,8 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     {
         $resolver->setRequired(self::OPTION_RECOVERABLE);
         $resolver->setDefault(Protocol::OPTION_EXCHANGE_PATTERN,Protocol::EXCHANGE_PATTERN_IN_ONLY);
+        $resolver->setDefault(self::OPTION_FORCE, false);
+        $resolver->setAllowedTypes(self::OPTION_FORCE,'bool');
         $resolver->setAllowedValues(Protocol::OPTION_EXCHANGE_PATTERN,[Protocol::EXCHANGE_PATTERN_IN_ONLY]);
     }
 }

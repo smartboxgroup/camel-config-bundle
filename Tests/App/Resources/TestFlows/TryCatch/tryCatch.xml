@@ -53,6 +53,7 @@
           </doFinally>
       </doTry>
     </route>
+
     <route>
       <from uri="test://try3"/>
       <to uri="helper://add/5"/>
@@ -70,6 +71,28 @@
               <to uri="helper://add/1"/>
           </doFinally>
       </doTry>
+    </route>
+
+    <route>
+        <from uri="queue://main/tryAsync"/>
+        <doTry>
+            <to uri="helper://add/5"/>
+            <to uri="spy://try/async/before_first_error"/>
+            <to uri="error://recoverable"/>
+            <to uri="helper://add/5"/>
+            <to uri="spy://try/async/after_first_error"/>
+            <to uri="error://unrecoverable?force=true"/> <!-- This will make sure that we always throw the exception -->
+            <to uri="helper://add/10"/>
+            <doCatch>
+                <handled>
+                    <simple>not isRecoverable(exception)</simple>
+                </handled>
+                <to uri="helper://add/50"/>
+            </doCatch>
+            <doFinally>
+                <to uri="spy://try/async/after_all"/>
+            </doFinally>
+        </doTry>
     </route>
 </camelContext>
 

@@ -1,4 +1,4 @@
 steps:
-  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Tests\Fixtures\Exceptions\SampleRecoverableException'}
+  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException'}
   - { type: handle, from: "test://try3", in: 1, out: 21 }
 

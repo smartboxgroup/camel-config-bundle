@@ -9,6 +9,7 @@ parameters:
   smartesb.definitions.stop.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\StopDefinition
   smartesb.definitions.process.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessDefinition
   smartesb.definitions.try_catch.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TryCatchDefinition
+  smartesb.definitions.throttle.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrottlerDefinition
 
 services:
   smartesb.registry.processor_definitions:
@@ -64,6 +65,14 @@ services:
         - { name: smartesb.definitions, nodeName: process }
       calls:
         - [setProcessorClass, ["%smartesb.processor.process.class%"]]
+
+  smartesb.definitions.throttle:
+      class: "%smartesb.definitions.throttle.class%"
+      tags:
+        - { name: smartesb.definitions, nodeName: throttle }
+      calls:
+        - [setEvaluator, ["@smartesb.util.evaluator"]]
+        - [setProcessorClass, ["%smartesb.processor.throttle.class%"]]
 
   smartesb.definitions.try_catch:
       class: "%smartesb.definitions.try_catch.class%"
