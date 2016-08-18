@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 interface FlowsBuilderInterface
 {
-
     /**
      * @param string $name
      * @param \Traversable $config

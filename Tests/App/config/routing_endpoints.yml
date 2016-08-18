@@ -18,7 +18,7 @@ test:
   defaults:
     _protocol: @smartesb.protocols.direct
   requirements:
-    path: "[a-zA-Z0-9/]+"
+    path: "[a-zA-Z0-9/_\-]+"
 
 helper:
   pattern: "helper://{operation}/{operand}"

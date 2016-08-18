@@ -10,7 +10,6 @@ use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointFactory;
 use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
 use Smartbox\Integration\FrameworkBundle\Core\Handlers\MessageHandler;
 use Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException;
-use Smartbox\Integration\FrameworkBundle\DependencyInjection\SmartboxIntegrationFrameworkExtension;
 use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 use Symfony\Bridge\Monolog\Handler\DebugHandler;
 use Symfony\Component\Finder\Finder;
@@ -31,15 +30,14 @@ class FlowsTest extends BaseKernelTestCase{
         $parser = new Parser();
         $finder = new Finder();
         $flowsDir = $this->getContainer()->getParameter('smartesb.flows_directories');
+        $finder->name('*.yml');
         $finder->files()->in($flowsDir);
 
         $res = array();
 
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
-            if($file->getFilename() == 'test.yml'){
-                $res[] = [$file->getRelativePath(),$parser->parse(file_get_contents($file->getRealpath()))];
-            }
+            $res[] = [$file->getRelativePath(),$parser->parse(file_get_contents($file->getRealpath()))];
         }
 
         return $res;
