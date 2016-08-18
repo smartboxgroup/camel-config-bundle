@@ -6,6 +6,7 @@ use Monolog\Logger;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\ErrorTriggerProducer;
 use Smartbox\Integration\CamelConfigBundle\Tests\BaseKernelTestCase;
+use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointFactory;
 use Smartbox\Integration\FrameworkBundle\Core\Endpoints\EndpointInterface;
 use Smartbox\Integration\FrameworkBundle\Core\Handlers\MessageHandler;
 use Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ProcessingException;
@@ -110,7 +111,7 @@ class FlowsTest extends BaseKernelTestCase{
         $message = $this->createMessage(new EntityX($in));
         $handler = $this->getContainer()->get('smartesb.helper')->getHandler('sync');
         $endpointFactory = $this->getContainer()->get('smartesb.endpoint_factory');
-        $endpoint = $endpointFactory->createEndpoint($conf['from']);
+        $endpoint = $endpointFactory->createEndpoint($conf['from'], EndpointFactory::MODE_CONSUME);
 
         /** @var EntityX $result */
         $result = $handler->handle($message,$endpoint)->getBody();
@@ -155,7 +156,7 @@ class FlowsTest extends BaseKernelTestCase{
         $uri = $conf['uri'];
 
         /** @var EndpointInterface $endpoint */
-        $endpoint = $this->getContainer()->get('smartesb.endpoint_factory')->createEndpoint($uri);
+        $endpoint = $this->getContainer()->get('smartesb.endpoint_factory')->createEndpoint($uri, EndpointFactory::MODE_CONSUME);
         $endpoint->consume($conf['amount']);
     }
 
