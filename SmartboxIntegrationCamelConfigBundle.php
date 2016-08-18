@@ -7,8 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class SmartboxIntegrationCamelConfigBundle
- * @package Smartbox\Integration\CamelConfigBundle
+ * Class SmartboxIntegrationCamelConfigBundle.
  */
 class SmartboxIntegrationCamelConfigBundle extends Bundle
 {

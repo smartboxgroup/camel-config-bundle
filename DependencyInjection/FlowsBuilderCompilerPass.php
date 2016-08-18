@@ -121,33 +121,33 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
             throw new \InvalidArgumentException("$class is not a valid class name");
         }
 
-        $definition = new Definition($class, array());
+        $definition = new Definition($class, []);
 
         $traits = $this->classUsesDeep($class);
         foreach ($traits as $trait) {
             switch ($trait) {
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator':
-                    $definition->addMethodCall('setEvaluator', array(new Reference('smartesb.util.evaluator')));
+                    $definition->addMethodCall('setEvaluator', [new Reference('smartesb.util.evaluator')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesSerializer':
-                    $definition->addMethodCall('setSerializer', array(new Reference('serializer')));
+                    $definition->addMethodCall('setSerializer', [new Reference('serializer')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesValidator':
-                    $definition->addMethodCall('setValidator', array(new Reference('validator')));
+                    $definition->addMethodCall('setValidator', [new Reference('validator')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEventDispatcher':
-                    $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
+                    $definition->addMethodCall('setEventDispatcher', [new Reference('event_dispatcher')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEndpointFactory':
-                    $definition->addMethodCall('setEndpointFactory', array(new Reference('smartesb.endpoint_factory')));
+                    $definition->addMethodCall('setEndpointFactory', [new Reference('smartesb.endpoint_factory')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEndpointRouter':
-                    $definition->addMethodCall('setEndpointsRouter', array(new Reference('smartesb.router.endpoints')));
+                    $definition->addMethodCall('setEndpointsRouter', [new Reference('smartesb.router.endpoints')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\MessageFactoryAware':
@@ -217,7 +217,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
-        $definition->setArguments(array($name));
+        $definition->setArguments([$name]);
 
         return new Reference($id);
     }
@@ -264,7 +264,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS);
         foreach ($processorDefinitionsServices as $id => $tags) {
             foreach ($tags as $attributes) {
-                $this->processorDefinitionsRegistry->addMethodCall('register', array($attributes['nodeName'], new Reference($id)));
+                $this->processorDefinitionsRegistry->addMethodCall('register', [$attributes['nodeName'], new Reference($id)]);
             }
         }
 
@@ -404,7 +404,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $from = ItineraryResolver::getItineraryURIWithVersion($from, $this->currentLoadingVersion);
         $itinerariesRepo = $this->container->getDefinition('smartesb.map.itineraries');
-        $itinerariesRepo->addMethodCall('addItinerary', array($from, (string) $itineraryRef));
+        $itinerariesRepo->addMethodCall('addItinerary', [$from, (string) $itineraryRef]);
     }
 
     /**
@@ -481,10 +481,10 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
          */
 
         $endpointDef = $this->getBasicDefinition(EndpointProcessor::class);
-        $endpointDef->addMethodCall('setURI', array($uri));
+        $endpointDef->addMethodCall('setURI', [$uri]);
 
         if (isset($config->description)) {
-            $endpointDef->addMethodCall('setDescription', array((string) $config->description));
+            $endpointDef->addMethodCall('setDescription', [(string) $config->description]);
         }
         if ($runtimeBreakpoint) {
             $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);

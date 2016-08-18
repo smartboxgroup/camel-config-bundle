@@ -2,13 +2,10 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\Multicast;
-use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
- * Class StopDefinition
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
+ * Class StopDefinition.
  */
 class StopDefinition extends ProcessorDefinition
 {
@@ -24,10 +21,10 @@ class StopDefinition extends ProcessorDefinition
         foreach ($configNode as $nodeName => $nodeValue) {
             switch ($nodeName) {
                 case self::DESCRIPTION:
-                    $def->addMethodCall('setDescription', [(string)$nodeValue]);
+                    $def->addMethodCall('setDescription', [(string) $nodeValue]);
                     break;
                 default:
-                    throw new InvalidConfigurationException('Unsupported stop processor node: "' . $nodeName . '"');
+                    throw new InvalidConfigurationException('Unsupported stop processor node: "'.$nodeName.'"');
                     break;
             }
         }

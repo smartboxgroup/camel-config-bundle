@@ -1,4 +1,5 @@
 <?php
+
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
@@ -9,8 +10,7 @@ use Smartbox\Integration\FrameworkBundle\Exceptions\Deprecated\BadRequestExcepti
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * Class ThrowExceptionDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class ThrowExceptionDefinitionTest.
  */
 class ThrowExceptionDefinitionTest extends BaseKernelTestCase
 {
@@ -20,17 +20,16 @@ class ThrowExceptionDefinitionTest extends BaseKernelTestCase
     /** @var FlowsBuilderInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $builderMock;
 
-
     public function setUp()
     {
         $this->builderMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'getParameter'))
+            ->setMethods(['getBasicDefinition', 'getParameter'])
             ->getMock();
 
         $this->builderMock->method('getParameter')->willReturnMap(
-            array(
-                array('exceptions.bad_request.class', BadRequestException::class)
-            )
+            [
+                ['exceptions.bad_request.class', BadRequestException::class],
+            ]
         );
 
         $this->builderMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -38,7 +37,6 @@ class ThrowExceptionDefinitionTest extends BaseKernelTestCase
         $this->processorDefinition = new ThrowExceptionDefinition();
         $this->processorDefinition->setBuilder($this->builderMock);
     }
-
 
     public function testShouldBuildProcessor()
     {

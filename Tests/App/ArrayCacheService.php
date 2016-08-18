@@ -4,14 +4,14 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\App;
 
 use Smartbox\CoreBundle\Utils\Cache\CacheServiceInterface;
 
-class ArrayCacheService implements CacheServiceInterface{
-
+class ArrayCacheService implements CacheServiceInterface
+{
     protected $cache = [];
 
     /**
      * @param $key
      * @param mixed $value
-     * @param null $expireTTL
+     * @param null  $expireTTL
      *
      * @return bool
      */
@@ -38,6 +38,6 @@ class ArrayCacheService implements CacheServiceInterface{
      */
     public function exists($key, $ttlLimit = null)
     {
-        return array_key_exists($key,$this->cache);
+        return array_key_exists($key, $this->cache);
     }
 }

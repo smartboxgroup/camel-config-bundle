@@ -6,8 +6,7 @@ use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderInter
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * Class ProcessorDefinition
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
+ * Class ProcessorDefinition.
  */
 interface ProcessorDefinitionInterface
 {
@@ -24,6 +23,7 @@ interface ProcessorDefinitionInterface
     /**
      * @param $configNode
      * @param string $id
+     *
      * @return Definition
      */
     public function buildProcessor($configNode, $id);

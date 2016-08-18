@@ -3,8 +3,7 @@
 namespace Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception;
 
 /**
- * Class TestException
- * @package Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception
+ * Class TestException.
  */
 class TestException extends \Exception
 {
