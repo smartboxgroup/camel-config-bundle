@@ -485,7 +485,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         if (isset($config->description)) {
             $endpointDef->addMethodCall('setDescription', [(string) $config->description]);
-        };
+        }
         if ($runtimeBreakpoint) {
             $endpointDef->addMethodCall('setRuntimeBreakpoint', [true]);
         }

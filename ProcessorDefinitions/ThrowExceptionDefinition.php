@@ -31,9 +31,11 @@ class ThrowExceptionDefinition extends ProcessorDefinition
             throw new \RuntimeException("The exception reference $ref was not found");
         }
 
-        if (empty($exceptionClass)
-            ||  !class_exists($exceptionClass)
-            ||  !is_a($exceptionClass, 'Exception', true)) {
+        if (
+            empty($exceptionClass) ||
+            !class_exists($exceptionClass) ||
+            !is_a($exceptionClass, 'Exception', true)
+        ) {
             throw new \RuntimeException("$exceptionClass is not a valid exception class");
         }
 

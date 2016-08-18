@@ -12,7 +12,7 @@ class ThrottlerDefinition extends ProcessorDefinition
 
     use UsesEvaluator;
 
-    /** @var  string */
+    /** @var string */
     protected $processorClass = Throttler::class;
 
     /**

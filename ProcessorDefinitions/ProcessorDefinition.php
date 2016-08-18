@@ -16,10 +16,10 @@ abstract class ProcessorDefinition extends Service implements ProcessorDefinitio
     const ATTRIBUTE_RUNTIME_BREAKPOINT = 'runtime-breakpoint';
     const ATTRIBUTE_COMPILETIME_BREAKPOINT = 'compiletime-breakpoint';
 
-    /** @var  string */
+    /** @var string */
     protected $processorClass;
 
-    /** @var  FlowsBuilderInterface */
+    /** @var FlowsBuilderInterface */
     protected $builder;
 
     protected $debug = false;
