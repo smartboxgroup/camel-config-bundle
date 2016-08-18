@@ -29,15 +29,14 @@ class FlowsTest extends BaseKernelTestCase
         $parser = new Parser();
         $finder = new Finder();
         $flowsDir = $this->getContainer()->getParameter('smartesb.flows_directories');
+        $finder->name('*.yml');
         $finder->files()->in($flowsDir);
 
         $res = [];
 
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
-            if ($file->getFilename() == 'test.yml') {
-                $res[] = [$file->getRelativePath(), $parser->parse(file_get_contents($file->getRealpath()))];
-            }
+            $res[] = [$file->getRelativePath(), $parser->parse(file_get_contents($file->getRealpath()))];
         }
 
         return $res;

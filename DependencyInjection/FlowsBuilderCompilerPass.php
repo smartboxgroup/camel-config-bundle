@@ -30,7 +30,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const ITINERARY_ID_PREFIX = 'smartesb.itinerary.';
     const ENDPOINT_PREFIX = 'endpoint.';
 
-    /** @var  ContainerBuilder */
+    /** @var ContainerBuilder */
     protected $container;
 
     /** @var Definition */
@@ -511,7 +511,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     public function addToItinerary(Reference $itinerary, Reference $processor)
     {
         $itineraryDef = $this->container->getDefinition($itinerary);
-        $itineraryDef->addMethodCall('addProcessor', [$processor]);
+        $itineraryDef->addMethodCall('addProcessorId', [$processor->__toString()]);
     }
 
     /**

@@ -7,19 +7,19 @@
 
   <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
     <route>
-        <from uri="test://throttler1"/>
+        <from uri="test://throttlerAsync"/>
         <throttle timePeriodMillis="60000" asyncDelayed="true">
             <simple>1+0</simple>
             <to uri="helper://multiply/5"/>
         </throttle>
     </route>
     <route>
-      <from uri="queue://main/throttler_async"/>
-      <to uri="spy://throttler_async/before"/>
+      <from uri="queue://main/throttlerAsync"/>
+      <to uri="spy://throttlerAsync/before"/>
       <throttle timePeriodMillis="2500" asyncDelayed="true">
           <simple>1+0</simple>
           <to uri="helper://multiply/5"/>
-          <to uri="spy://throttler_async/after"/>
+          <to uri="spy://throttlerAsync/after"/>
       </throttle>
     </route>
 </camelContext>
