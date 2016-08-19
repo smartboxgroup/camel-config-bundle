@@ -10,8 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class StopDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class StopDefinitionTest.
  */
 class StopDefinitionTest extends BaseKernelTestCase
 {
@@ -28,7 +27,7 @@ class StopDefinitionTest extends BaseKernelTestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'buildItinerary'))
+            ->setMethods(['getBasicDefinition', 'buildItinerary'])
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -40,7 +39,7 @@ class StopDefinitionTest extends BaseKernelTestCase
 
     public function testBuildProcessorForValidConfiguration()
     {
-        $config = new \SimpleXMLElement("<stop><description>Some description of stop processor</description></stop>");
+        $config = new \SimpleXMLElement('<stop><description>Some description of stop processor</description></stop>');
 
         $stopDefinition = $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
 
@@ -58,7 +57,7 @@ class StopDefinitionTest extends BaseKernelTestCase
 
     public function testBuildProcessorForInvalidConfiguration()
     {
-        $config = new \SimpleXMLElement("<stop><wrong_node>this is content of unsupported node</wrong_node></stop>");
+        $config = new \SimpleXMLElement('<stop><wrong_node>this is content of unsupported node</wrong_node></stop>');
 
         $this->setExpectedException(InvalidConfigurationException::class);
 

@@ -9,8 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class MulticastDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class MulticastDefinitionTest.
  */
 class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +26,7 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'buildProcessor', 'addToItinerary'))
+            ->setMethods(['getBasicDefinition', 'registerProcessor', 'buildItinerary', 'buildEndpoint', 'buildProcessor', 'addToItinerary'])
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -69,7 +68,7 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
                 ],
             ],
         ];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 4; ++$i) {
             $expectedMethodCalls[] = [
                 'addItinerary',
                 [
@@ -86,6 +85,6 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(\Exception::class);
 
         $config = new \SimpleXMLElement('<multicast strategyRef="invalidStrategy"></multicast>');
-        $this->processorDefinition->buildProcessor($config,$this->flowsBuilderCompilerPassMock->determineProcessorId($config));
+        $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
 }

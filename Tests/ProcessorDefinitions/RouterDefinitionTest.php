@@ -2,7 +2,6 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\ContentRouter;
 use Smartbox\Integration\FrameworkBundle\Tools\Evaluator\ExpressionEvaluator;
 use Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass;
 use Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RouterDefinition;
@@ -12,8 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
- * Class RouterDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class RouterDefinitionTest.
  */
 class RouterDefinitionTest extends BaseKernelTestCase
 {
@@ -27,11 +25,10 @@ class RouterDefinitionTest extends BaseKernelTestCase
      */
     protected $flowsBuilderCompilerPassMock;
 
-
     public function setUp()
     {
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'buildItinerary'))
+            ->setMethods(['getBasicDefinition', 'buildItinerary'])
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -44,7 +41,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
 
     /**
      * Test the cases where the itinerary is not build, that's the description and single properties for a when clause and
-     * the description in the otherwise case. The itinerary creation should be tested in the flowsBuilderCompilerPass class
+     * the description in the otherwise case. The itinerary creation should be tested in the flowsBuilderCompilerPass class.
      */
     public function testBuildProcessor()
     {
@@ -72,14 +69,13 @@ class RouterDefinitionTest extends BaseKernelTestCase
     }
 
     /**
-     * Tests exception when XML for when clause does not contain anything
+     * Tests exception when XML for when clause does not contain anything.
      */
     public function testBuildProcessorException()
     {
         $this->setExpectedException('Exception', 'Expression missing in when clause');
 
-        $config = new \SimpleXMLElement("<choice><when></when></choice>");
+        $config = new \SimpleXMLElement('<choice><when></when></choice>');
         $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
-
 }
