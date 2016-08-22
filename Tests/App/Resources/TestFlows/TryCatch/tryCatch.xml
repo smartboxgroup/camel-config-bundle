@@ -10,6 +10,7 @@
         <from uri="test://try1"/>
         <to uri="helper://add/5"/>
         <doTry>
+            <description>try/catch description</description>
             <to uri="helper://add/5"/>
             <to uri="helper://add/10"/>
             <doCatch>

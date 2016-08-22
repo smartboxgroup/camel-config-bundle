@@ -35,7 +35,6 @@ interface FlowsBuilderInterface
      * @param Reference $itinerary
      * @param Definition $processor
      * @param string|null $id
-     * @return mixed
      */
     public function addProcessorDefinitionToItinerary(Reference $itinerary, Definition $processor, $id = null);
 

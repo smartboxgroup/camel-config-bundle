@@ -68,7 +68,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     {
         $options = [
             self::OPTION_RECOVERABLE => ['Whether the errors triggered are recoverable or not', []],
-            self::OPTION_FORCE => ['Force to throw the exception every time, not only n number of times', []],
+            self::OPTION_FORCE => ['Force to throw the exception every time, not only "n" number of times', []],
         ];
 
         return $options;

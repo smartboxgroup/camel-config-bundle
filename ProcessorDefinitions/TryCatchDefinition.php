@@ -15,6 +15,8 @@ class TryCatchDefinition extends ProcessorDefinition
 {
     use UsesEvaluator;
 
+    const INNER_SUFFIX = '_inner';
+
     const CATCH_CLAUSE = "doCatch";
     const FINALLY_CLAUSE = "doFinally";
     const SIMPLE = "simple";
@@ -42,7 +44,7 @@ class TryCatchDefinition extends ProcessorDefinition
         $pipeline = $this->builder->getBasicDefinition($this->pipelineClass);
 
         // Build try/catch
-        $innerId = $id.'_inner';
+        $innerId = $id.self::INNER_SUFFIX;
         $tryCatch = parent::buildProcessor($configNode, $innerId);
 
         // Build Pipeline itinerary with try/catch as first node
@@ -55,7 +57,7 @@ class TryCatchDefinition extends ProcessorDefinition
         foreach ($configNode as $nodeName => $nodeValue) {
             switch ($nodeName) {
                 case self::DESCRIPTION:
-                    $tryCatch->addMethodCall('setDescription', (string)$nodeValue);
+                    $tryCatch->addMethodCall('setDescription', [(string) $nodeValue]);
                     break;
                 case self::CATCH_CLAUSE:
                     $clauseParams = $this->buildCatchClauseParams($nodeValue, $id);
