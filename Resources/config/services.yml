@@ -8,6 +8,7 @@ parameters:
   smartesb.definitions.throw_exception.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrowExceptionDefinition
   smartesb.definitions.stop.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\StopDefinition
   smartesb.definitions.process.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessDefinition
+  smartesb.definitions.try_catch.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TryCatchDefinition
   smartesb.definitions.throttle.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrottlerDefinition
 
 services:
@@ -73,4 +74,11 @@ services:
         - [setEvaluator, ["@smartesb.util.evaluator"]]
         - [setProcessorClass, ["%smartesb.processor.throttle.class%"]]
 
-
+  smartesb.definitions.try_catch:
+      class: "%smartesb.definitions.try_catch.class%"
+      tags:
+        - { name: smartesb.definitions, nodeName: doTry }
+      calls:
+        - [setEvaluator, ["@smartesb.util.evaluator"]]
+        - [setProcessorClass, ["%smartesb.processor.try_catch.class%"]]
+        - [setPipelineClass, ["%smartesb.processor.pipeline.class%"]]

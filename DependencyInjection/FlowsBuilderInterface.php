@@ -32,6 +32,13 @@ interface FlowsBuilderInterface
     public function addNodeToItinerary(Reference $itinerary, $nodeName, $nodeConfig);
 
     /**
+     * @param Reference $itinerary
+     * @param Definition $processor
+     * @param string|null $id
+     */
+    public function addProcessorDefinitionToItinerary(Reference $itinerary, Definition $processor, $id = null);
+
+    /**
      * @param Definition|Reference $itinerary
      * @param Reference            $processor
      */
