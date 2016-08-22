@@ -4,12 +4,10 @@ namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
 use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\Pipeline;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
-use JMS\Serializer\Annotation as JMS;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 
 /**
- * Class TryCatchDefinition
- * @package Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions
+ * Class TryCatchDefinition.
  */
 class TryCatchDefinition extends ProcessorDefinition
 {
@@ -17,10 +15,10 @@ class TryCatchDefinition extends ProcessorDefinition
 
     const INNER_SUFFIX = '_inner';
 
-    const CATCH_CLAUSE = "doCatch";
-    const FINALLY_CLAUSE = "doFinally";
-    const SIMPLE = "simple";
-    const HANDLED = "handled";
+    const CATCH_CLAUSE = 'doCatch';
+    const FINALLY_CLAUSE = 'doFinally';
+    const SIMPLE = 'simple';
+    const HANDLED = 'handled';
 
     /**
      * @var string
@@ -50,7 +48,7 @@ class TryCatchDefinition extends ProcessorDefinition
         // Build Pipeline itinerary with try/catch as first node
         $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
         $mainItinerary = $this->builder->buildItinerary($itineraryName);
-        $pipeline->addMethodCall('setItinerary',[$mainItinerary]);
+        $pipeline->addMethodCall('setItinerary', [$mainItinerary]);
         $this->builder->addProcessorDefinitionToItinerary($mainItinerary, $tryCatch, $innerId);
 
         // Configure try/catch and pipeline
@@ -65,7 +63,7 @@ class TryCatchDefinition extends ProcessorDefinition
                     break;
                 case self::FINALLY_CLAUSE:
                     $mainItinerary = $this->buildFinallyItineray($nodeValue, $id);
-                    $tryCatch->addMethodCall('setFinallyItinerary', array($mainItinerary));
+                    $tryCatch->addMethodCall('setFinallyItinerary', [$mainItinerary]);
                     break;
                 default:
                     $this->builder->addNodeToItinerary($mainItinerary, $nodeName, $nodeValue);
@@ -77,7 +75,7 @@ class TryCatchDefinition extends ProcessorDefinition
         return $pipeline;
     }
 
-    protected function buildCatchClauseParams($whenConfig,$id)
+    protected function buildCatchClauseParams($whenConfig, $id)
     {
         $expression = null;
         $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
@@ -92,7 +90,7 @@ class TryCatchDefinition extends ProcessorDefinition
                         $evaluator->compile($expression, $this->evaluator->getExchangeExposedVars());
                     } catch (\Exception $e) {
                         throw new InvalidConfigurationException(
-                            "Given value ({$expression}) should be a valid expression: " . $e->getMessage(),
+                            "Given value ({$expression}) should be a valid expression: ".$e->getMessage(),
                             $e->getCode(),
                             $e
                         );
@@ -109,10 +107,10 @@ class TryCatchDefinition extends ProcessorDefinition
         }
 
         if (empty($expression)) {
-            throw new \Exception("Expression missing in when clause");
+            throw new \Exception('Expression missing in when clause');
         }
 
-        return array($expression, $itinerary);
+        return [$expression, $itinerary];
     }
 
     protected function buildFinallyItineray($config, $id)
