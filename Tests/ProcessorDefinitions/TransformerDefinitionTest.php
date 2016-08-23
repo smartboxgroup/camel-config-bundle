@@ -10,8 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class TransformerDefinitionTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\ProcessorDefinitions
+ * Class TransformerDefinitionTest.
  */
 class TransformerDefinitionTest extends BaseKernelTestCase
 {
@@ -31,7 +30,7 @@ class TransformerDefinitionTest extends BaseKernelTestCase
         $container = static::$kernel->getContainer();
 
         $this->flowsBuilderCompilerPassMock = $this->getMockBuilder(FlowsBuilderCompilerPass::class)
-            ->setMethods(array('getBasicDefinition', 'registerService', 'buildItinerary'))
+            ->setMethods(['getBasicDefinition', 'registerService', 'buildItinerary'])
             ->getMock();
 
         $this->flowsBuilderCompilerPassMock->method('getBasicDefinition')->willReturn(new Definition());
@@ -57,10 +56,10 @@ class TransformerDefinitionTest extends BaseKernelTestCase
                     [
                         'setExpression',
                         [
-                            "msg.getBody().get('box').setDescription('test description')"
-                        ]
-                    ]
-                ]
+                            "msg.getBody().get('box').setDescription('test description')",
+                        ],
+                    ],
+                ],
             ],
             [
                 new \SimpleXMLElement("<transform><description></description><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>"),
@@ -74,10 +73,10 @@ class TransformerDefinitionTest extends BaseKernelTestCase
                     [
                         'setExpression',
                         [
-                            "msg.getBody().get('box').setDescription('test description')"
-                        ]
-                    ]
-                ]
+                            "msg.getBody().get('box').setDescription('test description')",
+                        ],
+                    ],
+                ],
             ],
             [
                 new \SimpleXMLElement("<transform><simple>msg.getBody().get('box').setDescription('test description')</simple></transform>"),
@@ -85,17 +84,17 @@ class TransformerDefinitionTest extends BaseKernelTestCase
                     [
                         'setExpression',
                         [
-                            "msg.getBody().get('box').setDescription('test description')"
-                        ]
-                    ]
-                ]
+                            "msg.getBody().get('box').setDescription('test description')",
+                        ],
+                    ],
+                ],
             ],
         ];
     }
 
     /**
      * Test the cases where the itinerary is not build, that's the description and single properties for a when clause and
-     * the description in the otherwise case. The itinerary creation should be tested in the flowsBuilderCompilerPass class
+     * the description in the otherwise case. The itinerary creation should be tested in the flowsBuilderCompilerPass class.
      *
      * @dataProvider dataProviderForValidConfiguration
      *
@@ -112,19 +111,19 @@ class TransformerDefinitionTest extends BaseKernelTestCase
     public function dataProviderForInvalidConfiguration()
     {
         return [
-            [new \SimpleXMLElement("<transform></transform>")],
-            [new \SimpleXMLElement("<transform><simple></simple></transform>")],
-            [new \SimpleXMLElement("<transform><description>Some description of transformer processor</description></transform>")],
-            [new \SimpleXMLElement("<transform><simple>incorrect expression</simple></transform>")],
+            [new \SimpleXMLElement('<transform></transform>')],
+            [new \SimpleXMLElement('<transform><simple></simple></transform>')],
+            [new \SimpleXMLElement('<transform><description>Some description of transformer processor</description></transform>')],
+            [new \SimpleXMLElement('<transform><simple>incorrect expression</simple></transform>')],
             [new \SimpleXMLElement("<transform><simple>msg.getBody().get('box').setDescription('test description')abc</simple></transform>")],
-            [new \SimpleXMLElement("<transform><wrong_node></wrong_node></transform>")],
-            [new \SimpleXMLElement("<transform><description>Some description of transformer processor</description><wrong_node></wrong_node></transform>")],
-            [new \SimpleXMLElement("<transform><wrong_node>this is content of unsupported node</wrong_node></transform>")],
+            [new \SimpleXMLElement('<transform><wrong_node></wrong_node></transform>')],
+            [new \SimpleXMLElement('<transform><description>Some description of transformer processor</description><wrong_node></wrong_node></transform>')],
+            [new \SimpleXMLElement('<transform><wrong_node>this is content of unsupported node</wrong_node></transform>')],
         ];
     }
 
     /**
-     * Tests exception when XML for transformer expression is invalid
+     * Tests exception when XML for transformer expression is invalid.
      *
      * @dataProvider dataProviderForInvalidConfiguration
      *
@@ -136,5 +135,4 @@ class TransformerDefinitionTest extends BaseKernelTestCase
 
         $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }
-
 }

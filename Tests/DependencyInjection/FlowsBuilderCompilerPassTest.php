@@ -12,9 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * Class FlowsBuilderCompilerPassTest
- * @package Smartbox\Integration\CamelConfigBundle\Tests\DependencyInjection
- * The test is merely functional as there are many dependencies
+ * Class FlowsBuilderCompilerPassTest.
  *
  * @coversDefaultClass Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass
  */
@@ -23,11 +21,11 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
     /**
      * @param ContainerBuilder $container
      */
-    public function prepareContainer(ContainerBuilder $container){
-        $container->setDefinition('smartesb.registry.processor_definitions',new Definition(ProcessorDefinitionsRegistry::class));
-        $container->setDefinition('smartesb.map.itineraries',new Definition(ItinerariesMap::class));
+    public function prepareContainer(ContainerBuilder $container)
+    {
+        $container->setDefinition('smartesb.registry.processor_definitions', new Definition(ProcessorDefinitionsRegistry::class));
+        $container->setDefinition('smartesb.map.itineraries', new Definition(ItinerariesMap::class));
     }
-
 
     /**
      * @covers ::process
@@ -53,19 +51,18 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
         // Mock extension interface and its related methods
         /** @var SmartboxIntegrationCamelConfigExtension|\PHPUnit_Framework_MockObject_MockObject $extension */
         $extension = $this->getMockBuilder(SmartboxIntegrationCamelConfigExtension::class)
-            ->setMethods(array('getNamespace', 'getAlias', 'getFlowsDirectories', 'getFrozenFlowsDirectory','getXsdValidationBasePath', 'load'))
+            ->setMethods(['getNamespace', 'getAlias', 'getFlowsDirectories', 'getFrozenFlowsDirectory', 'getXsdValidationBasePath', 'load'])
             ->getMock();
 
-        $extension->method('getFlowsDirectories')->willReturn(__DIR__ . '/../Fixtures/FlowsBuilderCompilerPassSuccess');
-        $extension->method('getFrozenFlowsDirectory')->willReturn(__DIR__ . '/../Fixtures/FlowsBuilderCompilerPassSuccess/Frozen');
+        $extension->method('getFlowsDirectories')->willReturn(__DIR__.'/../Fixtures/FlowsBuilderCompilerPassSuccess');
+        $extension->method('getFrozenFlowsDirectory')->willReturn(__DIR__.'/../Fixtures/FlowsBuilderCompilerPassSuccess/Frozen');
 
         $extension->method('getAlias')
             ->will($this->returnValue('smartbox_integration_camel_config'));
 
-
         /** @var SmartboxIntegrationFrameworkExtension|\PHPUnit_Framework_MockObject_MockObject $frameworkExtension */
         $frameworkExtension = $this->getMockBuilder(SmartboxIntegrationFrameworkExtension::class)
-            ->setMethods(array('getNamespace','getAlias','getFlowsVersion','getXsdValidationBasePath', 'load'))
+            ->setMethods(['getNamespace', 'getAlias', 'getFlowsVersion', 'getXsdValidationBasePath', 'load'])
             ->getMock();
 
         $frameworkExtension
@@ -78,7 +75,7 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
         // Mock the container given to the compiler pass
         /** @var ContainerBuilder|\PHPUnit_Framework_MockObject_MockObject $container */
         $container = $this->getMockBuilder(ContainerBuilder::class)
-        ->setMethods(array('getParameter', 'findTaggedServiceIds'))
+        ->setMethods(['getParameter', 'findTaggedServiceIds'])
         ->getMock();
 
         // The following expectations are tight up to the CamelFlowGetBox sample
@@ -112,9 +109,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
         $compilerPass->process($container);
     }
 
-
     /**
-     * Test exceptions when calling GetBasicDefinition
+     * Test exceptions when calling GetBasicDefinition.
      */
     public function testGetBasicDefinitionException()
     {

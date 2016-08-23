@@ -43,8 +43,8 @@ smartbox_core:
   entities_namespaces:
     - 'Smartbox\Integration\CamelConfigBundle\Tests\App\Entity'
   cache_drivers:
-      null:
-          service: ~
+      array:
+          service: @array_cache_service
 
 smartbox_integration_camel_config:
     flows_directories:
@@ -92,5 +92,4 @@ smartbox_integration_framework:
             defer_new_exchanges: true
             retry_delay: 0
 
-    message_consumers:
     flows_version: 0

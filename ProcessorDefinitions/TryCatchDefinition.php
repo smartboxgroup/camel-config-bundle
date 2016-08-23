@@ -2,47 +2,80 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
+use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\Pipeline;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 
 /**
- * Class RouterDefinition.
+ * Class TryCatchDefinition.
  */
-class RouterDefinition extends ProcessorDefinition
+class TryCatchDefinition extends ProcessorDefinition
 {
     use UsesEvaluator;
 
-    const WHEN = 'when';
-    const OTHERWISE = 'otherwise';
+    const INNER_SUFFIX = '_inner';
+
+    const CATCH_CLAUSE = 'doCatch';
+    const FINALLY_CLAUSE = 'doFinally';
     const SIMPLE = 'simple';
+    const HANDLED = 'handled';
+
+    /**
+     * @var string
+     */
+    protected $pipelineClass;
+
+    /**
+     * @param string $pipelineClass
+     */
+    public function setPipelineClass($pipelineClass)
+    {
+        $this->pipelineClass = $pipelineClass;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function buildProcessor($configNode, $id)
     {
-        $def = parent::buildProcessor($configNode, $id);
+        // Build pipeline
+        $pipeline = $this->builder->getBasicDefinition($this->pipelineClass);
 
+        // Build try/catch
+        $innerId = $id.self::INNER_SUFFIX;
+        $tryCatch = parent::buildProcessor($configNode, $innerId);
+
+        // Build Pipeline itinerary with try/catch as first node
+        $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
+        $mainItinerary = $this->builder->buildItinerary($itineraryName);
+        $pipeline->addMethodCall('setItinerary', [$mainItinerary]);
+        $this->builder->addProcessorDefinitionToItinerary($mainItinerary, $tryCatch, $innerId);
+
+        // Configure try/catch and pipeline
         foreach ($configNode as $nodeName => $nodeValue) {
             switch ($nodeName) {
                 case self::DESCRIPTION:
-                    $def->addMethodCall('setDescription', (string) $nodeValue);
+                    $tryCatch->addMethodCall('setDescription', [(string) $nodeValue]);
                     break;
-                case self::WHEN:
-                    $clauseParams = $this->buildWhenClauseParams($nodeValue, $id);
-                    $def->addMethodCall('addWhen', $clauseParams);
+                case self::CATCH_CLAUSE:
+                    $clauseParams = $this->buildCatchClauseParams($nodeValue, $id);
+                    $tryCatch->addMethodCall('addCatch', $clauseParams);
                     break;
-                case self::OTHERWISE:
-                    $itinerary = $this->buildOtherwiseItineraryRef($nodeValue, $id);
-                    $def->addMethodCall('setOtherwise', [$itinerary]);
+                case self::FINALLY_CLAUSE:
+                    $mainItinerary = $this->buildFinallyItineray($nodeValue, $id);
+                    $tryCatch->addMethodCall('setFinallyItinerary', [$mainItinerary]);
+                    break;
+                default:
+                    $this->builder->addNodeToItinerary($mainItinerary, $nodeName, $nodeValue);
                     break;
             }
         }
 
-        return $def;
+        // Return the pipeline
+        return $pipeline;
     }
 
-    protected function buildWhenClauseParams($whenConfig, $id)
+    protected function buildCatchClauseParams($whenConfig, $id)
     {
         $expression = null;
         $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
@@ -51,8 +84,8 @@ class RouterDefinition extends ProcessorDefinition
 
         foreach ($whenConfig as $nodeName => $nodeValue) {
             switch ($nodeName) {
-                case self::SIMPLE:
-                    $expression = (string) $nodeValue;
+                case self::HANDLED:
+                    $expression = (string) $nodeValue->{self::SIMPLE};
                     try {
                         $evaluator->compile($expression, $this->evaluator->getExchangeExposedVars());
                     } catch (\Exception $e) {
@@ -80,7 +113,7 @@ class RouterDefinition extends ProcessorDefinition
         return [$expression, $itinerary];
     }
 
-    protected function buildOtherwiseItineraryRef($config, $id)
+    protected function buildFinallyItineray($config, $id)
     {
         $itineraryName = $this->getBuilder()->generateNextUniqueReproducibleIdForContext($id);
         $itinerary = $this->builder->buildItinerary($itineraryName);
