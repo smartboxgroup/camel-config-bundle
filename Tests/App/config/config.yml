@@ -77,8 +77,8 @@ smartbox_integration_framework:
         sync:
             description: Message hanlder to handle messages comming from the API
             retries_max: 5
-            failed_uri: nosql://main/failed/sync
-            retry_uri: nosql://main/retry/sync
+            failed_uri: nosql://main/insert/failed/sync
+            retry_uri: nosql://main/insert/retry/sync
             throw_exceptions: true
             defer_new_exchanges: false
             retry_delay: 0
@@ -86,10 +86,25 @@ smartbox_integration_framework:
         async:
             description: Message hanlder to handle messages comming from a queue
             retries_max: 5
-            failed_uri: nosql://main/failed/async
+            failed_uri: nosql://main/insert/failed/async
             retry_uri: original
             throw_exceptions: false
             defer_new_exchanges: true
             retry_delay: 0
 
     flows_version: 0
+
+    producers:
+        mongo:
+            class: Smartbox\Integration\FrameworkBundle\Components\DB\DBConfigurableProducer
+            description: Producer to send messages to mongo
+            calls:
+              - [setConfigurableStepsProvider, [@smartesb.steps_provider.nosql]]
+            options: ~
+
+            methods:
+                insert:
+                    description: Inserts a message in a mongo collection
+                    steps:
+                        - insertOne:
+                            data: eval: msg
