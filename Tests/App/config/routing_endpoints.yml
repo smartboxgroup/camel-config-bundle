@@ -14,7 +14,7 @@ nosql.configurable:
     _protocol: @smartesb.protocols.configurable.nosql
     _producer: @smartesb.producers.mongo
     _handler: @smartesb.handlers.sync
-    prefix: db_
+    prefix: ""
     nosql_driver: main
   requirements:
     collection: "[_\-a-zA-Z0-9/]+"
