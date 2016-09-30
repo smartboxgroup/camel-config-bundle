@@ -77,8 +77,8 @@ smartbox_integration_framework:
         sync:
             description: Message hanlder to handle messages comming from the API
             retries_max: 5
-            failed_uri: nosql://main/insert/failed/sync
-            retry_uri: nosql://main/insert/retry/sync
+            failed_uri: service://smartbox.failed_exchange_handler/handleSync
+            retry_uri: service://smartbox.failed_exchange_handler/handleSync
             throw_exceptions: true
             defer_new_exchanges: false
             retry_delay: 0
@@ -86,7 +86,7 @@ smartbox_integration_framework:
         async:
             description: Message hanlder to handle messages comming from a queue
             retries_max: 5
-            failed_uri: nosql://main/insert/failed/async
+            failed_uri: service://smartbox.failed_exchange_handler/handleAsync
             retry_uri: original
             throw_exceptions: false
             defer_new_exchanges: true
