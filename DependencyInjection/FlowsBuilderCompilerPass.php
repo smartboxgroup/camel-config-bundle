@@ -26,8 +26,8 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     const FROM = 'from';
     const TO = 'to';
     const TAG_DEFINITIONS = 'smartesb.definitions';
-    const PROCESSOR_ID_PREFIX = '_smartesb.processor.';
-    const ITINERARY_ID_PREFIX = 'smartesb.itinerary.';
+    const PROCESSOR_ID_PREFIX = '_sme_pr_';
+    const ITINERARY_ID_PREFIX = '_sme_it_';
     const ENDPOINT_PREFIX = 'endpoint.';
 
     /** @var ContainerBuilder */
@@ -42,11 +42,12 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     /** @var SplFileInfo */
     protected $currentLoadingFile = null;
+    protected $currentFileSlug = null;
 
     protected $currentLoadingVersion = null;
     protected $registeredNamesInFileCount = 1;
 
-    protected static $incrementId = 0;
+    protected $incrementIds = [];
 
     public static function camelToSnake($input)
     {
@@ -97,11 +98,15 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         return array_unique($traits);
     }
 
-    private static function getNextIncrementalId()
+    private function getNextIncrementalId()
     {
-        ++self::$incrementId;
+        if(!array_key_exists($this->currentFileSlug,$this->incrementIds)){
+            $this->incrementIds[$this->currentFileSlug] = 0;
+        }
 
-        return self::$incrementId;
+        $this->incrementIds[$this->currentFileSlug]++;
+
+        return $this->currentFileSlug.'_'.$this->incrementIds[$this->currentFileSlug];
     }
 
     public function getParameter($name)
@@ -230,7 +235,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
     {
         $id = @$config['id'].'';
         if (!$id) {
-            $id = self::PROCESSOR_ID_PREFIX.self::getNextIncrementalId();
+            $id = self::PROCESSOR_ID_PREFIX.$this->getNextIncrementalId();
         }
 
         $id = 'v'.$this->currentLoadingVersion.'.'.$id;
@@ -322,6 +327,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         /** @var SplFileInfo $file */
         foreach ($finder as $file) {
             $this->currentLoadingFile = $file;
+            $this->currentFileSlug = self::slugify(str_replace('.xml', '', $this->currentLoadingFile->getRelativePathname()));
             $this->registeredNamesInFileCount = 1;
             $this->loadXMLFlows($file->getRealpath());
         }
