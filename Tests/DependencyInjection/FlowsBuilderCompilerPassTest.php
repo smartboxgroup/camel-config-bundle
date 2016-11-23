@@ -115,7 +115,7 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testGetBasicDefinitionException()
     {
         $class = 'Idontexist';
-        $this->setExpectedException('InvalidArgumentException', "$class is not a valid class name");
+        $this->expectException('InvalidArgumentException');
         $compilerPass = new FlowsBuilderCompilerPass();
         $compilerPass->getBasicDefinition($class);
     }

@@ -82,7 +82,7 @@ class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidAggregationStrategy()
     {
-        $this->setExpectedException(\Exception::class);
+        $this->expectException(\Exception::class);
 
         $config = new \SimpleXMLElement('<multicast strategyRef="invalidStrategy"></multicast>');
         $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));

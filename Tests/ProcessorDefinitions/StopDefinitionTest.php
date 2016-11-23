@@ -59,7 +59,7 @@ class StopDefinitionTest extends BaseKernelTestCase
     {
         $config = new \SimpleXMLElement('<stop><wrong_node>this is content of unsupported node</wrong_node></stop>');
 
-        $this->setExpectedException(InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
     }

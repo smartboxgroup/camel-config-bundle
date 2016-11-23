@@ -73,7 +73,7 @@ class RouterDefinitionTest extends BaseKernelTestCase
      */
     public function testBuildProcessorException()
     {
-        $this->setExpectedException('Exception', 'Expression missing in when clause');
+        $this->expectException('Exception');
 
         $config = new \SimpleXMLElement('<choice><when></when></choice>');
         $this->processorDefinition->buildProcessor($config, $this->flowsBuilderCompilerPassMock->determineProcessorId($config));
