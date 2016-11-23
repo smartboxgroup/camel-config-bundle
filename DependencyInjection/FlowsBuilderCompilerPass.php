@@ -100,7 +100,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
     private function getNextIncrementalId()
     {
-        if(!array_key_exists($this->currentFileSlug,$this->incrementIds)){
+        if( !array_key_exists($this->currentFileSlug, $this->incrementIds)){
             $this->incrementIds[$this->currentFileSlug] = 0;
         }
 

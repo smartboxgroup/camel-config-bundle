@@ -173,7 +173,7 @@ class FlowsTest extends BaseKernelTestCase
             $conf['class'] = ProcessingException::class;
         }
 
-        $this->setExpectedException($conf['class']);
+        $this->expectException($conf['class']);
     }
 
     private function checkLogs(array $conf)
