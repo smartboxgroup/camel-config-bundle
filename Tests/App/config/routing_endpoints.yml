@@ -47,11 +47,12 @@ spy:
     path: "[a-zA-Z0-9/_-]+"
 
 error.triggerer.recoverable:
-  pattern: "error://recoverable"
+  pattern: "error://recoverable/{nb_errors}"
   defaults:
     _protocol: @smartesb.protocols.base
     _producer: @producer.error.triggerer
     recoverable: true
+    nb_errors: 1
 
 error.triggerer.unrecoverable:
   pattern: "error://unrecoverable"

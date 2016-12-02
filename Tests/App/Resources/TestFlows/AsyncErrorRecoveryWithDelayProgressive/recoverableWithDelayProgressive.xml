@@ -7,12 +7,12 @@
 
     <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
         <route>
-            <from uri="queue://main/delayRecoveryAsyncRecoverableWithDelay"/>
+            <from uri="queue://main/delayRecoveryAsyncRecoverableWithDelayProgressive"/>
             <to uri="helper://add/5"/>
-            <to uri="spy://before_error/recoverableDelay"/>
-            <to uri="error://recoverable"/>
+            <to uri="spy://before_error/recoverableDelayProgressive"/>
+            <to uri="error://recoverable/2"/>
             <to uri="helper://add/5"/>
-            <to uri="spy://after_error/recoverableDelay"/>
+            <to uri="spy://after_error/recoverableDelayProgressive"/>
         </route>
     </camelContext>
 

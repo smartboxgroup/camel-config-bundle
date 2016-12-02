@@ -22,17 +22,11 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
      *
      * @var array
      */
-    public static $amountOfErrors = 1;
-
-    /**
-     * @JMS\Exclude
-     *
-     * @var array
-     */
     public static $count = 0;
 
-    const OPTION_RECOVERABLE = 'recoverable';
-    const OPTION_FORCE = 'force';
+    const OPTION_RECOVERABLE    = 'recoverable';
+    const OPTION_FORCE          = 'force';
+    const OPTION_NUMBER_ERRORS  = 'nb_errors';
 
     /**
      * Sends an exchange to the producer.
@@ -45,7 +39,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
     {
         $options = $endpoint->getOptions();
 
-        if (self::$count < self::$amountOfErrors || @$options[self::OPTION_FORCE]) {
+        if (self::$count < @$options[self::OPTION_NUMBER_ERRORS] || @$options[self::OPTION_FORCE]) {
             $ex->getIn()->setBody(new EntityX(666));
             ++self::$count;
 
@@ -69,6 +63,7 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
         $options = [
             self::OPTION_RECOVERABLE => ['Whether the errors triggered are recoverable or not', []],
             self::OPTION_FORCE => ['Force to throw the exception every time, not only "n" number of times', []],
+            self::OPTION_NUMBER_ERRORS => ['Define the number of time the exception will be throw', []]
         ];
 
         return $options;
@@ -88,5 +83,6 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
         $resolver->setDefault(self::OPTION_RECOVERABLE, false);
         $resolver->setDefault(self::OPTION_FORCE, false);
         $resolver->setAllowedValues(Protocol::OPTION_EXCHANGE_PATTERN, [Protocol::EXCHANGE_PATTERN_IN_ONLY]);
+        $resolver->setDefault(self::OPTION_NUMBER_ERRORS, 1);
     }
 }
