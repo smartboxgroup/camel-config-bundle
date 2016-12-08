@@ -24,9 +24,9 @@ class ErrorTriggerProducer extends Producer implements ConfigurableInterface
      */
     public static $count = 0;
 
-    const OPTION_RECOVERABLE    = 'recoverable';
-    const OPTION_FORCE          = 'force';
-    const OPTION_NUMBER_ERRORS  = 'nb_errors';
+    const OPTION_RECOVERABLE = 'recoverable';
+    const OPTION_FORCE = 'force';
+    const OPTION_NUMBER_ERRORS = 'nb_errors';
 
     /**
      * Sends an exchange to the producer.
