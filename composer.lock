@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0dba7b111a2af98ab21ab30008748c8b",
-    "content-hash": "300f36265650321dde95638630b314bf",
+    "content-hash": "f11773fc765a6f198586a742cca0d304",
     "packages": [
         {
             "name": "ass/xmlsecurity",
@@ -1640,14 +1639,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/smartboxgroup/besimplesoap-bundle.git",
-                "reference": "a6b3dd110ca56eb97dd132edac82b6394238a90a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/smartboxgroup/besimplesoap-bundle/zipball/a6b3dd110ca56eb97dd132edac82b6394238a90a",
-                "reference": "a6b3dd110ca56eb97dd132edac82b6394238a90a",
-                "shasum": ""
+                "url": "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git",
+                "reference": "904781bd9ce888c99dc6da591a3d461bf63a34de"
             },
             "require": {
                 "ass/xmlsecurity": "~1.0",
@@ -1656,7 +1649,7 @@
                 "php": ">=5.3.0",
                 "symfony/framework-bundle": "~2.6",
                 "symfony/twig-bundle": "~2.6",
-                "zendframework/zend-mime": "2.1.*"
+                "zendframework/zend-mime": "2.*"
             },
             "replace": {
                 "besimple/soap-bundle": "self.version",
@@ -1704,25 +1697,15 @@
             "keywords": [
                 "soap"
             ],
-            "support": {
-                "source": "https://github.com/smartboxgroup/besimplesoap-bundle/tree/master",
-                "issues": "https://github.com/smartboxgroup/besimplesoap-bundle/issues"
-            },
-            "time": "2016-06-02 16:34:08"
+            "time": "2016-12-01 09:45:29"
         },
         {
             "name": "smartbox/core-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/smartboxgroup/core-bundle.git",
-                "reference": "9387546388aa5916db580fb3589ae658dc95e9bf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/smartboxgroup/core-bundle/zipball/9387546388aa5916db580fb3589ae658dc95e9bf",
-                "reference": "9387546388aa5916db580fb3589ae658dc95e9bf",
-                "shasum": ""
+                "url": "git@gitlab.production.smartbox.com:smartesb/core-bundle.git",
+                "reference": "71b2e6d9199991e24309d620e0e288673d2c7108"
             },
             "require": {
                 "doctrine/annotations": ">=1.2.0",
@@ -1752,25 +1735,15 @@
                 "MIT"
             ],
             "description": "Smartbox Core Bundle",
-            "support": {
-                "source": "https://github.com/smartboxgroup/commons-bundle/tree/master",
-                "issues": "https://github.com/smartboxgroup/commons-bundle/issues"
-            },
-            "time": "2016-08-25 12:07:48"
+            "time": "2016-10-12 09:32:09"
         },
         {
             "name": "smartbox/framework-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/smartboxgroup/integration-framework-bundle.git",
-                "reference": "03491fe642e6a2c4861f845cf2c584d4d2b44d7c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/smartboxgroup/integration-framework-bundle/zipball/03491fe642e6a2c4861f845cf2c584d4d2b44d7c",
-                "reference": "03491fe642e6a2c4861f845cf2c584d4d2b44d7c",
-                "shasum": ""
+                "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
+                "reference": "17ccbb2995b8b94152b250d867c02d194a6dd919"
             },
             "require": {
                 "centraldesktop/stomp": "dev-master",
@@ -1792,9 +1765,9 @@
                 "symfony/symfony": "2.7.*"
             },
             "require-dev": {
-                "phpunit/php-code-coverage": "dev-master",
-                "phpunit/phpunit": "dev-master",
-                "phpunit/phpunit-mock-objects": "dev-master",
+                "phpunit/php-code-coverage": "~4.0",
+                "phpunit/phpunit": "~5.4",
+                "phpunit/phpunit-mock-objects": "~3.2",
                 "sensio/generator-bundle": "~2.3"
             },
             "type": "symfony-bundle",
@@ -1807,11 +1780,7 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "support": {
-                "source": "https://github.com/smartboxgroup/integration-framework-bundle/tree/master",
-                "issues": "https://github.com/smartboxgroup/integration-framework-bundle/issues"
-            },
-            "time": "2016-08-25 12:18:57"
+            "time": "2016-12-08 16:53:03"
         },
         {
             "name": "symfony/assetic-bundle",

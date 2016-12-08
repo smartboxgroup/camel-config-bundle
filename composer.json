@@ -35,15 +35,15 @@
   "repositories": [
     {
       "type": "vcs",
-      "url":  "git@github.com:smartboxgroup/besimplesoap-bundle.git"
+      "url":  "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git"
     },
     {
       "type": "vcs",
-      "url":  "git@github.com:smartboxgroup/commons-bundle.git"
+      "url":  "git@gitlab.production.smartbox.com:smartesb/core-bundle.git"
     },
     {
       "type": "vcs",
-      "url":  "git@github.com:smartboxgroup/integration-framework-bundle.git"
+      "url":  "git@gitlab.production.smartbox.com:smartesb/framework.git"
     }
   ],
   "minimum-stability": "dev",
