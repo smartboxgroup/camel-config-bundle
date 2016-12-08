@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class ThrowExceptionDefinition extends ProcessorDefinition
 {
     const REF = 'ref';
+    const MESSAGE = 'message';
     const PREFIX = 'throw_exception';
 
     /**
@@ -40,6 +41,10 @@ class ThrowExceptionDefinition extends ProcessorDefinition
         }
 
         $def->addMethodCall('setExceptionClass', [$exceptionClass]);
+
+
+        $message = (string) $configNode->attributes()->{'message'};
+        $def->addMethodCall('setExceptionMessage', [$message]);
 
         return $def;
     }

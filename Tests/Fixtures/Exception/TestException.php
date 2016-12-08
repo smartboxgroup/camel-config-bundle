@@ -7,8 +7,8 @@ namespace Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception;
  */
 class TestException extends \Exception
 {
-    public function __construct()
+    public function __construct($message = "This is a test exception")
     {
-        parent::__construct('This is a test exception');
+        parent::__construct($message);
     }
 }
