@@ -219,6 +219,11 @@ class FlowsTest extends BaseKernelTestCase
         if (array_key_exists('retryDelay', $conf)) {
             $handler->setRetryDelay($conf['retryDelay']);
         }
+
+        if (array_key_exists('retryStrategy', $conf)) {
+            $handler->setRetryStrategy($conf['retryStrategy']);
+            $handler->setRetryDelayFactor($conf['retryDelayFactor']);
+        }
     }
 
     /**
