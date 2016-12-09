@@ -172,7 +172,7 @@ class FlowsTest extends BaseKernelTestCase
         if (!array_key_exists('class', $conf)) {
             $conf['class'] = ProcessingException::class;
         }
-
+        
         $this->expectException($conf['class']);
     }
 

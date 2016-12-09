@@ -40,7 +40,7 @@ class ThrowExceptionDefinitionTest extends BaseKernelTestCase
 
     public function testShouldBuildProcessor()
     {
-        $config = new \SimpleXMLElement('<throwException ref="exceptions.bad_request"/>');
+        $config = new \SimpleXMLElement('<throwException ref="exceptions.bad_request" message="Test message"/>');
         $throwExceptionDefinition = $this->processorDefinition->buildProcessor($config, $this->builderMock->determineProcessorId($config));
 
         $expectedMethodCalls = [
@@ -54,6 +54,12 @@ class ThrowExceptionDefinitionTest extends BaseKernelTestCase
                 'setExceptionClass',
                 [
                     BadRequestException::class,
+                ],
+            ],
+            [
+                'setExceptionMessage',
+                [
+                    "Test message",
                 ],
             ],
         ];
