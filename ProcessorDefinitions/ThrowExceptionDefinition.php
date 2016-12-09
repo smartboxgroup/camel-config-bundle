@@ -42,7 +42,7 @@ class ThrowExceptionDefinition extends ProcessorDefinition
 
         $def->addMethodCall('setExceptionClass', [$exceptionClass]);
 
-        $message = (string) $configNode->attributes()->{'message'};
+        $message = (string) $configNode->attributes()->{self::MESSAGE};
         $def->addMethodCall('setExceptionMessage', [$message]);
 
         return $def;
