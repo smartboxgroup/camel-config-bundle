@@ -10,6 +10,6 @@
         <from uri="test://logging/exception"/>
         <throwException ref="logging_exception_test" message="This is a custom message"/>
     </route>
-</camelContext>
+  </camelContext>
 
 </beans>
