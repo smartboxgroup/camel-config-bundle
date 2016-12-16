@@ -67,45 +67,6 @@
             "time": "2015-05-31 10:10:35"
         },
         {
-            "name": "centraldesktop/stomp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/centraldesktop/php-stomp.git",
-                "reference": "45a2fa09c6a70fb3c82c8964a3f233d59b2c4205"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/centraldesktop/php-stomp/zipball/45a2fa09c6a70fb3c82c8964a3f233d59b2c4205",
-                "reference": "45a2fa09c6a70fb3c82c8964a3f233d59b2c4205",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-xmlreader": "*",
-                "php": ">=5.4.0",
-                "psr/log": "~1.0"
-            },
-            "require-dev": {
-                "pdepend/pdepend": "1.1.*",
-                "phpmd/phpmd": "1.5.*",
-                "phpunit/phpunit": ">=4.2.0",
-                "squizlabs/php_codesniffer": "1.4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CentralDesktop": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "A Stomp 1.2 capable client",
-            "time": "2016-03-10 03:19:21"
-        },
-        {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
             "source": {
@@ -1640,7 +1601,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git",
-                "reference": "904781bd9ce888c99dc6da591a3d461bf63a34de"
+                "reference": "c6751ddee564ea6132dc434f1d12fede794227a8"
             },
             "require": {
                 "ass/xmlsecurity": "~1.0",
@@ -1697,7 +1658,7 @@
             "keywords": [
                 "soap"
             ],
-            "time": "2016-12-01 09:45:29"
+            "time": "2016-12-16 12:18:45"
         },
         {
             "name": "smartbox/core-bundle",
@@ -1743,10 +1704,9 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "3d059f7a804c9f2187ecfeefb57d6083bcd2d149"
+                "reference": "8665d068d9ae3b68d58d48a89a0372267de4b140"
             },
             "require": {
-                "centraldesktop/stomp": "dev-master",
                 "doctrine/annotations": "1.2.*",
                 "ext-mongodb": "~1.0",
                 "ext-pcntl": "*",
@@ -1760,6 +1720,7 @@
                 "sensio/framework-extra-bundle": "^3.0",
                 "smartbox/besimple/soap": "dev-master",
                 "smartbox/core-bundle": "dev-master",
+                "stomp-php/stomp-php": "4.*",
                 "symfony/assetic-bundle": "~2.3",
                 "symfony/monolog-bundle": "~2.4",
                 "symfony/symfony": "2.7.*"
@@ -1780,7 +1741,68 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "time": "2016-12-09 14:46:29"
+            "time": "2016-12-16 16:09:00"
+        },
+        {
+            "name": "stomp-php/stomp-php",
+            "version": "4.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stomp-php/stomp-php.git",
+                "reference": "ae77d4a83c98d94611228929e4d81588d8d3a1f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stomp-php/stomp-php/zipball/ae77d4a83c98d94611228929e4d81588d8d3a1f3",
+                "reference": "ae77d4a83c98d94611228929e4d81588d8d3a1f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "2.*",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Stomp\\": "src/Stomp/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Dejan Bosnanac",
+                    "email": "dejan@nighttale.net",
+                    "homepage": "http://www.nighttale.net"
+                },
+                {
+                    "name": "Sören Rohweder",
+                    "email": "s.rohweder@blage.net",
+                    "homepage": "http://www.monofone.de"
+                },
+                {
+                    "name": "Jens Radtke",
+                    "email": "swefl@fin-sn.de",
+                    "homepage": "http://www.fin-sn.de"
+                }
+            ],
+            "description": "stomp support for PHP",
+            "homepage": "http://github.com/stomp-php/stomp-php",
+            "keywords": [
+                "activeMQ",
+                "apollomq",
+                "jms",
+                "messaging",
+                "rabbitmq",
+                "stomp"
+            ],
+            "time": "2016-08-26 06:17:53"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2427,6 +2449,45 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "centraldesktop/stomp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/centraldesktop/php-stomp.git",
+                "reference": "45a2fa09c6a70fb3c82c8964a3f233d59b2c4205"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/centraldesktop/php-stomp/zipball/45a2fa09c6a70fb3c82c8964a3f233d59b2c4205",
+                "reference": "45a2fa09c6a70fb3c82c8964a3f233d59b2c4205",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "ext-xmlreader": "*",
+                "php": ">=5.4.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "pdepend/pdepend": "1.1.*",
+                "phpmd/phpmd": "1.5.*",
+                "phpunit/phpunit": ">=4.2.0",
+                "squizlabs/php_codesniffer": "1.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "CentralDesktop": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A Stomp 1.2 capable client",
+            "time": "2016-03-10 03:19:21"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.0.5",
