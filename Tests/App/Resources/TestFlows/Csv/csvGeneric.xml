@@ -7,9 +7,9 @@
 
     <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
         <route>
-            <from uri="csv://test/consumer/read_happy"/>
-            <to uri="spy://csv/read_file1"/>
-            <to uri="csv://test/producer/write_happy/happy.csv" customId="true" id="csv_producer_test_write_happy"/>
+            <!-- Test from the generic csv consumer setup in the framework bundle -->
+            <from uri="csv://generic/tmp/happy-pipe.csv"/> <!-- Another test will have left this behind for us -->
+            <to uri="spy://csv/read_file3" runtime-breakpoint="1" />
         </route>
     </camelContext>
 
