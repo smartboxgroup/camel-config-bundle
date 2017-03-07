@@ -2,14 +2,38 @@ steps:
     - {type: configureHandler, name: async, retryDelay: 0 }
 
     # Consume one set of rows from the csv, the amount here is 1, but the consumer is set to read 3 lines
-    - {type: consume, uri: csv://test/consumer/read, amount: 1 }
+    - {type: consume, uri: csv://test/consumer/read_happy, amount: 1 }
 
     # Test that we returned 3 lines as expected from the csv
     -
         type: checkSpyArray
-        path: csv/read_file
+        path: csv/read_file1
         values:
             lines:
                 - ['a1', 'b1', 'c1' ]
                 - ['a2', 'b2', 'c2' ]
                 - ['a3', 'b3', 'c3' ]
+
+    # Consume one set of rows from the csv, the amount here is 1, but the consumer is set to read 2 lines
+    - {type: consume, uri: csv://test/consumer_2/read_happy/happy.csv, amount: 1 }
+
+    # Test that we returned 2 lines as expected from the csv
+    -
+        type: checkSpyArray
+        path: csv/read_file2
+        values:
+            lines:
+                - ['a1', 'b1', 'c1' ]
+                - ['a2', 'b2', 'c2' ]
+
+    # And the csvGeneric
+    # Consume one set of rows from the csv, the amount here is 1, but the consumer is set to read 2 lines
+    - {type: consume, uri: csv://generic/tmp/happy-pipe.csv, amount: 1 }
+
+    # Test that we returned 1 lines as expected from the csv
+    -
+        type: checkSpyArray
+        path: csv/read_file3
+        values:
+            lines:
+                - ['a1', 'b1', 'c1' ]
