@@ -2,6 +2,7 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\Tests\App\Producers;
 
+use Smartbox\CoreBundle\Type\SerializableArray;
 use Smartbox\Integration\CamelConfigBundle\Tests\App\Entity\EntityX;
 use Smartbox\Integration\FrameworkBundle\Configurability\ConfigurableInterface;
 use Smartbox\Integration\FrameworkBundle\Core\Protocols\Protocol;
@@ -16,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SpyProducer extends Producer implements ConfigurableInterface
 {
     const OPTION_PATH = 'path';
+    const OPTION_CHECK_VALUES_IDENTICAL = 'check_values_identical';
 
     public $array = [];
 
@@ -38,7 +40,12 @@ class SpyProducer extends Producer implements ConfigurableInterface
             $this->array[$path] = [];
         }
 
-        $this->array[$path][] = $x->getX();
+        if ($x instanceof SerializableArray) {
+            $this->array[$path] = $x->toArray();
+        } else {
+            $this->array[$path][] = $x->getX();
+        }
+
     }
 
     /**

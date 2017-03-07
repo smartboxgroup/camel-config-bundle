@@ -75,6 +75,9 @@ class FlowsTest extends BaseKernelTestCase
                 case 'checkSpy':
                     $this->checkSpy($step);
                     break;
+                case 'checkSpyArray':
+                    $this->checkSpyArray($step);
+                    break;
                 case 'consume':
                     $this->consume($step);
                     break;
@@ -146,6 +149,28 @@ class FlowsTest extends BaseKernelTestCase
         $values = $this->getContainer()->get('producer.spy')->getData($conf['path']);
 
         $this->assertEquals($expectedValues, $values, 'The spy '.$conf['path']." didn't contain the expected data");
+    }
+    /**
+     * @param array $conf
+     *
+     * @throws \Exception
+     * @throws \Smartbox\Integration\FrameworkBundle\Core\Handlers\HandlerException
+     */
+    private function checkSpyArray(array $conf)
+    {
+        if (!array_key_exists('path', $conf) || !array_key_exists('values', $conf)) {
+            throw new \Exception('Missing parameter in checkSpy step');
+        }
+//        $evaluator = $this->getContainer()->get('smartesb.util.evaluator');
+
+        $expectedValues = $conf['values'];
+//        foreach ($conf['values'] as $value) {
+//        $expectedValues[] = $evaluator->evaluateWithVars($value, []);
+//    }
+
+        $values = $this->getContainer()->get('producer.spy')->getData($conf['path']);
+
+        $this->assertSame($expectedValues, $values, 'The spy '.$conf['path']." didn't contain the expected data");
     }
 
     /**
