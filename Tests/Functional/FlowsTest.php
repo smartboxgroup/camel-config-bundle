@@ -161,12 +161,8 @@ class FlowsTest extends BaseKernelTestCase
         if (!array_key_exists('path', $conf) || !array_key_exists('values', $conf)) {
             throw new \Exception('Missing parameter in checkSpy step');
         }
-//        $evaluator = $this->getContainer()->get('smartesb.util.evaluator');
 
         $expectedValues = $conf['values'];
-//        foreach ($conf['values'] as $value) {
-//        $expectedValues[] = $evaluator->evaluateWithVars($value, []);
-//    }
 
         $values = $this->getContainer()->get('producer.spy')->getData($conf['path']);
 
