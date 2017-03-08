@@ -8,7 +8,7 @@
     <camelContext trace="false" xmlns="http://camel.apache.org/schema/spring">
         <route>
             <!-- Test from the generic csv consumer setup in the framework bundle -->
-            <from uri="csv://generic/tmp/happy-pipe.csv"/> <!-- Another test will have left this behind for us -->
+            <from uri="csv://generic/tmp/camel-config-test/happy-comma.csv"/> <!-- Another test will have left this behind for us -->
             <to uri="spy://csv/read_file3"/>
             <to uri="csv://generic/tmp/happy-pipe-2.csv"/>
         </route>
