@@ -1704,7 +1704,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "43867c12f8f09ced971cd124de163920cca56648"
+                "reference": "587fb2b0e4b1ecbc3aa26102eba7db74261d762d"
             },
             "require": {
                 "doctrine/annotations": "1.2.*",
@@ -1741,7 +1741,7 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "time": "2017-01-13 13:58:08"
+            "time": "2017-03-08 14:57:07"
         },
         {
             "name": "stomp-php/stomp-php",
@@ -2815,7 +2815,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-01T05:06:24+00:00"
+            "time": "2016-11-01 05:06:24"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3077,7 +3077,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-23T08:53:45+00:00"
+            "time": "2016-11-23 08:53:45"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3136,7 +3136,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-11-19T09:07:46+00:00"
+            "time": "2016-11-19 09:07:46"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

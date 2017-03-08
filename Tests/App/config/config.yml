@@ -1,5 +1,9 @@
 imports:
     - { resource: services.yml }
+    - { resource: csv.yml }
+    - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_consumers.yml" }
+    - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_producers.yml" }
+
 
 parameters:
     locale: en
@@ -56,16 +60,18 @@ smartbox_integration_framework:
     defer_events_to_uri: false
     queue_drivers:
         main:
-            type: ActiveMQ
+            type: rabbitmq
             description: Default queue driver
-            host: tcp://real.smartesb.local
-            username: ''
-            password: ''
+            host: 'failover://(tcp://eai-demo.sandbox.local:61613)?randomize=false'
+            username: rabbit
+            password: eairabbitmq
+            vhost: test_camel_config
             format: json
+            timeout: 15
+    default_queue_driver: main
+    default_nosql_driver: ~
 
     nosql_drivers: ~
-    default_queue_driver: main
-    default_nosql_driver: null
 
     message_handlers:
         sync:
