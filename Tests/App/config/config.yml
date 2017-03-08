@@ -2,6 +2,8 @@ imports:
     - { resource: services.yml }
     - { resource: csv.yml }
     - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_consumers.yml" }
+    - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_producers.yml" }
+
 
 parameters:
     locale: en
