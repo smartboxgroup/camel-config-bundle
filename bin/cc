@@ -7,3 +7,33 @@ rm Tests/App/cache/* -rf;
 
 sudo service activemq restart;
 sudo service php7.0-fpm restart;
+
+
+#!/usr/bin/env bash
+host="http://eai-demo.sandbox.local:15672"
+
+path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" && cd ${path}/../;
+
+echo 'Clearing all caches'
+rm app/cache/* -rf;
+
+echo 'Clearing RabbitMq Queues'
+vhost="test_camel_config"
+username="rabbit"
+password="eairabbitmq"
+echo "vhost '$vhost' and user '$username' on '$host'."
+
+echo "Removing vhost $vhost"
+uri="$host/api/vhosts/$vhost";
+
+curl -s -i -u $username:$password  -H "content-type:application/json" -XDELETE "$uri" > /dev/null
+
+echo "Recreating vhost '$vhost' with '$username' user"
+
+curl -s -i -u $username:$password  -H "content-type:application/json"  -XPUT $uri > /dev/null
+
+uri="$host/api/permissions/$vhost/rabbit"
+curl -s -i -u $username:$password  -H "content-type:application/json" -d '{"configure":".*","write":".*","read":".*"}' -XPUT "$uri" > /dev/null
+
+sudo service php7.0-fpm restart;
+sudo redis-cli flushall;
