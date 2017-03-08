@@ -1704,7 +1704,7 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.production.smartbox.com:smartesb/framework.git",
-                "reference": "eb483aa6870da66c7af2e8b695211671954020b3"
+                "reference": "587fb2b0e4b1ecbc3aa26102eba7db74261d762d"
             },
             "require": {
                 "doctrine/annotations": "1.2.*",
@@ -1741,7 +1741,7 @@
                 "MIT"
             ],
             "description": "Smartbox Framework Bundle",
-            "time": "2017-03-08 14:09:32"
+            "time": "2017-03-08 14:57:07"
         },
         {
             "name": "stomp-php/stomp-php",
