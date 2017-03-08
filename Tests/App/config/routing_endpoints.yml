@@ -76,7 +76,7 @@ csv.test.consumer.read_2:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _consumer: "@smartesb.consumers.test_csv_2"
     _handler: "@smartesb.handlers.async"
-    root_path: "/tmp"
+    root_path: "/tmp/camel-config-test"
   requirements:
     default_path: ".*"
 
@@ -85,7 +85,7 @@ csv.test.producer.write:
   defaults:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _producer: "@smartesb.producers.test_csv"
-    root_path: "/tmp"
+    root_path: "/tmp/camel-config-test"
     delimiter: ","
   requirements:
     default_path: ".*"

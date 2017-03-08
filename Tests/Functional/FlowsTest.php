@@ -21,6 +21,9 @@ use Symfony\Component\Yaml\Parser;
  */
 class FlowsTest extends BaseKernelTestCase
 {
+    const TMP_FOLDER = '/tmp/camel-config-test';
+    const RESOURCE_FOLDER = 'Resources/Fixtures';  // not including kernel.root
+
     /** @var DebugHandler */
     private $loggerHandler;
 
@@ -92,6 +95,12 @@ class FlowsTest extends BaseKernelTestCase
                     break;
                 case 'configureHandler':
                     $this->configureHandler($step);
+                    break;
+                case 'copyTmpResource':
+                    $this->copyTmpResource($step);
+                    break;
+                case 'cleanTmpResources':
+                    $this->cleanTmpResources($step);
                     break;
             }
         }
@@ -245,6 +254,58 @@ class FlowsTest extends BaseKernelTestCase
             $handler->setRetryStrategy($conf['retryStrategy']);
             $handler->setRetryDelayFactor($conf['retryDelayFactor']);
         }
+    }
+
+    /**
+     * Copy a test resource to /tmp/camel-config-test for using
+     *
+     * conf['from'] The resource in %kernel.root_path%/Test/App/Resources you would like copied
+     * to /tmp/camel-config-test
+     *
+     * If the /tmp/camel-config-test does not exist it will be created
+     *
+     * @param array $conf
+     *
+     * @throws \Exception
+     */
+    private function copyTmpResource(array $conf)
+    {
+        if (!array_key_exists('from', $conf)) {
+            throw new \Exception('Missing from parameter in copyTmpResource step');
+        }
+
+        $from_path = self::$kernel->getRootDir() . DIRECTORY_SEPARATOR . self::RESOURCE_FOLDER . DIRECTORY_SEPARATOR . $conf['from'];
+
+        if (!is_file($from_path)) {
+            throw new \Exception("The resource path {$from_path} is not a file!");
+        }
+
+
+        if (!is_dir(self::TMP_FOLDER)) {
+            mkdir(self::TMP_FOLDER);
+        }
+
+        $to_path = self::TMP_FOLDER . DIRECTORY_SEPARATOR . basename($conf['from']);
+
+        copy( $from_path, $to_path );
+    }
+
+    /**
+     * Clean up the copied and created file resources by removeing the folder /tmp/camel-config-test
+     *
+     * @param array $conf
+     *
+     * @throws \Exception
+     */
+    private function cleanTmpResources(array $conf)
+    {
+        $files = glob(self::TMP_FOLDER . DIRECTORY_SEPARATOR . '*');
+        foreach ($files as $file) {
+            if (is_file($file))
+                unlink($file); // delete file
+        }
+        //remove the folder
+        rmdir(self::TMP_FOLDER);
     }
 
     /**
