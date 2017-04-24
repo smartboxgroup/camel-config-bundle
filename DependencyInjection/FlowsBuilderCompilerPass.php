@@ -202,7 +202,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $index = count($this->registeredNamesPerContext[$contextId]);
 
-        $id = 'v'.$this->currentLoadingVersion.'.'.sha1($contextId.$index);
+        $id = 'v'.$this->currentLoadingVersion.'.'.sha1($contextId.'_'.$index);
         $this->registeredNamesPerContext[$contextId][] = $id;
 
         return $id;
