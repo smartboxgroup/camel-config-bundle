@@ -31,20 +31,6 @@
   "config": {
     "bin-dir": "bin"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url":  "git@gitlab.production.smartbox.com:smartesb/BeSimpleSoap.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@gitlab.production.smartbox.com:smartesb/core-bundle.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@gitlab.production.smartbox.com:smartesb/framework.git"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable" : true
 }
