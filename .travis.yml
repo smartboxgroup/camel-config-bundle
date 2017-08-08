@@ -7,7 +7,8 @@ env:
   - SYMFONY_VERSION=2.7.*
 
 before_script:
-  - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
+#  - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
+  - echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
 #  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
 #  - composer update --no-interaction --prefer-source
