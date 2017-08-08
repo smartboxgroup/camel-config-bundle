@@ -9,7 +9,8 @@ env:
 before_script:
   - composer self-update
 #  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
-  - composer update --no-interaction --prefer-source
+#  - composer update --no-interaction --prefer-source
+  - composer install
 
 script:
   - phpunit --coverage-text

@@ -11,3 +11,6 @@ Tests/App/logs/*
 
 # Coverage report files
 /.coverage
+
+# MacOS
+.DS_Store
