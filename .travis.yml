@@ -9,6 +9,7 @@ env:
 before_install: echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
+  - ls -al /home/travis/.phpenv/versions/7.0.7/lib/php/extensions/no-debug-zts-20151012/
 #  - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
   - composer self-update
 #  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
