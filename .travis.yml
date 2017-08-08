@@ -7,7 +7,7 @@ env:
   - SYMFONY_VERSION=2.7.*
 
 before_script:
-  - echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - pecl install -f apcu
   - composer self-update
 #  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
 #  - composer update --no-interaction --prefer-source
