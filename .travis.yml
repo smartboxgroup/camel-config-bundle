@@ -8,9 +8,11 @@ env:
 
 before_script:
   - composer self-update
-  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
+#  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
   - composer update --no-interaction --prefer-source
 
 script:
   - phpunit --coverage-text
 
+notifications:
+  email: true
