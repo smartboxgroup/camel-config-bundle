@@ -6,18 +6,13 @@ php:
 env:
   - SYMFONY_VERSION=2.7.*
 
-before_install: echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-
 before_script:
-  - ls -al /home/travis/.phpenv/versions/7.0.7/lib/php/extensions/no-debug-zts-20151012/
-#  - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
+  - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
   - composer self-update
-#  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
-#  - composer update --no-interaction --prefer-source
   - composer install
 
 script:
-  - bin/phpunit --coverage-text
+  - bin/phpunit --coverage-text --debug
 
 notifications:
   email: true
