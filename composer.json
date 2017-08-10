@@ -19,8 +19,8 @@
     "sensio/framework-extra-bundle": "^3.0",
     "incenteev/composer-parameter-handler": "~2.0",
     "jms/serializer-bundle": "^0.13.0",
-    "smartbox/core-bundle": "dev-master",
-    "smartbox/integration-framework-bundle": "dev-master"
+    "smartbox/core-bundle": "~1.0.0",
+    "smartbox/integration-framework-bundle": "~1.0.0"
   },
   "require-dev": {
     "phpunit/php-code-coverage": "~4.0",
