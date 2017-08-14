@@ -15,12 +15,14 @@ matrix:
 before_script:
   - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
   - composer self-update
-  - composer install
+  - composer install --prefer-dist --no-interaction
 
 script:
   - bin/phpunit --coverage-text --debug
 
 notifications:
-  email:
-    on_success: always
+  email:
+    recipients:
+      - si-integration@smartandco.com
+    on_success: change
     on_failure: always
