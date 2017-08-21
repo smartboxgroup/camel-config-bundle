@@ -26,8 +26,8 @@
     "phpunit/phpunit": "~5.4.0",
     "sensio/generator-bundle": "~2.3",
     "smartbox/integration-framework-bundle": "dev-SIEAI-1453",
-    "smartbox/core-bundle": "dev-SIEAI-1453",
-    "smartbox/besimple-soap": "dev-SIEAI-1453"
+    "smartbox/core-bundle": "~1.0",
+    "smartbox/besimple-soap": "~1.0"
   },
   "config": {
     "bin-dir": "bin"
