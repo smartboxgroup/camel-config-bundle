@@ -18,14 +18,16 @@
     "sensio/distribution-bundle": "~4.0",
     "sensio/framework-extra-bundle": "^3.0",
     "incenteev/composer-parameter-handler": "~2.0",
-    "jms/serializer-bundle": "^0.13.0",
-    "smartbox/integration-framework-bundle": "dev-SIEAI-1453"
+    "jms/serializer-bundle": "^0.13.0"
   },
   "require-dev": {
     "phpunit/php-code-coverage": "~4.0",
     "phpunit/phpunit-mock-objects": "~3.2",
     "phpunit/phpunit": "~5.4.0",
-    "sensio/generator-bundle": "~2.3"
+    "sensio/generator-bundle": "~2.3",
+    "smartbox/integration-framework-bundle": "dev-SIEAI-1453",
+    "smartbox/core-bundle": "dev-SIEAI-1453",
+    "smartbox/besimple-soap": "dev-SIEAI-1453"
   },
   "config": {
     "bin-dir": "bin"
