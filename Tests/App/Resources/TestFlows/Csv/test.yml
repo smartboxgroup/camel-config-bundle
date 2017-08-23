@@ -18,7 +18,7 @@ steps:
                 - ['a3', 'b3', 'c3' ]
 
     # Consume one set of rows from the csv, the amount here is 1, but the consumer is set to read 2 lines
-    - {type: consume, uri: csv://test/consumer_2/read_happy/happy.csv, amount: 1 }
+    - {type: consume, uri: csv://test/consumer_2/read_happy, amount: 1 }
 
     # Test that we returned 2 lines as expected from the csv
     -
@@ -31,7 +31,7 @@ steps:
 
     # And the csvGeneric
     # Consume one set of rows from the csv, the amount here is 1, but the consumer is set to read 2 lines
-    - {type: consume, uri: csv://generic/tmp/camel-config-test/happy-comma.csv, amount: 1 }
+    - {type: consume, uri: csv://generic//tmp/camel-config-test/happy-comma.csv, amount: 1 }
 
     # Test that we returned 1 lines as expected from the csv
     -
