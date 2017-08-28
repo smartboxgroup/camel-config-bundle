@@ -67,18 +67,15 @@ csv.test.consumer.read:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _consumer: "@smartesb.consumers.test_csv"
     _handler: "@smartesb.handlers.async"
-    default_path: "happy.csv"
-    root_path: "%kernel.root_dir%/Resources/Fixtures/Csv"
+    path: "%kernel.root_dir%/Resources/Fixtures/Csv/"
 
 csv.test.consumer.read_2:
-  pattern: "csv://test/consumer_2/{method}/{default_path}"
+  pattern: "csv://test/consumer_2/{method}"
   defaults:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _consumer: "@smartesb.consumers.test_csv_2"
     _handler: "@smartesb.handlers.async"
-    root_path: "/tmp/camel-config-test"
-  requirements:
-    default_path: ".*"
+    path: "/tmp/camel-config-test"
 
 csv.test.producer.write:
   pattern: "csv://test/producer/{method}/{default_path}"
