@@ -1,7 +1,6 @@
 addons:
   hosts:
     - camel.local
-    - database.local
 
 language: php
 
