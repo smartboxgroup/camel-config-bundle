@@ -1,16 +1,9 @@
 imports:
     - { resource: services.yml }
     - { resource: csv.yml }
+    - { resource: parameters.yml }
     - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_consumers.yml" }
     - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_producers.yml" }
-
-
-parameters:
-    locale: en
-    secret: "5yg6u543wrftg34"
-    fixtures_path: "%kernel.root_dir%/Resources/Fixtures"
-    logging_exception_test.class: \Smartbox\Integration\CamelConfigBundle\Tests\Fixtures\Exception\TestException
-    flows.version: 0
 
 
 framework:
@@ -60,14 +53,22 @@ smartbox_integration_framework:
     defer_events_to_uri: false
     queue_drivers:
         main:
-            type: rabbitmq
-            description: Default queue driver
-            host: 'failover://(tcp://eai-demo.sandbox.local:61613)?randomize=false'
-            username: rabbit
-            password: eairabbitmq
-            vhost: test_camel_config
+            type: RabbitMQ
+            description: RabbitMQ queue driver
+            host: "%rabbitmq.hostname%"
+            username: "%rabbitmq.username%"
+            password: "%rabbitmq.password%"
             format: json
-            timeout: 15
+            vhost: '%rabbitmq.vhost%'
+            timeout: '%rabbitmq.timeout%'
+#            type: rabbitmq
+#            description: Default queue driver
+#            host: 'failover://(tcp://eai-demo.sandbox.local:61613)?randomize=false'
+#            username: rabbit
+#            password: eairabbitmq
+#            vhost: test_camel_config
+#            format: json
+#            timeout: 15
     default_queue_driver: main
     default_nosql_driver: ~
 
