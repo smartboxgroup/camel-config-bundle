@@ -28,12 +28,6 @@ class ThrottlerDefinition extends ProcessorDefinition
             throw new \RuntimeException('The attribute timePeriodMillis of the throttler processor must be defined and be an integer >= 0');
         }
 
-        // timeDelaySeconds
-        $delayS = (int) $configNode->attributes()->{'timeDelaySeconds'};
-        if (!$delayS && is_int($delayS) && !$delayS >= 0) {
-            throw new \RuntimeException('The attribute timeDelaySeconds of the throttler processor must be defined and be an integer >= 0');
-        }
-
         // asyncDelayed
         $asyncDelayed = false;
         if (isset($configNode->attributes()->{'asyncDelayed'})) {
@@ -48,7 +42,6 @@ class ThrottlerDefinition extends ProcessorDefinition
         }
 
         $def->addMethodCall('setPeriodMs', [$timeMs]);
-        $def->addMethodCall('setDelayS', [$delayS]);
         $def->addMethodCall('setAsyncDelayed', [$asyncDelayed]);
 
         $expression = null;

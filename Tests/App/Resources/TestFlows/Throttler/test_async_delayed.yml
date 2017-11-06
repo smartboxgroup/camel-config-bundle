@@ -22,5 +22,5 @@ steps:
   - { type: handle, from: "test://throttlerAsync", in: 1, out: 5}
 
 # Second message should fail
-  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ThrottledException'}
+  - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\RetryLaterException'}
   - { type: handle, from: "test://throttlerAsync", in: 1, out: 1}
