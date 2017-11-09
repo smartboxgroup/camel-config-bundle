@@ -82,6 +82,10 @@ smartbox_integration_framework:
             throw_exceptions: true
             defer_new_exchanges: false
             retry_delay: 0
+            throttle_delay: 1
+            throttle_delay_factor: 1
+            throttle_strategy: fixed
+            throttle_uri: queue://main/throttle
 
         async:
             description: Message hanlder to handle messages comming from a queue
@@ -91,6 +95,10 @@ smartbox_integration_framework:
             throw_exceptions: false
             defer_new_exchanges: true
             retry_delay: 0
+            throttle_delay: 1
+            throttle_delay_factor: 1
+            throttle_strategy: fixed
+            throttle_uri: queue://main/throttle
 
     flows_version: 0
 
