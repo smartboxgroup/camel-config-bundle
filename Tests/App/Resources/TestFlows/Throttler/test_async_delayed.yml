@@ -11,16 +11,14 @@ steps:
 
   - { type: wait, delay: 3 } # Wait until the end of the reset, then consume again and check that the message passes
 
-  - { type: consume, uri: "queue://main/throttle", amount: 1}
+  - { type: consume, uri: "queue://main/throttle", amount: 1} # When a message gets throttled it will be put in the uri defined in smartesb.handlers.async
   - { type: checkSpy, path: "throttlerAsync/before", values: [1,1] }
   - { type: checkSpy, path: "throttlerAsync/after", values: [5,5] } # spy now contains both results
 
 
-## Sync
-
 # First message should pass
-  - { type: handle, from: "test://throttle", in: 1, out: 5}
+  - { type: handle, from: "test://throttlerAsync", in: 1, out: 5}
 
-# Second message should fail
+# Second message should through an exception
   - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ThrottledException'}
-  - { type: handle, from: "test://throttle", in: 1, out: 1}
+  - { type: handle, from: "test://throttlerAsync", in: 1, out: 1}
