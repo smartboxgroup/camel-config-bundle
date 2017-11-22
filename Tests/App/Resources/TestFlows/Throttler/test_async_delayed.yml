@@ -15,10 +15,9 @@ steps:
   - { type: checkSpy, path: "throttlerAsync/before", values: [1,1] }
   - { type: checkSpy, path: "throttlerAsync/after", values: [5,5] } # spy now contains both results
 
-
 # First message should pass
   - { type: handle, from: "test://throttlerAsync", in: 1, out: 5}
 
-# Second message should through an exception
+# Second message should throw an exception
   - { type: expectedException, class: 'Smartbox\Integration\FrameworkBundle\Core\Processors\Exceptions\ThrottledException'}
   - { type: handle, from: "test://throttlerAsync", in: 1, out: 1}
