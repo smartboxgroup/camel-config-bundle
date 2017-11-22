@@ -1,3 +1,7 @@
+addons:
+  hosts:
+    - camel.local
+
 language: php
 
 php:
@@ -13,17 +17,18 @@ matrix:
   allow_failures:
     - php: 7.1
 
+before_install:
+  - phpenv config-add travis/travis.ini
+  - bash travis/install-apcu-pecl.sh
+
 before_script:
-  - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
+  - sudo rabbitmq-plugins enable rabbitmq_stomp
+  - sudo service rabbitmq-server restart
   - composer self-update
   - composer install --prefer-dist --no-interaction
 
 script:
   - bin/phpunit --coverage-text --debug
 
-notifications:
-  email:
-    recipients:
-      - si-integration@smartandco.com
-    on_success: change
-    on_failure: always
+services:
+  - rabbitmq
