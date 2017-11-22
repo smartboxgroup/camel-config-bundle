@@ -15,6 +15,7 @@ matrix:
 
 before_install:
   - phpenv config-add travis/z_php.ini
+  - bash travis/install-apcu-pecl.sh
 
 before_script:
   - if [[ "$(php -v | grep 'PHP 7')" ]]; then yes | pecl install -f apcu; composer require atoum/atoum; fi
