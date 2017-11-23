@@ -55,7 +55,7 @@ smartbox_integration_framework:
         main:
             type: RabbitMQ
             description: RabbitMQ queue driver
-            host: "%rabbitmq.hostname%"
+            host: "%rabbitmq.host%"
             username: "%rabbitmq.username%"
             password: "%rabbitmq.password%"
             format: json
