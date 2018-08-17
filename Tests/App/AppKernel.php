@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new \Smartbox\CoreBundle\SmartboxCoreBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Smartbox\Integration\FrameworkBundle\SmartboxIntegrationFrameworkBundle(),
             new \Smartbox\Integration\CamelConfigBundle\SmartboxIntegrationCamelConfigBundle(),
         ];

@@ -109,3 +109,11 @@ smartbox_integration_framework:
                     steps:
                         - insertOne:
                             data: eval: msg
+
+doctrine:
+    dbal:
+        default_connection: default
+    orm:
+        entity_managers:
+            default:
+                connection: default
