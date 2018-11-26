@@ -26,7 +26,6 @@
     "phpunit/phpunit-mock-objects": "~3.2",
     "phpunit/phpunit": "~5.4.0",
     "sensio/generator-bundle": "~2.3",
-    "smartbox/core-bundle": "^1.0.0",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5"
   },

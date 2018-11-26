@@ -54,8 +54,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['getNamespace', 'getAlias', 'getFlowsDirectories', 'getFrozenFlowsDirectory', 'getXsdValidationBasePath', 'load'])
             ->getMock();
 
-        $extension->method('getFlowsDirectories')->willReturn(__DIR__.'/../Fixtures/FlowsBuilderCompilerPassSuccess');
-        $extension->method('getFrozenFlowsDirectory')->willReturn(__DIR__.'/../Fixtures/FlowsBuilderCompilerPassSuccess/Frozen');
+        $extension->method('getFlowsDirectories')->willReturn(__DIR__ . '/../App/Resources/Fixtures/FlowsBuilderCompilerPassSuccess');
+        $extension->method('getFrozenFlowsDirectory')->willReturn(__DIR__ . '/../App/Resources/Fixtures/FlowsBuilderCompilerPassSuccess/Frozen');
 
         $extension->method('getAlias')
             ->will($this->returnValue('smartbox_integration_camel_config'));
