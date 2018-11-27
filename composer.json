@@ -27,7 +27,7 @@
     "sensio/generator-bundle": "~2.3",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
-    "smartbox/integration-framework-bundle": "^1.0.0"
+    "smartbox/integration-framework-bundle": "dev-tidy/move-tests as 1.0.0"
   },
   "config": {
     "bin-dir": "bin"
