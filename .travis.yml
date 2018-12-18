@@ -12,10 +12,6 @@ php:
 env:
   - SYMFONY_VERSION=2.8.*
 
-matrix:
-  allow_failures:
-    - php: 7.1
-
 before_install:
   - phpenv config-add travis/z_php.ini
   - bash travis/install-apcu-pecl.sh
