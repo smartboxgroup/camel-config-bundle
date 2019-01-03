@@ -136,7 +136,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesSerializer':
-                    $definition->addMethodCall('setSerializer', [new Reference('serializer')]);
+                    $definition->addMethodCall('setSerializer', [new Reference('jms_serializer')]);
                     break;
 
                 case 'Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesValidator':
