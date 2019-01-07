@@ -46,6 +46,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     public function testProcess()
     {
+        $this->markTestSkipped('This test has been skipped as it should be moved to the framework bundle.');
+
         $compilerPass = new FlowsBuilderCompilerPass();
 
         // Mock extension interface and its related methods
