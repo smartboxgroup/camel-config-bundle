@@ -10,13 +10,12 @@ php:
   - 7.2
   - 7.3
 
-env:
-  - SYMFONY_VERSION=2.7.*
-  - SYMFONY_VERSION=2.8.*
-
 matrix:
   allow_failures:
     - php: 7.3
+
+env:
+  - SYMFONY_VERSION=2.8.*
 
 before_install:
   - phpenv config-add travis/z_php.ini
@@ -25,7 +24,6 @@ before_install:
 before_script:
   - sudo rabbitmq-plugins enable rabbitmq_stomp
   - sudo service rabbitmq-server restart
-  - composer self-update
   - composer install --prefer-dist --no-interaction
 
 script:
