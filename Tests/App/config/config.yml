@@ -1,10 +1,8 @@
 imports:
     - { resource: services.yml }
-    - { resource: csv.yml }
     - { resource: parameters.yml }
     - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_consumers.yml" }
     - { resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_configured_producers.yml" }
-
 
 framework:
     secret:          "%secret%"
@@ -45,8 +43,8 @@ smartbox_core:
 
 smartbox_integration_camel_config:
     flows_directories:
-      - "%kernel.root_dir%/Resources/TestFlows"
-    frozen_flows_directory: "%kernel.root_dir%/Resources/FrozenFlows"
+      - "%kernel.root_dir%/Resources/Fixtures/TestFlows"
+    frozen_flows_directory: "%kernel.root_dir%/Resources/Fixtures/FrozenFlows"
 
 
 smartbox_integration_framework:
