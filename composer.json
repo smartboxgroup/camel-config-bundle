@@ -25,7 +25,7 @@
     "jms/serializer-bundle": "*",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
-    "smartbox/integration-framework-bundle": "dev-tidy/move-tests as 1.0.0"
+    "smartbox/integration-framework-bundle": "dev-tidy/move-tests as 1.26.0"
   },
   "config": {
     "bin-dir": "bin"
