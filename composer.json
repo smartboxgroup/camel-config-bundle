@@ -14,7 +14,7 @@
     "symfony/symfony": "^2.8|^3.0|^4.0",
     "sensio/distribution-bundle": "^4.0.0",
     "incenteev/composer-parameter-handler": "^2.0.0",
-    "smartbox/integration-framework-bundle": "^1.0.0"
+    "smartbox/integration-framework-bundle": "dev-tidy/move-tests as 1.26.0"
   },
   "require-dev": {
     "symfony/monolog-bundle": "^2.4.0",
@@ -23,9 +23,9 @@
     "phpunit/phpunit": "~5.4.0",
     "sensio/generator-bundle": "~2.3",
     "jms/serializer-bundle": "*",
+    "smartbox/core-bundle": "^1.0.0",
     "doctrine/doctrine-bundle": "^1.6",
-    "doctrine/orm": "^2.5",
-    "smartbox/integration-framework-bundle": "dev-tidy/move-tests as 1.26.0"
+    "doctrine/orm": "^2.5"
   },
   "config": {
     "bin-dir": "bin"
