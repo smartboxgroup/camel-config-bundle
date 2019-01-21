@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Class PipelineDefinitionTest.
  */
-class PipelineDefinitionTest extends \PHPUnit_Framework_TestCase
+class PipelineDefinitionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PipelineDefinition
