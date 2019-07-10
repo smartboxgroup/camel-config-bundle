@@ -1,7 +1,8 @@
 addons:
   hosts:
     - rabbit
-
+  apt_packages:
+    - rabbitmq-server
 language: php
 
 php:
