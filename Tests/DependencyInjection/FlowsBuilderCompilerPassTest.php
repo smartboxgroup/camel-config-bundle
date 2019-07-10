@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Definition;
  *
  * @coversDefaultClass Smartbox\Integration\CamelConfigBundle\DependencyInjection\FlowsBuilderCompilerPass
  */
-class FlowsBuilderCompilerPassTest extends \PHPUnit_Framework_TestCase
+class FlowsBuilderCompilerPassTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @param ContainerBuilder $container

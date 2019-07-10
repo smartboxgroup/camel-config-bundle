@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Class MulticastDefinitionTest.
  */
-class MulticastDefinitionTest extends \PHPUnit_Framework_TestCase
+class MulticastDefinitionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var MulticastDefinition
