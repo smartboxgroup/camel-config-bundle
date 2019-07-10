@@ -17,11 +17,6 @@ framework:
         enabled: true
         collect: false
 
-sensio_framework_extra:
-    request:
-        converters: true
-        auto_convert: false
-
 monolog:
     channels: [tracking]
     handlers:
@@ -41,7 +36,7 @@ smartbox_core:
     - 'Smartbox\Integration\CamelConfigBundle\Tests\App\Entity'
   cache_drivers:
       array:
-          service: @array_cache_service
+          service: "@array_cache_service"
 
 smartbox_integration_camel_config:
     flows_directories:
@@ -100,7 +95,7 @@ smartbox_integration_framework:
             class: Smartbox\Integration\FrameworkBundle\Components\DB\DBConfigurableProducer
             description: Producer to send messages to mongo
             calls:
-              - [setConfigurableStepsProvider, [@smartesb.steps_provider.nosql]]
+              - [setConfigurableStepsProvider, ["@smartesb.steps_provider.nosql"]]
             options: ~
 
             methods:
@@ -108,7 +103,7 @@ smartbox_integration_framework:
                     description: Inserts a message in a mongo collection
                     steps:
                         - insertOne:
-                            data: eval: msg
+                            data: "eval: msg"
 
 doctrine:
     dbal:

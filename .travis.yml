@@ -1,6 +1,6 @@
 addons:
   hosts:
-    - camel.local
+    - rabbit
 
 language: php
 

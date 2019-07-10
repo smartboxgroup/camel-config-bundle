@@ -11,19 +11,21 @@
   "require": {
     "php": ">=5.6",
     "ext-pcntl": "*",
-    "smartbox/integration-framework-bundle": "^1.0.0",
-    "symfony/framework-bundle": "^2.8|^3.0|^4.0"
+    "smartbox/integration-framework-bundle": "dev-feature/recipient-list",
+    "symfony/framework-bundle": "^2.8|^3.0|^4.0",
+    "symfony/yaml": "^2.8|^3.0|^4.0"
   },
   "require-dev": {
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
     "jms/serializer-bundle": "*",
     "symfony/monolog-bundle": "^2.4.0",
-    "symfony/phpunit-bridge": "*"
+    "symfony/phpunit-bridge": "*",
+    "stomp-php/stomp-php": "^4.4"
   },
   "config": {
     "bin-dir": "bin"
   },
   "minimum-stability": "dev",
-  "prefer-stable" : true
+  "prefer-stable": true
 }

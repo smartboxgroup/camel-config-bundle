@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  php:
+    build: ./docker/php
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbit
+
+  rabbit:
+    build: ./docker/rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_PASS=rabbit
+    ports:
+      - "8081:15672"
+      - "8082:61613"

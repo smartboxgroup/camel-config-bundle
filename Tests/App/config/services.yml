@@ -5,7 +5,7 @@ services:
   producer.helper:
     class: Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\HelperProducer
     calls:
-      - [setMessageFactory, [@smartesb.message_factory]]
+      - [setMessageFactory, ["@smartesb.message_factory"]]
 
   producer.spy:
     class: Smartbox\Integration\CamelConfigBundle\Tests\App\Producers\SpyProducer
