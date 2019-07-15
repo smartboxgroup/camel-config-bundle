@@ -16,4 +16,3 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     ports:
       - "8081:15672"
-      - "8082:61613"
