@@ -2,7 +2,6 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
-use Smartbox\Integration\FrameworkBundle\Core\Processors\Routing\RecipientList;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
@@ -59,7 +58,14 @@ class RecipientListDefinition extends ProcessorDefinition
         return $definition;
     }
 
-    private function validateStrategy(string $strategy)
+    /**
+     * Method to validate that the stratefy defined in the flow is a strategy allowed.
+     *
+     * @param string $strategy
+     *
+     * @throws \Exception
+     */
+    private function validateStrategy($strategy)
     {
         $aggregationStrategies = $this->getAvailableAggregationStrategies();
 
