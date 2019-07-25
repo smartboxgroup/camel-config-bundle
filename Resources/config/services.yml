@@ -82,3 +82,11 @@ services:
         - [setEvaluator, ["@smartesb.util.evaluator"]]
         - [setProcessorClass, ["%smartesb.processor.try_catch.class%"]]
         - [setPipelineClass, ["%smartesb.processor.pipeline.class%"]]
+
+  smartesb.definitions.recipient_list:
+      class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\RecipientListDefinition
+      tags:
+        - { name: smartesb.definitions, nodeName: recipientList }
+      calls:
+        - [setEvaluator, ["@smartesb.util.evaluator"]]
+        - [setProcessorClass, ["%smartesb.processor.recipient_list.class%"]]

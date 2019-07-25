@@ -4,7 +4,7 @@ smartbox_integration_framework:
             class: Smartbox\Integration\FrameworkBundle\Components\FileService\Csv\CsvConfigurableConsumer
             description: Consume from csv file
             calls:
-                - [setConfigurableStepsProvider,[@smartesb.steps_provider.csv_file]]
+                - [setConfigurableStepsProvider,["@smartesb.steps_provider.csv_file"]]
             options:
                 delimiter: '|'
                 enclosure: '"'
@@ -19,14 +19,14 @@ smartbox_integration_framework:
                             max_lines: 3
                             filename: happy.csv
                     query_result:
-                        lines: eval: results['xyxx']
+                        lines: "eval: results['xyxx']"
                     on_consume: ~
 
         test_csv_2:
             class: Smartbox\Integration\FrameworkBundle\Components\FileService\Csv\CsvConfigurableConsumer
             description: Consume from csv file
             calls:
-                - [setConfigurableStepsProvider,[@smartesb.steps_provider.csv_file]]
+                - [setConfigurableStepsProvider,["@smartesb.steps_provider.csv_file"]]
             options:
                 delimiter: ','
                 enclosure: '"'
@@ -42,7 +42,7 @@ smartbox_integration_framework:
                             max_lines: 2
                             filename: happy-comma.csv
                     query_result:
-                        lines: eval: results['xyxx']
+                        lines: "eval: results['xyxx']"
                     on_consume: ~
 
     producers:
@@ -60,5 +60,5 @@ smartbox_integration_framework:
                     description: Append lines to the csv file
                     steps:
                         - append_lines:
-                            rows: eval: body['lines']
+                            rows: "eval: body['lines']"
                     response: []

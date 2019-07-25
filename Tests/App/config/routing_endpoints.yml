@@ -1,7 +1,7 @@
 queues.generic:
   pattern: "queue://{queue_driver}/{queue}"
   defaults:
-    _protocol: @smartesb.protocols.queue
+    _protocol: "@smartesb.protocols.queue"
     prefix: "test/camelconfig/"
     persistent: false    # For the tests we don't really want to persist our messages
 
@@ -11,54 +11,54 @@ queues.generic:
 nosql.configurable:
   pattern: "nosql://{nosql_driver}/{method}/{collection}"
   defaults:
-    _protocol: @smartesb.protocols.configurable.nosql
-    _producer: @smartesb.producers.mongo
-    _handler: @smartesb.handlers.sync
+    _protocol: "@smartesb.protocols.configurable.nosql"
+    _producer: "@smartesb.producers.mongo"
+    _handler: "@smartesb.handlers.sync"
     prefix: ""
     nosql_driver: main
   requirements:
-    collection: "[_\-a-zA-Z0-9/]+"
+    collection: "[a-zA-Z0-9/_-]+"
     nosql_driver: "[a-zA-Z0-9]+"
 
 smartbox_integration_platform:
-    resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
-    prefix:   /
+  resource: "@SmartboxIntegrationFrameworkBundle/Resources/config/default_endpoint_routes.yml"
+  prefix:   /
 
 ## For testing purposes
 test:
   pattern: "test://{path}"
   defaults:
-    _protocol: @smartesb.protocols.direct
+    _protocol: "@smartesb.protocols.direct"
   requirements:
-    path: "[a-zA-Z0-9/_\-]+"
+    path: "[a-zA-Z0-9/_-]+"
 
 helper:
   pattern: "helper://{operation}/{operand}"
   defaults:
-    _protocol: @smartesb.protocols.base
-    _producer: @producer.helper
+    _protocol: "@smartesb.protocols.base"
+    _producer: "@producer.helper"
 
 spy:
   pattern: "spy://{path}"
   defaults:
-    _protocol: @smartesb.protocols.base
-    _producer: @producer.spy
+    _protocol: "@smartesb.protocols.base"
+    _producer: "@producer.spy"
   requirements:
     path: "[a-zA-Z0-9/_-]+"
 
 error.triggerer.recoverable:
   pattern: "error://recoverable/{nb_errors}"
   defaults:
-    _protocol: @smartesb.protocols.base
-    _producer: @producer.error.triggerer
+    _protocol: "@smartesb.protocols.base"
+    _producer: "@producer.error.triggerer"
     recoverable: true
     nb_errors: 1
 
 error.triggerer.unrecoverable:
   pattern: "error://unrecoverable"
   defaults:
-    _protocol: @smartesb.protocols.base
-    _producer: @producer.error.triggerer
+    _protocol: "@smartesb.protocols.base"
+    _producer: "@producer.error.triggerer"
     recoverable: false
 
 csv.test.consumer.read:

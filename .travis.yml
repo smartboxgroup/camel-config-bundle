@@ -1,7 +1,8 @@
 addons:
   hosts:
-    - camel.local
-
+    - rabbit
+  apt_packages:
+    - rabbitmq-server
 language: php
 
 php:
@@ -22,8 +23,9 @@ before_install:
   - bash travis/install-apcu-pecl.sh
 
 before_script:
+  - sudo systemctl enable rabbitmq-server
   - sudo rabbitmq-plugins enable rabbitmq_stomp
-  - sudo service rabbitmq-server restart
+  - sudo systemctl restart rabbitmq-server
   - composer install --prefer-dist --no-interaction
 
 script:

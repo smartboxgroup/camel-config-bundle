@@ -1,0 +1,5 @@
+<route>
+    <from uri="queue://main/recipientList"/>
+    <to uri="test://recipientList"/>
+    <to uri="spy://queue/recipientList/result"/>
+</route>

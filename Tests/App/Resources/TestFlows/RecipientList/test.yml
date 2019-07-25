@@ -1,0 +1,4 @@
+steps:
+  - { type: handle, from: "test://recipientList", in: 1, out: 1} # We perform no aggregation, so the main exchange doesn't change
+  - { type: checkSpy, path: "recipientList/a", values: [5]}
+  - { type: checkSpy, path: "recipientList/b", values: [2]}
