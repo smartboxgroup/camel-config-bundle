@@ -22,10 +22,7 @@ class RecipientListDefinition extends ProcessorDefinition
 
         $evaluator = $this->getEvaluator();
 
-        $delimiter = (string) $configNode->attributes()->{'delimiter'};
-        if (empty($delimiter)) {
-            $delimiter = self::DELIMITER;
-        }
+        $delimiter = (string) $configNode->attributes()->{'delimiter'} ?: self::DELIMITER;
 
         $strategy = (string) $configNode->attributes()->{'strategyRef'};
         $this->validateStrategy($strategy);
