@@ -8,7 +8,7 @@
          bootstrap="./Tests/App/autoload.php"
 >
     <php>
-        <server name="KERNEL_DIR" value="Tests/App/" />
+        <server name="KERNEL_CLASS" value="AppKernel" />
     </php>
 
     <testsuite name="Smartbox Integration Camel Config Suite">
