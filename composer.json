@@ -18,9 +18,9 @@
     "symfony/doctrine-bridge": "^2.8 || ^3.4",
     "symfony/finder": "^2.8 || ^3.4",
     "symfony/form": "^2.8 || ^3.4",
-    "symfony/framework-bundle": "^2.8|^3.4|^4.0",
+    "symfony/framework-bundle": "^2.8 || ^3.4",
     "symfony/twig-bridge": "^2.8 || ^3.4",
-    "symfony/yaml": "^2.8|^3.4|^4.0"
+    "symfony/yaml": "^2.8 || ^3.4"
   },
   "require-dev": {
     "doctrine/doctrine-bundle": "^1.6",
@@ -32,7 +32,7 @@
     "symfony/monolog-bridge": "^2.8 || ^3.4",
     "symfony/monolog-bundle": "^2.8 || ^3.4",
     "symfony/options-resolver": "^2.8 || ^3.4",
-    "symfony/phpunit-bridge": "*"
+    "symfony/phpunit-bridge": "^4"
   },
   "config": {
     "bin-dir": "bin",
