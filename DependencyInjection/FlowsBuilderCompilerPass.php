@@ -274,7 +274,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $this->container = $container;
         $this->processorDefinitionsRegistry = $this->container->getDefinition('smartesb.registry.processor_definitions');
 
-        $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS);
+        $processorDefinitionsServices = $container->findTaggedServiceIds(self::TAG_DEFINITIONS, null, null);
         foreach ($processorDefinitionsServices as $id => $tags) {
             foreach ($tags as $attributes) {
                 $this->processorDefinitionsRegistry->addMethodCall('register', [$attributes['nodeName'], new Reference($id)]);
