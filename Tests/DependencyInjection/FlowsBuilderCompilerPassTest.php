@@ -43,6 +43,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit\Framework\TestCase
      * @covers ::addNodeToItinerary
      * @covers ::addToItinerary
      * @covers ::buildHandler
+     *
+     * @doesNotPerformAssertions
      */
     public function testProcess()
     {
