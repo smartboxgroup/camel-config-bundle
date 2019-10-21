@@ -21,16 +21,17 @@
     "symfony/yaml": "^2.8 || ^3.4"
   },
   "require-dev": {
+    "doctrine/annotations": "^1.4",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
-    "doctrine/annotations": "^1.4",
     "jms/serializer-bundle": "^2.4",
     "stomp-php/stomp-php": "^4.5",
     "symfony/expression-language": "^2.8 || ^3.4",
     "symfony/http-kernel": "^2.8 || ^3.4",
     "symfony/monolog-bundle": "^2.9 || ^3.4",
     "symfony/options-resolver": "^2.8 || ^3.4",
-    "symfony/phpunit-bridge": "^4.3"
+    "symfony/phpunit-bridge": "^4.3",
+    "symfony/security-acl": "^3"
   },
   "config": {
     "bin-dir": "bin",
