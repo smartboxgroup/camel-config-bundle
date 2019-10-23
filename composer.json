@@ -24,7 +24,7 @@
     "doctrine/annotations": "^1.4",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
-    "jms/serializer-bundle": "*",
+    "jms/serializer-bundle": "^2.4",
     "stomp-php/stomp-php": "^4.4",
     "symfony/expression-language": "^2.8 || ^3.0",
     "symfony/http-kernel": "^2.8 || ^3.0",
