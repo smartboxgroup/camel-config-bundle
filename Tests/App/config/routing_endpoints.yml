@@ -1,5 +1,5 @@
 queues.generic:
-  pattern: "queue://{queue_driver}/{queue}"
+  path: "queue://{queue_driver}/{queue}"
   defaults:
     _protocol: "@smartesb.protocols.queue"
     prefix: "test/camelconfig/"
@@ -9,7 +9,7 @@ queues.generic:
     queue: "[a-zA-Z0-9/]+"
 
 nosql.configurable:
-  pattern: "nosql://{nosql_driver}/{method}/{collection}"
+  path: "nosql://{nosql_driver}/{method}/{collection}"
   defaults:
     _protocol: "@smartesb.protocols.configurable.nosql"
     _producer: "@smartesb.producers.mongo"
@@ -26,20 +26,20 @@ smartbox_integration_platform:
 
 ## For testing purposes
 test:
-  pattern: "test://{path}"
+  path: "test://{path}"
   defaults:
     _protocol: "@smartesb.protocols.direct"
   requirements:
     path: "[a-zA-Z0-9/_-]+"
 
 helper:
-  pattern: "helper://{operation}/{operand}"
+  path: "helper://{operation}/{operand}"
   defaults:
     _protocol: "@smartesb.protocols.base"
     _producer: "@producer.helper"
 
 spy:
-  pattern: "spy://{path}"
+  path: "spy://{path}"
   defaults:
     _protocol: "@smartesb.protocols.base"
     _producer: "@producer.spy"
@@ -47,7 +47,7 @@ spy:
     path: "[a-zA-Z0-9/_-]+"
 
 error.triggerer.recoverable:
-  pattern: "error://recoverable/{nb_errors}"
+  path: "error://recoverable/{nb_errors}"
   defaults:
     _protocol: "@smartesb.protocols.base"
     _producer: "@producer.error.triggerer"
@@ -55,14 +55,14 @@ error.triggerer.recoverable:
     nb_errors: 1
 
 error.triggerer.unrecoverable:
-  pattern: "error://unrecoverable"
+  path: "error://unrecoverable"
   defaults:
     _protocol: "@smartesb.protocols.base"
     _producer: "@producer.error.triggerer"
     recoverable: false
 
 csv.test.consumer.read:
-  pattern: "csv://test/consumer/{method}"
+  path: "csv://test/consumer/{method}"
   defaults:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _consumer: "@smartesb.consumers.test_csv"
@@ -70,7 +70,7 @@ csv.test.consumer.read:
     path: "%kernel.root_dir%/Resources/Fixtures/Csv/"
 
 csv.test.consumer.read_2:
-  pattern: "csv://test/consumer_2/{method}"
+  path: "csv://test/consumer_2/{method}"
   defaults:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _consumer: "@smartesb.consumers.test_csv_2"
@@ -78,7 +78,7 @@ csv.test.consumer.read_2:
     path: "/tmp/camel-config-test"
 
 csv.test.producer.write:
-  pattern: "csv://test/producer/{method}/{default_path}"
+  path: "csv://test/producer/{method}/{default_path}"
   defaults:
     _protocol: "@smartesb.protocols.configurable.csv_file"
     _producer: "@smartesb.producers.test_csv"

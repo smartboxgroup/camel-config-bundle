@@ -8,6 +8,7 @@
          bootstrap="./Tests/App/autoload.php"
 >
     <php>
+        <server name="KERNEL_CLASS" value="AppKernel" />
         <server name="KERNEL_DIR" value="Tests/App/" />
     </php>
 

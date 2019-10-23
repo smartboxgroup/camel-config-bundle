@@ -6,17 +6,18 @@ addons:
 language: php
 
 php:
-  - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
+  - '7.0'
+  - '7.1'
+  - '7.2'
+  - '7.3'
 
 matrix:
   allow_failures:
-    - php: 7.3
+    - php: '7.3'
 
 env:
   - SYMFONY_VERSION=2.8.*
+  - SYMFONY_VERSION=3.4.*
 
 before_install:
   - phpenv config-add travis/z_php.ini

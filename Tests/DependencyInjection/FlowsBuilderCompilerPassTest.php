@@ -43,6 +43,8 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit\Framework\TestCase
      * @covers ::addNodeToItinerary
      * @covers ::addToItinerary
      * @covers ::buildHandler
+     *
+     * @doesNotPerformAssertions
      */
     public function testProcess()
     {
@@ -95,12 +97,11 @@ class FlowsBuilderCompilerPassTest extends \PHPUnit\Framework\TestCase
             ->method('findTaggedServiceIds')
             ->willReturnMap(
                 [
-                    [FlowsBuilderCompilerPass::TAG_DEFINITIONS, ['serviceId' => [['nodeName' => 'abc']]]],
-                    ['producer.direct.demo', $serviceId],
-                    ['producer.custom.business_demo', $serviceId],
+                    [FlowsBuilderCompilerPass::TAG_DEFINITIONS, false, ['serviceId' => [['nodeName' => 'abc']]]],
+                    ['producer.direct.demo', false, $serviceId],
+                    ['producer.custom.business_demo', false, $serviceId],
                 ]
-            )
-        ;
+            );
 
         $container->registerExtension($frameworkExtension);
         $container->registerExtension($extension);
