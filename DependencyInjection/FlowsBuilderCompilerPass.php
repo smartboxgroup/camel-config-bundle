@@ -231,6 +231,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
         $definition->setArguments([$name]);
+        $definition->setPublic(true);
 
         return new Reference($id);
     }
@@ -260,6 +261,7 @@ class FlowsBuilderCompilerPass implements CompilerPassInterface, FlowsBuilderInt
 
         $this->container->setDefinition($id, $definition);
         $definition->setProperty('id', $id);
+        $definition->setPublic(true);
 
         return new Reference($id);
     }
