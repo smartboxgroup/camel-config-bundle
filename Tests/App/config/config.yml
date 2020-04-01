@@ -48,8 +48,8 @@ smartbox_integration_framework:
     defer_events_to_uri: false
     queue_drivers:
         main:
-            type: RabbitMQ
-            description: RabbitMQ queue driver
+            type: amqp
+            description: RabbitMQ amqp queue driver
             host: "%rabbitmq.hostname%"
             username: "%rabbitmq.username%"
             password: "%rabbitmq.password%"
