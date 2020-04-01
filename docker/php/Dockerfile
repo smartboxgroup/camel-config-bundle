@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -qq \
 
 RUN docker-php-ext-install \
     soap \
-    pcntl
+    pcntl \
+    sockets
 
 RUN pecl install apcu-5.1.8
 
