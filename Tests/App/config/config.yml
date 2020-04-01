@@ -49,7 +49,7 @@ smartbox_integration_framework:
     queue_drivers:
         main:
             type: RabbitMQ
-            description: RabbitMQ queue driver
+            description: RabbitMQ stomp queue driver
             host: "%rabbitmq.hostname%"
             username: "%rabbitmq.username%"
             password: "%rabbitmq.password%"
