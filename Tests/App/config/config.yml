@@ -48,10 +48,8 @@ smartbox_integration_framework:
     defer_events_to_uri: false
 
     queue_consumers:
-        async_queue:
-            type: async
         queue:
-            type: sync
+            type: async
 
     queue_drivers:
         main:
@@ -65,7 +63,7 @@ smartbox_integration_framework:
 
     nosql_drivers: ~
 
-    default_queue_consumer: async_queue
+    default_queue_consumer: queue
     default_queue_driver: main
     default_nosql_driver: ~
 
