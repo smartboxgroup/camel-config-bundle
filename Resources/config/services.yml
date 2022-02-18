@@ -81,7 +81,6 @@ services:
       - { name: smartesb.definitions, nodeName: delay }
     calls:
       - [setEvaluator, ["@smartesb.util.evaluator"]]
-      - [setProcessorClass, ["%smartesb.processor.delay.class%"]]
 
   smartesb.definitions.try_catch:
       class: "%smartesb.definitions.try_catch.class%"
