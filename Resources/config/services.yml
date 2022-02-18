@@ -10,6 +10,7 @@ parameters:
   smartesb.definitions.process.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ProcessDefinition
   smartesb.definitions.try_catch.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\TryCatchDefinition
   smartesb.definitions.throttle.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\ThrottlerDefinition
+  smartesb.definitions.delay.class: Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions\DelayDefinition
 
 services:
   smartesb.registry.processor_definitions:
@@ -73,6 +74,14 @@ services:
       calls:
         - [setEvaluator, ["@smartesb.util.evaluator"]]
         - [setProcessorClass, ["%smartesb.processor.throttle.class%"]]
+
+  smartesb.definitions.delay:
+    class: "%smartesb.definitions.delay.class%"
+    tags:
+      - { name: smartesb.definitions, nodeName: delay }
+    calls:
+      - [setEvaluator, ["@smartesb.util.evaluator"]]
+      - [setProcessorClass, ["%smartesb.processor.delay.class%"]]
 
   smartesb.definitions.try_catch:
       class: "%smartesb.definitions.try_catch.class%"
