@@ -2,15 +2,15 @@
 
 namespace Smartbox\Integration\CamelConfigBundle\ProcessorDefinitions;
 
+use Smartbox\Integration\FrameworkBundle\Core\Processors\ControlFlow\DelayInterceptor;
 use Smartbox\Integration\FrameworkBundle\DependencyInjection\Traits\UsesEvaluator;
 
 class DelayDefinition extends ProcessorDefinition
 {
-
     use UsesEvaluator;
 
     /** @var string */
-    protected $processorClass = Delay::class;
+    protected $processorClass = DelayInterceptor::class;
 
     /**
      * {@inheritdoc}
