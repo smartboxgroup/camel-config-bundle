@@ -15,6 +15,12 @@ matrix:
   allow_failures:
     - php: '7.3'
 
+  include:
+    - php: 7.0
+      env: PHPUNIT_VERSION="6.5"
+    - php: 7.1
+      env: PHPUNIT_VERSION="7.5"
+
 env:
   - SYMFONY_VERSION=2.8.*
   - SYMFONY_VERSION=3.4.*
@@ -30,7 +36,7 @@ before_script:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - SYMFONY_PHPUNIT_VERSION=7.5 SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit --coverage-text # TODO: Fix deprecations
+  - SYMFONY_PHPUNIT_VERSION=$PHPUNIT_VERSION SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit --coverage-text # TODO: Fix deprecations
 
 services:
   - rabbitmq
